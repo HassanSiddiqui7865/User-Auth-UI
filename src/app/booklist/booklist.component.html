@@ -1,0 +1,59 @@
+<div class="p-5">
+  <table class="table table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Image</th>
+        <th scope="col">Book Name</th>
+        <th scope="col">Author Name</th>
+        <th scope="col">CreatedAt</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="cursor: pointer;" *ngFor="let item of bookList,let i = index">
+        <th scope="row">{{i+1}}</th>
+        <td><img width="60px" height="60px" src={{item.imgUrl}}></td>
+        <td>{{item.bookName}}</td>
+        <td>{{item.bookAuthor}}</td>
+        <td>{{getDate(item.createdAt)}}</td>
+        <td>
+          <div class="d-flex gap-2 ">
+            <button (click)="handleNavigate(item.bookId)" class="btn btn-primary ">View</button>
+            <button *ngIf="userrole == 'admin' || userrole === 'librarian'" (click)="openDeleteModal(item.bookId)" class="btn btn-danger ">Delete</button>
+          </div>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+  <div class="modal" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Delete the User</h4>
+          <button (click)="CloseDeleteModel()" type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          Are you sure you want to Delete the book
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button (click)="handleDelete()" type="button" class="btn btn btn-danger " data-bs-dismiss="modal">
+            <div *ngIf="loading" class="spinner-border spinner-border-sm" role="status"></div>
+            <span *ngIf="!loading">Delete</span>
+          </button>
+          <button (click)="CloseDeleteModel()" type="button" class="btn btn-primary "
+            data-bs-dismiss="modal">Close</button>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

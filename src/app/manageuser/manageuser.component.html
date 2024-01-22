@@ -1,0 +1,95 @@
+<div style="position: relative;" class="d-flex justify-content-center">
+  <div [ngStyle]="{'opacity': OpenModel ? 0.3 : 1, 'width': '100vw'}" class="p-5" style="width: 100vw;">
+    <div class="d-flex justify-content-end ">
+      <button class="btn btn-primary mb-4" (click)="handleOpen()">Add Librarian</button>
+    </div>
+    <table class="table table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Username</th>
+          <th scope="col">Email</th>
+          <th scope="col">Userrole</th>
+          <th scope="col">CreatedOn</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of userList,let i = index">
+          <th scope="row">{{i+1}}</th>
+          <td>{{item.username}}</td>
+          <td>{{item.email}}</td>
+          <td>{{item.userrole}}</td>
+          <td>{{getDate(item.createdAt)}}</td>
+          <td><button class="btn btn-danger" (click)="OpenDeleteModel(item.userId)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="modal" id="myModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Delete the User</h4>
+            <button (click)="CloseDeleteModel()" type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            Are you sure you want to Delete the user
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button (click)="handleDelete()" type="button" class="btn btn btn-danger " data-bs-dismiss="modal">
+              <div *ngIf="loading" class="spinner-border spinner-border-sm" role="status"></div>
+              <span *ngIf="!loading">Delete</span>
+            </button>
+            <button (click)="CloseDeleteModel()" type="button" class="btn btn-primary "
+              data-bs-dismiss="modal">Close</button>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="OpenModel" class="d-flex justify-content-center align-items-center"
+    style="width:100vw;height: 80vh;position: absolute;top:0;">
+    <div style="background-color: rgb(219, 219, 219);width: 40vw;position: relative;z-index: 999;" class="p-5 border ">
+      <div (click)="handleOpen()" style="position: absolute; top:5px;right:5px; cursor: pointer;" class="fs-5">X</div>
+      <p class="fs-3 ">Add Librarian</p>
+      <form [formGroup]="LibrarianForm" (ngSubmit)="AddLibrarian()">
+        <div class="form-group mb-2 ">
+          <label for="exampleInputUsername">Username</label>
+          <input formControlName="username" type="username" class="form-control" id="exampleInputUsername"
+            placeholder="Enter Username">
+          <small *ngIf="LibrarianForm.get('username').hasError('required') && LibrarianForm.get('username').touched"
+            class="text-danger">*Username is required</small>
+        </div>
+        <div class="form-group mb-2 ">
+          <label for="exampleInputEmail1">Email address</label>
+          <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1"
+            aria-describedby="emailHelp" placeholder="Enter email">
+          <small *ngIf="LibrarianForm.get('email').hasError('required') && LibrarianForm.get('email').touched"
+            class="text-danger">*Email is required</small>
+          <small *ngIf="LibrarianForm.get('email').hasError('email')" class="text-danger">Enter a Valid Email</small>
+        </div>
+        <div class="form-group mb-3 ">
+          <label for="exampleInputPassword1">Password</label>
+          <input formControlName="password" type="password" class="form-control" id="exampleInputPassword1"
+            placeholder="Password">
+          <small *ngIf="LibrarianForm.get('password').hasError('required') && LibrarianForm.get('password').touched"
+            class="text-danger">*Password is required</small>
+          <small *ngIf="LibrarianForm.get('password').hasError('minlength')" class="text-danger">
+            Password length should be at least 6
+          </small>
+        </div>
+        <small *ngIf="error?.status === 409" class="text-danger mb-3">Account already present with same credentials</small>
+        <small *ngIf="error?.ok && error?.status !== 409" class="text-danger mb-3">Error occured while logging In</small>
+        <button type="submit" [disabled]="LibrarianForm.invalid" class="btn w-100 btn-primary" style="background-color: teal;">Submit</button>
+      </form>
+    </div>
+  </div>

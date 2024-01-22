@@ -1,0 +1,43 @@
+<div class="d-flex vh-100 d-flex align-items-center justify-content-center" style="background-color: #b4e5f5;">
+    <div class="d-flex" style="height:max-content; width:50vw">
+        <div class="d-flex p-3 align-items-center flex-column " style="background-color: #30a7cf;border-radius: 10px 0px 0px 10px;flex: 2;padding: 5px; box-sizing: border-box;">
+            <img width="200px" height="200px" src="/assets/poster.png">
+            <p class="text-light fs-5 fw-semibold  ">Welcome to App</p>
+            <p class="text-light fs-6 fw-light ">Register your account and start your journey with us.</p>
+        </div>
+        <div class= "p-3 bg-light" style="flex:3">
+            <div class="d-flex justify-content-center ">
+               <p class="fs-3 fw-semibold ">Register your Account</p>
+            </div>
+            <form [formGroup]="registerForm" (ngSubmit)="OnhandleSubmit()">
+                <div class="form-group mb-2 ">
+                    <label for="exampleInputUsername">Username</label>
+                    <input formControlName="username" type="username" class="form-control" id="exampleInputUsername" 
+                        placeholder="Enter Username">
+                    <small *ngIf="registerForm.get('username').hasError('required') && registerForm.get('username').touched" class="text-danger">*Username is required</small>
+                </div>
+                <div class="form-group mb-2 ">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                        placeholder="Enter email">
+                        <small *ngIf="registerForm.get('email').hasError('required') && registerForm.get('email').touched" class="text-danger">*Email is required</small>
+                        <small *ngIf="registerForm.get('email').hasError('email')" class="text-danger">Enter a Valid Email</small>
+                </div>
+                <div class="form-group mb-3 ">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input formControlName="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    <small *ngIf="registerForm.get('password').hasError('required') && registerForm.get('password').touched" class="text-danger">*Password is required</small>
+                    <small *ngIf="registerForm.get('password').hasError('minlength')" class="text-danger">
+                        Password length should be at least 6
+                    </small>
+                </div>
+                <small *ngIf="error?.status === 409" class="text-danger mb-3">Account already present with same credentials</small>
+                <small *ngIf="error?.ok && error?.status !== 409" class="text-danger mb-3">Error occured while logging In</small>
+                <button type="submit" class="btn btn-primary w-100 mt-2 mb-2" [disabled]="registerForm.invalid">
+                    <div *ngIf="loading" class="spinner-border spinner-border-sm" role="status"></div>
+                    <span *ngIf="!loading">Submit</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
