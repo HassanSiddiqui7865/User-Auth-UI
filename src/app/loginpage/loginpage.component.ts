@@ -25,7 +25,7 @@ export class LoginpageComponent implements OnInit{
     
 
     if (this.loginService.isLoggedIn()) {
-      this.router.navigate(['dashboard']);
+      this.router.navigate(['/board']);
     }
   }
 
@@ -35,7 +35,7 @@ export class LoginpageComponent implements OnInit{
     subscribe((res)=>{
       this.loading = false
       localStorage.setItem('login',JSON.stringify(res))
-      this.router.navigate(['dashboard'])
+      this.router.navigate(['/board'])
     },(err)=>{
       this.loading = false
       this.error = err

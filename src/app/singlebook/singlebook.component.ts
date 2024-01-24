@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BookService } from '../Services/Book/book.service';
+import { ProjectService } from '../Services/Project/project.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
@@ -12,21 +12,21 @@ export class SinglebookComponent implements OnInit {
   book: any;
   id: any
   pipe = new DatePipe('en-US')
-  constructor(private bookService: BookService, private router: Router, private route: ActivatedRoute) {
+  constructor(private bookService: ProjectService, private router: Router, private route: ActivatedRoute) {
     this.id = this.route.snapshot.params['id'];
   }
   ngOnInit(): void {
     this.getBook()
   }
   getBook() {
-    this.bookService.getBookById(this.id).subscribe(
-      (res) => {
-        this.book = res
-        console.log(res)
-      },
-      (err) => {
-        console.log(err);
-      })
+    // this.bookService.getBookById(this.id).subscribe(
+    //   (res) => {
+    //     this.book = res
+    //     console.log(res)
+    //   },
+    //   (err) => {
+    //     console.log(err);
+    //   })
   }
   getDate(date:any){
     const myFormattedDate = this.pipe.transform(date, 'short');

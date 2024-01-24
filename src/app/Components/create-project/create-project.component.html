@@ -1,0 +1,30 @@
+<div class="p-5" style="box-sizing:border-box;">
+    <form [formGroup]="CreateProjectForm" (ngSubmit)="handlecreateProject()">
+        <div>
+            <h1 class="mb-4 ">Create New Project</h1>
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form3Example3">Project Shortname</label>
+            <input formControlName="projectshortname" type="text" id="form3Example3"
+                class="form-control form-control-lg" placeholder="Enter Project Shortname" />
+            <small
+                *ngIf="CreateProjectForm.get('projectshortname').hasError('required') && CreateProjectForm.get('projectshortname').touched"
+                class="text-danger">*Project Shortname is required</small>
+        </div>
+        <div class="form-outline mb-3">
+            <label class="form-label" for="form3Example4">Project Fullname</label>
+            <input formControlName="projectfullname" type="text" id="form3Example4" class="form-control form-control-lg"
+                placeholder="Enter Project Full Name" />
+            <small
+                *ngIf="CreateProjectForm.get('projectfullname').hasError('required') && CreateProjectForm.get('projectfullname').touched"
+                class="text-danger">*Project Fullname is required</small>
+        </div>
+
+        <div class=" mt-4 pt-2">
+            <button type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">
+                <div *ngIf="loading" class="spinner-border spinner-border-sm" role="status"></div>
+                <span *ngIf="!loading">Create</span>
+            </button>
+        </div>
+    </form>
+</div>

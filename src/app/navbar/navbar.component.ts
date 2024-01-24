@@ -15,9 +15,13 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.username = JSON.parse(localStorage.getItem('login')).username
     this.login = JSON.parse(localStorage.getItem('login')).userrole
+    const profileDiv = document.getElementById('output')
+    profileDiv.style.backgroundColor = '#ecb731'
+    profileDiv.innerText = this.username.slice(0,2)
   }
 
   onHandleLogout(){
     this.loginService.logout()
   }
+
 }

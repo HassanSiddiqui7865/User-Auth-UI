@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BookService } from '../Services/Book/book.service';
+import { ProjectService } from '../Services/Project/project.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -15,7 +15,7 @@ export class BookmanageComponent implements OnInit {
   BookForm : FormGroup
   loading:boolean = false;
 
-  constructor(private bookService : BookService,private router : Router,private toastr : ToastrService) {
+  constructor(private bookService : ProjectService,private router : Router,private toastr : ToastrService) {
   }
   ngOnInit(){
     this.BookForm = new FormGroup({
@@ -33,12 +33,12 @@ export class BookmanageComponent implements OnInit {
   }
   AddBook(){
     this.loading = true
-    this.bookService.createBook(this.BookForm.value).subscribe((res)=>{
-      this.loading = false
-      this.router.navigate(['dashboard'])
-      this.toastr.success("Book Added Successfully")
-    },(err)=>{
-      this.loading = false
-    })
+    // this.bookService.createBook(this.BookForm.value).subscribe((res)=>{
+    //   this.loading = false
+    //   this.router.navigate(['dashboard'])
+    //   this.toastr.success("Book Added Successfully")
+    // },(err)=>{
+    //   this.loading = false
+    // })
   }
 }
