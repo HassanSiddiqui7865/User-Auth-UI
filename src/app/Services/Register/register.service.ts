@@ -3,11 +3,13 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegisterService {
+  baseURL = environment.BASEURL
 
   private apiResponseSubject = new Subject<any>();
 
@@ -18,7 +20,7 @@ export class RegisterService {
   }
 
   RegisterUser(userData){
-    this.http.post("https://localhost:7135/api/User/register",{
+    this.http.post(this.baseURL+"User/register",{
       username:userData.username,
       email:userData.email,
       pass:userData.password,

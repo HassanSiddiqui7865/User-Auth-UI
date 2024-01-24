@@ -10,10 +10,10 @@ import { Observable, Subject } from 'rxjs';
 
 export class LoginService {
   constructor(private http : HttpClient,private router : Router,private toastr: ToastrService) { }
-
+  
 
   LoginUser(userData):Observable<any>{
-    return this.http.post("https://localhost:7135/api/User/login",{
+    return this.http.post("http://localhost:51865/api/User/login",{
         username:userData.username,
         pass:userData.password,
       })

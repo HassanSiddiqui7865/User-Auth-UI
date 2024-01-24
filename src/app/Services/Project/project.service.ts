@@ -8,7 +8,7 @@ import {environment} from 'src/environment/environment'
 export class ProjectService {
   constructor(private http : HttpClient) { }
   getProjects(): Observable<any> {
-    return this.http.get(`${environment.BASEURL}/Project`);
+    return this.http.get(`${environment.BASEURL}Project`);
   }
 
   createProject(projectData:any):Observable<any>{
