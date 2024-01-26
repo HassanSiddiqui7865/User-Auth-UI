@@ -22,6 +22,7 @@ import { CreateProjectComponent } from './Components/create-project/create-proje
 import {MatDialogModule} from '@angular/material/dialog';
 import { DeleteComponentComponent } from './Components/delete-component/delete-component.component';
 import { UpdateProjectComponent } from './Components/update-project/update-project.component';
+import { DialerComponent } from './dialer/dialer.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { UpdateProjectComponent } from './Components/update-project/update-proje
     CreateProjectComponent,
     DeleteComponentComponent,
     UpdateProjectComponent,
+    DialerComponent,
     ],
   imports: [
     BrowserAnimationsModule,
