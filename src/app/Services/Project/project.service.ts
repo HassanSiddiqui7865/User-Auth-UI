@@ -12,19 +12,19 @@ export class ProjectService {
   }
 
   createProject(projectData:any):Observable<any>{
-    return this.http.post(`${environment.BASEURL}/Project`,{
+    return this.http.post(`${environment.BASEURL}Project`,{
       projectshortname:projectData.projectshortname,
       projectfullname:projectData.projectfullname
     })
   }
   getProject(id:any): Observable<any> {
-    return this.http.get(`${environment.BASEURL}/Project/${id}`);
+    return this.http.get(`${environment.BASEURL}Project/${id}`);
   }
   DeleteProject(id:any):Observable<any>{
-    return this.http.delete(`${environment.BASEURL}/Project/${id}`); 
+    return this.http.delete(`${environment.BASEURL}Project/${id}`); 
   }
   updateProject(id:any,projectData:any):Observable<any>{
-    return this.http.put(`${environment.BASEURL}/Project/${id}`,{
+    return this.http.put(`${environment.BASEURL}Project/${id}`,{
       projectshortname:projectData.projectshortname,
       projectfullname:projectData.projectfullname
     })

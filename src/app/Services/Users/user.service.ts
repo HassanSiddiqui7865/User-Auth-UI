@@ -15,7 +15,7 @@ export class UserService {
     }
 
     DeleteUser(id:any):Observable<any>{
-      return this.http.delete(`https://localhost:7135/api/User/${id}`)
+      return this.http.delete(`${this.baseURL}User/${id}`)
     }
 
     Addibrarian(userData):Observable<any>{
