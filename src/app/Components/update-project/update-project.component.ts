@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 import { ProjectService } from 'src/app/Services/Project/project.service';
+import { userlist } from 'src/app/create-project/userlist';
 
 @Component({
   selector: 'app-update-project',
@@ -12,42 +14,35 @@ export class UpdateProjectComponent implements OnInit{
   UpdateProjectForm : FormGroup
   loading : boolean = false
   projectFormData:any;
+  filteredArray:any[];
+  userinput:any;
+  usersList=userlist;
+  AddedMember:any[]=[]
   constructor(@Inject(MAT_DIALOG_DATA) public data, 
-  private projectService : ProjectService,public dialogRef: MatDialogRef<UpdateProjectComponent>){}
+  private projectService : ProjectService,public dialogRef: MatDialogRef<UpdateProjectComponent>,private toastr : ToastrService){}
   ngOnInit(): void {
     this.UpdateProjectForm = new FormGroup({
       projectshortname : new FormControl(null,Validators.required),
       projectfullname : new FormControl(null,[Validators.required])
     })
-    this.getProject()
   }
-  getProject(){
-    this.projectService.getProject(this.data.projectId)
-    .subscribe({
-      next:(res)=>{
-        this.projectFormData = res
-        this.UpdateProjectForm.patchValue({
-          projectshortname: this.projectFormData.projectshortname,
-          projectfullname: this.projectFormData.projectfullname
-        });
-      }
-    })
+  handleChange(e){
+    const filteredUser = userlist.filter((item) => {
+      return item.full_name.toLowerCase().startsWith(e.target.value.toLowerCase());
+    });
+    
+    this.filteredArray = e.target.value === "" ? null : filteredUser;
   }
-  handleUpdateProject(){
-    this.loading = true
-    this.projectService.updateProject(this.data.projectId,this.UpdateProjectForm.value)
-      .subscribe(
-        {
-          next:()=>{
-            this.data.loadProject()
-            this.loading = false
-            this.dialogRef.close()
-          },
-          error:()=>{
-            this.loading = false
-            this.dialogRef.close()
-          }
-        }
-      );
+  handleAddMember(id: number) {
+    const filteredUser = this.usersList.find((item) => {
+      return item.id === id;
+    });
+    if (!this.AddedMember.includes(filteredUser)) {
+      this.AddedMember.push(filteredUser);
+    }
   }
+  handleDeleteMember(id:number){
+    this.AddedMember.splice(this.AddedMember.findIndex((item)=>item.id === id),1)
+  }
+ 
 }

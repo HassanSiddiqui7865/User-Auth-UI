@@ -14,17 +14,21 @@ import { singlebookGuard } from './Guard/singlebook.guard';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 import { LayoutComponent } from './layout/layout.component';
 import { BoardComponent } from './board/board.component';
+import { CreateProjectComponent } from './create-project/create-project.component';
 
 const routes: Routes = [
  {path:"login",component:LoginpageComponent},
  {path:"forgetPassword",component:ForgetpasswordComponent},
  {path:"register",component:RegisterpageComponent},
  {path:"",component:LayoutComponent,
-//  canActivate:[dashboardGuard],
+ canActivate:[dashboardGuard],
   children:[
     {path:"board",component:BoardComponent},
     {path:"projects",component:ProjectsComponent},
-    {path:"users",component:ManageuserComponent}
+    {path:"users",component:ManageuserComponent},
+    {path:"create-project",component:CreateProjectComponent},
+    {path:"",redirectTo:"board",pathMatch:"full"}
+
     // {path:"addbooks",component:BookmanageComponent,canActivate:[addbookGuard]},
     // {path:"users",component:ManageuserComponent,canActivate:[userGuard]},
     // {path:":id",component:SinglebookComponent,canActivate:[singlebookGuard]},

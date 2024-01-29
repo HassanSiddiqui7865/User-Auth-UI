@@ -1,0 +1,15 @@
+table{
+    th{
+        font-size: medium;
+    }
+    td{
+        font-size: medium;
+    }
+    .name{
+        color: #4545ff;
+    }
+
+}
+.mat-mdc-row{
+    height: 100px;
+}
