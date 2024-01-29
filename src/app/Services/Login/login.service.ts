@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Subject } from 'rxjs';
+import { environment } from 'src/environment/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +14,13 @@ export class LoginService {
 
 
   LoginUser(userData):Observable<any>{
-    return this.http.post("https://localhost:7135/api/User/login",{
+    return this.http.post(`${environment.BASEURL}/User/login`,{
         username:userData.username,
         pass:userData.password,
       })
   }
-  getUserbyUsername(userData):Observable<any>{
-    return this.http.get(`https://localhost:7135/api/User/${userData.username}`)
+  getUserbyUsername(username:string):Observable<any>{
+    return this.http.get(`${environment.BASEURL}/User/${username}`)
   }
 
   isLoggedIn(){
@@ -28,7 +29,7 @@ export class LoginService {
 
   logout() {
     localStorage.removeItem('login');
-    this.router.navigate(['login']);
+    this.router.navigate(['/login']);
   }
 
 }

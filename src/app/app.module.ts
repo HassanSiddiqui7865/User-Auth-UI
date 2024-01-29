@@ -5,8 +5,7 @@ import { AppComponent } from './app.component';
 import { RegisterpageComponent } from './registerpage/registerpage.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { LoginpageComponent } from './loginpage/loginpage.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProjectsComponent } from './projects/projects.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BookmanageComponent } from './bookmanage/bookmanage.component';
@@ -18,10 +17,18 @@ import { SinglebookComponent } from './singlebook/singlebook.component';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 import { LayoutComponent } from './layout/layout.component';
 import { BoardComponent } from './board/board.component';
-import { CreateProjectComponent } from './Components/create-project/create-project.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { DeleteComponentComponent } from './Components/delete-component/delete-component.component';
 import { UpdateProjectComponent } from './Components/update-project/update-project.component';
+import {MatIconModule} from '@angular/material/icon'
+import {MatTableModule} from '@angular/material/table';
+import { SidebarComponent } from './Components/sidebar/sidebar.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { CommonModule } from '@angular/common';
+import { CreateProjectComponent } from './create-project/create-project.component';
+import { CreateTaskComponent } from './Components/create-task/create-task.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { ShowMembersComponent } from './Components/show-members/show-members.component';
 
 @NgModule({
   declarations: [
@@ -39,19 +46,29 @@ import { UpdateProjectComponent } from './Components/update-project/update-proje
     ForgetpasswordComponent,
     LayoutComponent,
     BoardComponent,
-    CreateProjectComponent,
     DeleteComponentComponent,
     UpdateProjectComponent,
+    SidebarComponent,
+    CreateProjectComponent,
+    CreateTaskComponent,
+    ShowMembersComponent
+   
+    
     ],
   imports: [
+    MatProgressBarModule,
+    CommonModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
-    FontAwesomeModule,
     HttpClientModule,
-    MatDialogModule
+    MatDialogModule,
+    FormsModule,
+    MatTableModule,
+    MatIconModule,
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,6 +2,8 @@ import {Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { RegisterService } from '../Services/Register/register.service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-registerpage',
@@ -12,7 +14,7 @@ export class RegisterpageComponent implements OnInit{
   error:any;
   registerForm : FormGroup
   loading:boolean = false;
-  constructor(private registerService : RegisterService) {
+  constructor(private registerService : RegisterService,private router : Router,private toastr : ToastrService) {
   }
 
 
@@ -22,18 +24,25 @@ export class RegisterpageComponent implements OnInit{
       email : new FormControl(null,[Validators.required,Validators.email]),
       password : new FormControl(null,[Validators.required,Validators.minLength(6)])
     })
-
-    this.registerService.getApiResponseObservable().
-    subscribe((res) => {
-      this.loading = false;
-    },(err)=>{
-      this.loading = false;
+   
+   
+}
+OnhandleRegister(){
+  this.loading = true
+  this.registerService.RegisterUser(this.registerForm.value).subscribe({
+    next:(res)=>{
+      this.loading = false
+      this.router.navigate(['/login'])
+      this.toastr.success('Login to use your Account','Account Created Successfully', {
+        timeOut: 3000,
+      });
+      
+    },
+    error:(err)=>{
+      this.loading = false
       this.error = err
-    });
-  }
-
-  OnhandleSubmit(){
-    this.loading = true; 
-   this.registerService.RegisterUser(this.registerForm.value)
-  }
+      console.log(err)
+    }
+  })
+}
 }

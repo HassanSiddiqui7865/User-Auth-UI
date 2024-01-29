@@ -1,12 +1,36 @@
-<div class="p-4 ">
-    <div>
-        <h3>Are you Sure you want to delete the item?</h3>
+<div class="p-4">
+  <div class="d-flex flex-column align-items-center ">
+    <div
+      class="d-flex align-items-center justify-content-center text-danger mb-3 "
+      style="
+        background-color: rgb(252, 187, 187);
+        width: 40px;
+        height: 40px;
+        
+        border-radius: 50%;
+      "
+    >
+      <mat-icon>error</mat-icon>
     </div>
-    <div class="d-flex gap-2 ">
-        <button type="submit" class="btn btn-danger" (click)="handleDelete()" style="padding-left: 2.5rem; padding-right: 2.5rem;">
-            <div *ngIf="loading" class="spinner-border spinner-border-sm" role="status"></div>
-            <span *ngIf="!loading">Delete</span>
-        </button>
-        <button type="button" (click)="dialogRef.close()" class="btn btn-primary ">Cancel</button>
-    </div>
+    <h3 class="fs-4 ">Are you Sure?</h3>
+    <p style="color: rgb(95, 95, 95);">This action cannot be undone. All values associated with this field will be lost</p>
+  </div>
+  <div class="d-flex gap-2 flex-column">
+    <button
+      type="submit"
+      class="btn btn-danger"
+      (click)="handleDelete()"
+      style="padding-left: 2.5rem; padding-right: 2.5rem"
+    >
+      <div
+        *ngIf="loading"
+        class="spinner-border spinner-border-sm"
+        role="status"
+      ></div>
+      <span *ngIf="!loading">Delete</span>
+    </button>
+    <button type="button" (click)="dialogRef.close()" class="btn btn-light border ">
+      Cancel
+    </button>
+  </div>
 </div>

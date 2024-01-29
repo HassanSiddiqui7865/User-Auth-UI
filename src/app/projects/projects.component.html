@@ -1,41 +1,194 @@
 <div class="p-3">
-  <div class="d-flex justify-content-end mb-4">
-    <button (click)="openCreateDialog()" class="btn btn-primary">Create New Project</button>
+  <div class="d-flex justify-content-between mb-4">
+    <h1 style="color: rgb(1, 1, 102)">Project Management</h1>
+    <button
+      [routerLink]="'/create-project'"
+      class="btn btn-primary btn-sm  d-flex align-items-center h-25"
+    >
+      <mat-icon>add</mat-icon>
+      Create
+    </button>
   </div>
-  <div *ngIf="ProjectList && ProjectList.length>0" class="d-flex gap-4 flex-wrap p-2">
-    <div *ngFor="let item of ProjectList" class="card border-dark mb-3" style="max-width: 18rem;">
-      <h2 class="card-header">{{item.projectshortname}}</h2>
-      <div class="card-body text-dark">
-        <h3 class="card-title">{{item.projectfullname}}</h3>
-        <div class="d-flex align-items-center gap-2">Project Creation: <span
-            style="color: rgb(73, 73, 73);">{{item.createdAt | date:'dd-MM-yyyy'}}</span></div>
-      </div>
-      <div class="d-flex" style="color: white; margin:0px 0px 10px 10px">
+  <table
+    mat-table
+    [dataSource]="data"
+    class="mat-elevation-z8"
+    style="box-shadow: none"
+  >
+    <ng-container matColumnDef="ProjectName">
+      <th
+        style="background-color: rgb(243, 243, 243)"
+        mat-header-cell
+        *matHeaderCellDef
+      >
+        Project Name
+      </th>
+      <td class="name" mat-cell *matCellDef="let element">
+        {{ element.projectname }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="Category">
+      <th
+        style="background-color: rgb(243, 243, 243)"
+        mat-header-cell
+        *matHeaderCellDef
+      >
+        Category
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <p
+          style="
+            border: 0.5px solid teal;
+            width: max-content;
+            padding: 5px;
+            border-radius: 5px;
+            color: teal;
+          "
+        >
+          {{ element.category }}
+        </p>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="Members">
+      <th
+        style="background-color: rgb(243, 243, 243)"
+        mat-header-cell
+        *matHeaderCellDef
+      >
+        Members
+      </th>
+      <td mat-cell *matCellDef="let element">
         <div
-          style="display:flex;width:30px;height:30px;background-color: orange;border-radius: 50%;justify-content: center;align-items: center;">
-          H</div>
-        <div
-          style="display:flex;width:30px;height:30px;background-color: blue;border-radius: 50%;justify-content: center;align-items: center;">
-          H</div>
-        <div
-          style="display:flex;width:30px;height:30px;background-color: green;border-radius: 50%;justify-content: center;align-items: center;">
-          H</div>
-      </div>
-
-      <div class="card-footer bg-transparent">
-        <div class="d-flex justify-content-between">
-          <button (click)="openEditDialog(item.projectId)" class="btn btn-outline-success">Edit</button>
-          <button (click)="openDeleteDialog(item.projectId)" class="btn btn-outline-danger">Delete</button>
+          class="d-flex position-relative"
+          style="color: white; margin: 0px 0px 10px 10px; position: relative"
+        >
+          <div
+            style="
+              display: flex;
+              width: 30px;
+              height: 30px;
+              background-color: rgb(92, 89, 255);
+              border-radius: 50%;
+              justify-content: center;
+              align-items: center;
+              position: absolute;
+              top: 0;
+              left: -2px;
+            "
+          >
+            H
+          </div>
+          <div
+            style="
+              display: flex;
+              width: 30px;
+              height: 30px;
+              background-color: rgb(203, 61, 247);
+              border-radius: 50%;
+              justify-content: center;
+              align-items: center;
+              position: absolute;
+              top: 0;
+              left: 15px;
+            "
+          >
+            H
+          </div>
+          <div
+            style="
+              display: flex;
+              width: 30px;
+              height: 30px;
+              background-color: rgb(255, 88, 88);
+              border-radius: 50%;
+              justify-content: center;
+              font-size: 15px;
+              align-items: center;
+              position: absolute;
+              top: 0;
+              left: 30px;
+            "
+          >
+            +6
+          </div>
+          <div
+            style="
+              display: flex;
+              width: 30px;
+              height: 30px;
+              background-color: white;
+              color: rgb(53, 53, 53);
+              border-radius: 50%;
+              justify-content: center;
+              align-items: center;
+              position: absolute;
+              top: 0;
+              left: 55px;
+            "
+            class="border"
+          >
+            <mat-icon (click)="openMemberDialog()" style="cursor: pointer;">expand_less</mat-icon>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <div *ngIf="!ProjectList" class="d-flex justify-content-center align-items-center" style="height: 50vh;">
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="Created At">
+      <th
+        style="background-color: rgb(243, 243, 243)"
+        mat-header-cell
+        *matHeaderCellDef
+      >
+        Created At
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.createdDate | date : "MMM dd,yyyy" }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="Created By">
+      <th
+        style="background-color: rgb(243, 243, 243)"
+        mat-header-cell
+        *matHeaderCellDef
+      >
+        Created By
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.createdBy }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="Actions">
+      <th
+        style="background-color: rgb(243, 243, 243)"
+        mat-header-cell
+        *matHeaderCellDef
+      >
+        Actions
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <div class="d-flex gap-2 align-items-center justify-content-center">
+          <mat-icon
+            style="color: #0d6efd; cursor: pointer"
+            (click)="openEditDialog(element.projectId)"
+            >edit</mat-icon
+          >
+          <mat-icon
+            (click)="openDeleteDialog(element.projectId)"
+            style="color: #dc3545; cursor: pointer"
+            >delete</mat-icon
+          >
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <!-- <div *ngIf="!ProjectList" class="d-flex justify-content-center align-items-center" style="height: 50vh;">
     <div class="spinner-border spinner-border" style="width: 3rem; height: 3rem;" role="status">
     </div>
   </div>
   <div class="d-flex justify-content-center align-items-center" style="height: 50vh;"
     *ngIf="ProjectList && ProjectList.length===0">
     <h1>No Project Click to Create new Project</h1>
-  </div>
+  </div> -->
 </div>

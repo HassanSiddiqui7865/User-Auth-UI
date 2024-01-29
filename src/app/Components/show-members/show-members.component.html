@@ -1,0 +1,23 @@
+<div class="p-3">
+    <h1>Members List for Project React Native</h1>
+    <div>
+        <div *ngFor="let item of usersList" class="d-flex align-items-center gap-2 m-3 ">
+             <div
+            style="
+              display: flex;
+              width: 40px;
+              height: 40px;
+              background-color: rgb(203, 61, 247);
+              border-radius: 50%;
+              color: white;
+              font-size: 20px;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            H
+          </div>
+          <div>{{ item.full_name }}</div>
+        </div>
+    </div>
+</div>
