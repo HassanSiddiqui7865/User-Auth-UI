@@ -1,16 +1,7 @@
 <div class="p-4">
-  <form class="w-75 example-form">
+  <form class="w-75 example-form"  [formGroup]="CreateProjectForm" (ngSubmit)="handleSubmitProject()">
     <div>
       <h1 style="color: rgb(1, 1, 102)" class="mb-3">Create New Project</h1>
-    </div>
-    <div class="form-outline mb-4">
-      <label class="form-label" for="form3Example3">Project Shortname</label>
-      <input
-        type="text"
-        id="form3Example3"
-        class="form-control"
-        placeholder="Enter Project Shortname"
-      />
     </div>
     <div class="form-outline mb-3">
       <label class="form-label" for="form3Example4">Project Fullname</label>
@@ -18,98 +9,73 @@
         type="text"
         id="form3Example4"
         class="form-control"
+        formControlName="projectname"
+        autocomplete="off"
         placeholder="Enter Project Full Name"
       />
     </div>
-    <div class="form-outline mb-3">
-      <label for="exampleFormControlSelect2">Members</label>
-      <div
-        *ngIf="AddedMember && AddedMember.length > 0"
-        class="w-100 border p-3 d-flex flex-wrap gap-2"
-      >
-        <div
-          *ngFor="let item of AddedMember"
-          class="d-flex align-items-center gap-1 rounded-2 p-1"
-          style="width: max-content; background-color: rgb(223, 223, 223)"
-        >
-          <div
-            style="
-              display: flex;
-              width: 20px;
-              height: 20px;
-              background-color: rgb(203, 61, 247);
-              border-radius: 50%;
-              justify-content: center;
-              align-items: center;
-            "
-          >
-            H
-          </div>
-          <div>{{ item.full_name }}</div>
-          <mat-icon
-            (click)="handleDeleteMember(item.id)"
-            class="fs-5 d-flex aiign-item-center justify-content-center"
-            style="cursor: pointer"
-            >close</mat-icon
-          >
-        </div>
-      </div>
-      <div class="position-relative">
-        <input
-          (input)="handleChange($event)"
-          class="form-control"
-          placeholder="Select Member"
-        />
-
-        <div
-          *ngIf="filteredArray && filteredArray.length > 0"
-          class="position-absolute border w-100 p-2"
-          style="max-height: 100px; background-color: white; overflow-y: auto"
-        >
-          <div
-            (click)="handleAddMember(item.id)"
-            *ngFor="let item of filteredArray"
-            class="d-flex align-items-center gap-2 m-3"
-            style="cursor: pointer"
-          >
-            <div
-              style="
+    <label>Project Lead</label>
+    <div style="position: relative; width: 50%;" class="mb-3">
+      <div class="border d-flex align-items-center px-2 ">
+      <div [ngStyle]="{'background-color': selectedLead ? 'rgb(92, 89, 255)' : 'white'}"
+        style="
                 display: flex;
-                width: 30px;
-                height: 30px;
-                background-color: rgb(203, 61, 247);
+                width: 20px;
+                height: 20px;
                 border-radius: 50%;
                 justify-content: center;
                 align-items: center;
-              "
-            >
-              {{ item.full_name[0] }}
-            </div>
-            <div>{{ item.full_name }}</div>
-          </div>
+                color: white;
+                font-size: small;
+              ">{{selectedLead && selectedLead.username[0].toUpperCase()}}</div>
+        <input
+        type="text"
+        id="form3Example1"
+        class="border-0 p-2 w-100"
+        [value]="selectedLead && selectedLead.username"
+        style="outline: none;"
+        autocomplete="off"
+        (input)="handleChange($event)"
+        >
+      </div>
+      
+      <div *ngIf="filteredArray && filteredArray.length>0" style="position: absolute;width: 100%;max-height:80px;background-color:#FFFF;margin-top:5px;" class="rounded border p-1 ">
+        <div (click)="SetLead(item)" *ngFor="let item of filteredArray" id="Lead-item" class="d-flex align-items-center gap-2 p-2 ">
+          <div  style="
+          display: flex;
+          width: 20px;
+          height: 20px;
+          background-color: rgb(92, 89, 255);
+          border-radius: 50%;
+          justify-content: center;
+          align-items: center;
+          color: white;
+        ">{{item.username[0].toUpperCase()}}</div>
+        <div>{{item.username}}</div>
         </div>
       </div>
     </div>
-
-    <div class="form-outline mb-3">
-      <label for="exampleFormControlSelect1">Category</label>
-      <select class="form-control" id="exampleFormControlSelect1">
-        <option>Web App</option>
-        <option>Mobile App</option>
-      </select>
-    </div>
-    <div class="form-outline mb-3">
+    <div class="form-outline">
       <label class="form-label" for="form3Example4">Project Description</label>
       <textarea
         rows="3"
         type="text"
+        autocomplete="off"
         id="form3Example4"
         class="form-control"
+        formControlName="projectdescription"
       ></textarea>
     </div>
 
     <div class="mt-4 pt-2">
-      <button class="btn btn-primary">Create Project</button>
+      <button [disabled]="CreateProjectForm.invalid || !selectedLead" class="btn btn-primary">
+        <div
+        *ngIf="loading"
+        class="spinner-border spinner-border-sm"
+        role="status"
+      ></div>
+      <span *ngIf="!loading">Create</span>
+      </button>
     </div>
   </form>
 </div>

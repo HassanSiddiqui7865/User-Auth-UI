@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { ProjectService } from 'src/app/Services/Project/project.service';
+import { UserService } from 'src/app/Services/Users/user.service';
 
 @Component({
   selector: 'app-delete-component',
@@ -11,23 +12,61 @@ import { ProjectService } from 'src/app/Services/Project/project.service';
 export class DeleteComponentComponent {
   loading:boolean = false
   constructor(@Inject(MAT_DIALOG_DATA) public data, 
-  private projectService : ProjectService,public dialogRef: MatDialogRef<DeleteComponentComponent>,private toastr : ToastrService){}
+  private projectService : ProjectService,public dialogRef: MatDialogRef<DeleteComponentComponent>,
+  private toastr : ToastrService,private userService : UserService){
+  }
   handleDelete() {
-    this.loading = true
-    this.projectService.DeleteProject(this.data.projectId).subscribe({
-      next:()=>{
-        this.data.loadProject()
-        this.loading = false
-        this.dialogRef.close()
-        this.dialogRef.close()
-            this.toastr.success('','Project Deleted Successfully', {
-              timeOut: 2000,
-            });
-      },
-      error:()=>{
-        this.loading = false
-        this.dialogRef.close()
-      }
-    })
+    if(this.data.type === "project"){
+      this.loading = true
+      this.projectService.DeleteProject(this.data.projectId).subscribe({
+        next:()=>{
+          this.data.loadProject()
+          this.loading = false
+          this.dialogRef.close()
+              this.toastr.success('','Project Deleted Successfully', {
+                timeOut: 2000,
+              });
+        },
+        error:()=>{
+          this.loading = false
+          this.dialogRef.close()
+        }
+      })
+    }
+    if(this.data.type === "users"){
+      this.loading = true
+      this.userService.DeleteUser(this.data.userId).subscribe({
+        next:()=>{
+          this.data.loadUsers()
+          this.loading = false
+          this.dialogRef.close()
+              this.toastr.success('','User Deleted Successfully', {
+                timeOut: 2000,
+              });
+        },
+        error:()=>{
+          this.loading = false
+          this.dialogRef.close()
+        }
+      })
+    }
+    if(this.data.type="assignedusers"){
+      this.loading = true
+      this.projectService.DeleteAssignedUser(this.data.projectId,this.data.userId).subscribe({
+        next:(res)=>{
+          this.data.LoadUsers()
+          this.loading = false
+          this.dialogRef.close()
+          this.toastr.success('','Removed Successfully',{
+            timeOut:1500
+          })
+        },
+        error:()=>{
+          this.loading = false
+          this.dialogRef.close()
+        }
+      })
+    }
+   
   }
 }

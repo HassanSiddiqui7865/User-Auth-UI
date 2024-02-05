@@ -1,5 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import { userlist } from './userlist';
+import {Component, Inject, OnInit} from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ProjectService } from '../Services/Project/project.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { UserService } from '../Services/Users/user.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { environment } from 'src/environment/environment';
 @Component({
   selector: 'app-create-project',
   templateUrl: './create-project.component.html',
@@ -7,28 +13,73 @@ import { userlist } from './userlist';
 
 })
 export class CreateProjectComponent implements OnInit {
-  filteredArray:any[];
-  userinput:any;
-  usersList=userlist;
-  AddedMember:any[]=[]
+  PmList:any[]
+  loading:boolean = false
+  CreateProjectForm:FormGroup
+  userList:any[]
+  filteredArray:any[]
+  selectedLead = null
+  AdminId:any;
+  constructor(private projectService : ProjectService,private toastr : ToastrService,
+    private userService : UserService,private dialogRef: MatDialogRef<CreateProjectComponent>,
+    @Inject(MAT_DIALOG_DATA) private data,
+    ){
+      this.AdminId = environment.admin
+    }
   ngOnInit(): void {
+    this.CreateProjectForm = new FormGroup({
+      projectname: new FormControl(null, Validators.required),
+      projectdescription: new FormControl(null, [Validators.required]),
+    })
+    this.getAllUsers()
   }
-  handleChange(e){
-    const filteredUser = userlist.filter((item) => {
-      return item.full_name.toLowerCase().startsWith(e.target.value.toLowerCase());
-    });
-    
-    this.filteredArray = e.target.value === "" ? null : filteredUser;
+  getAllUsers(){
+    this.userService.getUsersWithoutProjects().subscribe({
+      next:(res)=>{
+        this.userList = res.filter((items)=>items.roleId !== this.AdminId)
+      }
+    })
   }
-  handleAddMember(id: number) {
-    const filteredUser = this.usersList.find((item) => {
-      return item.id === id;
-    });
-    if (!this.AddedMember.includes(filteredUser)) {
-      this.AddedMember.push(filteredUser);
+  handleChange(event){
+    const filteredUser = this.userList.filter((item) => {
+      return item.fullname.toLowerCase().startsWith(event.target.value.toLowerCase());
+  });
+    this.filteredArray= event.target.value === "" ? null: filteredUser;
+    if(event.target.value===""){
+      this.filteredArray = null
+      this.selectedLead = null
+    }
+    else{
+      this.filteredArray
     }
   }
-  handleDeleteMember(id:number){
-    this.AddedMember.splice(this.AddedMember.findIndex((item)=>item.id === id),1)
+  SetLead(user){
+    this.selectedLead = user
+    this.filteredArray =null
+  }
+  handleSubmitProject(){
+    this.loading = true
+    this.projectService.createProject(this.CreateProjectForm.value).subscribe({
+      next:(res)=>{
+        this.AssignedProjectLead(res.projectId)
+        this.dialogRef.close()
+        this.toastr.success('Project Created Successfully')
+      },
+      error:()=>{
+        this.loading = false
+        this.dialogRef.close()
+        this.toastr.error("Error Occured")
+      }
+    })
+  }
+  AssignedProjectLead(projectId){
+    this.projectService.AssignedUser(this.selectedLead.userId,projectId,true).subscribe({
+      next:(res)=>{
+        this.loading = false
+        this.data.LoadProjects()
+        console.log(res)
+      }
+    })
   }
 }
+

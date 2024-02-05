@@ -8,6 +8,8 @@ import { DeleteComponentComponent } from '../Components/delete-component/delete-
 import { UpdateProjectComponent } from '../Components/update-project/update-project.component';
 import { Subscription } from 'rxjs';
 import { ShowMembersComponent } from '../Components/show-members/show-members.component';
+import { UserLogin } from 'src/Auth';
+import { CreateProjectComponent } from '../create-project/create-project.component';
 
 
 export interface PeriodicElement {
@@ -42,142 +44,15 @@ export class ProjectsComponent implements OnInit,OnDestroy {
   UpdateProjectForm: FormGroup
   loading: boolean = false
   projectsubscriptions: Subscription = new Subscription()
-  displayedColumns: string[] = ['ProjectName','Category','Members','Created At','Created By','Actions'];
-  baseURL = environment.BASEURL
-  data = [
-    {
-        projectname: "React Project",
-        category: "Web App",
-        createdDate: Date.now(),
-        createdBy: "John Doe",
-    },
-    {
-        projectname: "Angular Project",
-        category: "Web App",
-        createdDate: Date.now(),
-        createdBy: "Jane Smith",
-    },
-    {
-        projectname: "Vue Project",
-        category: "Web App",
-        createdDate: Date.now(),
-        createdBy: "Alice Johnson",
-    },
-    {
-        projectname: "Node.js Project",
-        category: "Backend",
-        createdDate: Date.now(),
-        createdBy: "Bob Williams",
-    },
-    {
-        projectname: "Python Project",
-        category: "Scripting",
-        createdDate: Date.now(),
-        createdBy: "Charlie Brown",
-    },
-    {
-        projectname: "Java Project",
-        category: "Desktop App",
-        createdDate: Date.now(),
-        createdBy: "David Miller",
-    },
-    {
-        projectname: "C# Project",
-        category: "Desktop App",
-        createdDate: Date.now(),
-        createdBy: "Eva Martinez",
-    },
-    {
-        projectname: "Ruby Project",
-        category: "Scripting",
-        createdDate: Date.now(),
-        createdBy: "Frank Davis",
-    },
-    {
-        projectname: "PHP Project",
-        category: "Web App",
-        createdDate: Date.now(),
-        createdBy: "Grace Wilson",
-    },
-    {
-        projectname: "HTML/CSS Project",
-        category: "Web Design",
-        createdDate: Date.now(),
-        createdBy: "Henry Lee",
-    },
-    {
-        projectname: "Django Project",
-        category: "Web App",
-        createdDate: Date.now(),
-        createdBy: "Isabella Scott",
-    },
-    {
-        projectname: "Spring Boot Project",
-        category: "Backend",
-        createdDate: Date.now(),
-        createdBy: "Jack Robinson",
-    },
-    {
-        projectname: "Express.js Project",
-        category: "Backend",
-        createdDate: Date.now(),
-        createdBy: "Katherine Stewart",
-    },
-    {
-        projectname: "MongoDB Project",
-        category: "Database",
-        createdDate: Date.now(),
-        createdBy: "Liam Carter",
-    },
-    {
-        projectname: "SQL Project",
-        category: "Database",
-        createdDate: Date.now(),
-        createdBy: "Mia Perez",
-    },
-    {
-        projectname: "React Native Project",
-        category: "Mobile App",
-        createdDate: Date.now(),
-        createdBy: "Noah Turner",
-    },
-    {
-        projectname: "Flutter Project",
-        category: "Mobile App",
-        createdDate: Date.now(),
-        createdBy: "Olivia Garcia",
-    },
-    {
-        projectname: "Swift Project",
-        category: "Mobile App",
-        createdDate: Date.now(),
-        createdBy: "Peter Evans",
-    },
-    {
-        projectname: "Kotlin Project",
-        category: "Mobile App",
-        createdDate: Date.now(),
-        createdBy: "Quinn Hughes",
-    },
-    {
-        projectname: "Xamarin Project",
-        category: "Mobile App",
-        createdDate: Date.now(),
-        createdBy: "Rachel Cook",
-    },
-    {
-        projectname: "Unity Project",
-        category: "Game Development",
-        createdDate: Date.now(),
-        createdBy: "Samuel Morris",
-    }
-];
-
-  
+  displayedColumns: string[] = ['ProjectName','Key','Lead','Created At','Actions'];
+  Credentials = UserLogin()
+  AssignedProjects:any[]
+  AdminId = environment.admin 
+  ProjectManagerId = environment.PMId
   constructor(private projectService: ProjectService, private router: Router, private dialog: MatDialog) {
   }
   ngOnInit(): void {
-    // this.getProjects()
+    this.getProjects()
   }
   ngOnDestroy(): void {
     this.projectsubscriptions.unsubscribe()
@@ -187,6 +62,7 @@ export class ProjectsComponent implements OnInit,OnDestroy {
       subscribe({
         next: (res) => {
           this.ProjectList = res
+          console.log(res)
         },
         error: (err) => {
           console.log(err)
@@ -194,32 +70,30 @@ export class ProjectsComponent implements OnInit,OnDestroy {
       })
       this.projectsubscriptions.add(subscribe)
   }
+  getProjectLead(item){
+    const lead = item.find((user) => user.isLead);
+    return lead;
+}
   openDeleteDialog(id: any) {
     this.dialog.open(DeleteComponentComponent, {
       height: 'max-content',
       width: '350px',
       data: {
+        type:"project",
         projectId: id,
         loadProject: this.getProjects.bind(this)
       }
     })
   }
-  openEditDialog(id: any) {
-    this.dialog.open(UpdateProjectComponent, {
+  OpenCreateProjectDialog(){
+    this.dialog.open(CreateProjectComponent, {
       height: '100vh',
       width: '600px',
       position:{"right":"0px","top":"0px"},
-      data: {
-        projectId: id,
-        loadProject: this.getProjects.bind(this),
+      data:{
+        LoadProjects:this.getProjects.bind(this)
       }
     })
   }
-  openMemberDialog() {
-    this.dialog.open(ShowMembersComponent, {
-      height: '50vh',
-      width: '500px',
-    })
-  }
-
+  
 }

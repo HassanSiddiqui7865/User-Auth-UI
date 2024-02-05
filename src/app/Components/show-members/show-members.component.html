@@ -1,23 +1,29 @@
 <div class="p-3">
-    <h1>Members List for Project React Native</h1>
-    <div>
-        <div *ngFor="let item of usersList" class="d-flex align-items-center gap-2 m-3 ">
-             <div
-            style="
-              display: flex;
-              width: 40px;
-              height: 40px;
-              background-color: rgb(203, 61, 247);
-              border-radius: 50%;
-              color: white;
-              font-size: 20px;
-              justify-content: center;
-              align-items: center;
-            "
-          >
-            H
-          </div>
-          <div>{{ item.full_name }}</div>
+  <h3>Members of {{ projectname }}</h3>
+  <div>
+    <div
+      *ngFor="let item of userList"
+      class="d-flex align-items-center justify-content-between  m-3"
+    >
+      <div class="d-flex align-items-center gap-2">
+        <div
+          style="
+            display: flex;
+            width: 40px;
+            height: 40px;
+            background-color: rgb(203, 61, 247);
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+         {{item.username[0].toUpperCase()}}
         </div>
+        <div class="fs-6">{{ item.fullname }}</div>
+      </div>
+      <mat-icon class="text-success" *ngIf="item.roleId === PmId">local_police</mat-icon>
     </div>
+  </div>
 </div>

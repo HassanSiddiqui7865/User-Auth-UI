@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environment/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +11,26 @@ export class UserService {
   constructor(private http:HttpClient) {}
 
     getUser(): Observable<any> {
-      return this.http.get("https://localhost:7135/api/User");
+      return this.http.get(`${environment.BASEURL}/User`);
     }
 
     DeleteUser(id:any):Observable<any>{
-      return this.http.delete(`https://localhost:7135/api/User/${id}`)
+      return this.http.delete(`${environment.BASEURL}/User/${id}`)
     }
 
-    Addibrarian(userData):Observable<any>{
-      return this.http.post("https://localhost:7135/api/User/register",{
+    createUser(userData:any):Observable<any>{
+      return this.http.post(`${environment.BASEURL}/User/register`,{
+        fullname:userData.fullname,
         username:userData.username,
         email:userData.email,
-        pass:userData.password,
-        userrole:"librarian"
+        pass:userData.pass,
+        roleId:userData.roleId
       })
+    }
+    getRoles():Observable<any>{
+      return this.http.get(`${environment.BASEURL}/Role`)
+    }
+    getUsersWithoutProjects():Observable<any>{
+      return this.http.get(`${environment.BASEURL}/User/withoutProjects`)
     }
 }

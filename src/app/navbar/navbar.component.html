@@ -1,9 +1,43 @@
-<nav class="navbar navbar-light border p-2 " style="position: sticky;top:0;background-color:white;z-index: 999;">
-  <div class="d-flex align-items-center fs-5 text-primary ">Ticket Management System</div>
-  <div class="d-flex gap-3 align-items-center">
-    <div id="output"></div>
-    <button class="btn btn-primary btn-sm" (click)="onHandleLogout()">
-      Logout
-    </button>
+<nav
+  class="navbar navbar-light border p-2"
+  style="position: sticky; top: 0; background-color: white; z-index: 999"
+>
+  <div class="d-flex align-items-center gap-5">
+    <div class="d-flex align-items-center gap-2">
+      <img
+        src="assets/logo.svg"
+        width="30"
+        height="30"
+        class="mx-2  d-inline-block align-top"
+        alt=""
+      />
+      <div class="fs-5">Ticket Management System</div>
+    </div>
+  </div>
+  <div
+    class="d-flex align-items-center gap-2"
+    style="margin-right: 5px; cursor: pointer"
+  >
+    <div class="">
+      <div>{{ LoggedInUser.email }}</div>
+      <div style="text-transform: capitalize; color: rgb(141, 141, 141)">
+        {{ LoggedInUser.roleName }}
+      </div>
+    </div>
+    <div mat-button [matMenuTriggerFor]="userMenu"  data-toggle="tooltip" data-placement="right" title="Tooltip on top" id="output"></div>
+    <mat-menu #userMenu="matMenu" xPosition="before" style="width:max-content;height: 30vh;">
+      <div style="height: 100%;width:100%">
+        <!-- <app-board></app-board> -->
+        <!-- <button
+        *ngIf="LoggedInUser.roleId === AdminId"
+        [routerLink]="'users'"
+        mat-menu-item
+      >
+        Manage Users
+      </button>
+      <button (click)="onHandleLogout()" mat-menu-item>Logout</button> -->
+      </div>
+      
+    </mat-menu>
   </div>
 </nav>

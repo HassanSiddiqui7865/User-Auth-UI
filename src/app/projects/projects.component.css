@@ -2,14 +2,14 @@ table{
     th{
         font-size: medium;
     }
-    td{
-        font-size: medium;
-    }
-    .name{
-        color: #4545ff;
-    }
-
 }
 .mat-mdc-row{
-    height: 100px;
+    height: 50px;
 }
+.mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+  }
+  .mat-mdc-row:hover .mat-mdc-cell {
+    background-color:  var(--ds-background-selected, #E6EFFC);
+  }

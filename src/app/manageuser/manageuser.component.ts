@@ -74,17 +74,4 @@ export class ManageuserComponent implements OnInit {
       this.toastr.error('An Error Occured');
     })
   }
-
-  AddLibrarian(){
-    this.loading = true
-    this.userService.Addibrarian(this.LibrarianForm.value).subscribe((res)=>{
-      this.GetUserList()
-      this.loading = false
-      this.handleOpen()
-      this.toastr.success("Librarian Added Successfully")
-    },(err)=>{
-      this.loading = false
-      this.error = err
-    })
-  }
 }

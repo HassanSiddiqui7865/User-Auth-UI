@@ -1,0 +1,82 @@
+<div style="display: flex">
+  <div>
+    <app-sidebar [data]="project.projectname"></app-sidebar>
+  </div>
+  <div style="display: flex;justify-content: center;width: 100%;margin-top: 30px;">
+    <div style="width: 50%;">
+      <form class="w-100" [formGroup]="UpdateProjectForm" (ngSubmit)="handleUpdateProject()">
+        <div class="d-flex justify-content-between">
+          <h1 class="mb-3">Details</h1>
+        </div>
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form3Example3">Project Name</label>
+          <input
+            type="text"
+            id="form3Example3"
+            class="form-control"
+            autocomplete="off"
+            formControlName="projectname"
+            placeholder="Enter Project Name"
+          />
+        </div>
+        <label>Project Lead</label>
+        <div style="position: relative; width: 50%;" class="mb-3">
+          <div class="border d-flex align-items-center px-2 ">
+          <div [ngStyle]="{'background-color': selectedLead ? 'rgb(92, 89, 255)' : 'white'}"
+            style="
+                    display: flex;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    justify-content: center;
+                    align-items: center;
+                    color: white;
+                    font-size: small;
+                  ">{{selectedLead && selectedLead.username[0].toUpperCase()}}</div>
+            <input
+            type="text"
+            id="form3Example1"
+            class="border-0 p-2 w-100"
+            autocomplete="off"
+            [value]="selectedLead && selectedLead.username"
+            style="outline: none;"
+            (input)="handleChange($event)"
+            >
+          </div>
+          
+          <div *ngIf="filteredArray && filteredArray.length>0" style="position: absolute;width: 100%;max-height:80px;background-color:#FFFF;margin-top:5px;" class="rounded border p-1 ">
+            <div (click)="SetLead(item)" *ngFor="let item of filteredArray" id="Lead-item" class="d-flex align-items-center gap-2 p-2 ">
+              <div  style="
+              display: flex;
+              width: 20px;
+              height: 20px;
+              background-color: rgb(92, 89, 255);
+              border-radius: 50%;
+              justify-content: center;
+              align-items: center;
+              color: white;
+            ">{{item.username[0].toUpperCase()}}</div>
+            <div>{{item.username}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-outline">
+          <label class="form-label" for="form3Example4"
+            >Project Description</label
+          >
+          <textarea
+            rows="3"
+            type="text"
+            autocomplete="off"
+            id="form3Example4"
+            formControlName="projectdescription"
+            class="form-control"
+          ></textarea>
+        </div>
+        <div class="mt-4 pt-2">
+          <button class="btn btn-primary">SAVE</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

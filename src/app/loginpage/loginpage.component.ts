@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './loginpage.component.html',
   styleUrls: ['./loginpage.component.css']
 })
-export class LoginpageComponent implements OnInit, OnDestroy{
+export class LoginpageComponent implements OnInit{
   error: any;
   loading: boolean;
   private loginSubscription: Subscription;
@@ -28,12 +28,6 @@ export class LoginpageComponent implements OnInit, OnDestroy{
       this.router.navigate(['/board']);
     }
   }
-  ngOnDestroy(): void {
-    if(this.loginSubscription){
-      this.loginSubscription.unsubscribe()
-    }
-  }
-
   LoginUser() {
     this.loading = true
    this.loginSubscription =  this.loginService.LoginUser(this.loginForm.value).

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { userlist } from 'src/app/create-project/userlist';
 
 
@@ -13,6 +14,9 @@ export class CreateTaskComponent {
   usersList=userlist;
   AddedMember:any[]=[]
 
+  constructor(public dialogRef: MatDialogRef<CreateTaskComponent>){
+    
+  }
   handleChange(e){
     const filteredUser = userlist.filter((item) => {
       return item.full_name.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -31,5 +35,7 @@ export class CreateTaskComponent {
   handleDeleteMember(id:number){
     this.AddedMember.splice(this.AddedMember.findIndex((item)=>item.id === id),1)
   }
- 
+  handleDialogClose(){
+    this.dialogRef.close()
+  }
 }
