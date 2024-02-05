@@ -1,19 +1,9 @@
-<nav class="navbar navbar-light border p-2 ">
-  <div class="d-flex align-items-center gap-4 ">
-    <a class="navbar-brand d-flex align-items-center gap-2 fs-5 " href="#">
-      <img src="assets/logo.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-      TMS SOFTWARE
-    </a>
-    <div class="d-flex gap-3 ">
-      <a class="fs-6 nav-link " [routerLink]="'/projects'" style="text-decoration: none; color:inherit;">Projects</a>
-      <a class="fs-6 nav-link " [routerLink]="'/board'" style="text-decoration: none; color:inherit;">Board</a>
-      <a class="fs-6 nav-link" [routerLink]="'/dialer'" style="text-decoration: none; color: inherit;">Dialer</a>
-    </div>
-  </div>
-  <div class="d-flex gap-3 align-items-center ">
+<nav class="navbar navbar-light border p-2 " style="position: sticky;top:0;background-color:white;z-index: 999;">
+  <div class="d-flex align-items-center fs-5 text-primary ">Ticket Management System</div>
+  <div class="d-flex gap-3 align-items-center">
     <div id="output"></div>
-    <button class="btn btn-primary btn-sm" (click)="onHandleLogout()">Logout</button>
-
+    <button class="btn btn-primary btn-sm" (click)="onHandleLogout()">
+      Logout
+    </button>
   </div>
-
 </nav>
