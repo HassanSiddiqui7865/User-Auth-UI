@@ -36,39 +36,50 @@ const ELEMENT_DATA: PeriodicElement[] = [
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css'],
 })
-export class ProjectsComponent implements OnInit,OnDestroy {
+export class ProjectsComponent implements OnInit {
   ProjectList: any[]
   ProjectId: any;
   projectData: any
   CreateProjectForm: FormGroup
   UpdateProjectForm: FormGroup
   loading: boolean = false
-  projectsubscriptions: Subscription = new Subscription()
   displayedColumns: string[] = ['ProjectName','Key','Lead','Created At','Actions'];
   Credentials = UserLogin()
   AssignedProjects:any[]
   AdminId = environment.admin 
-  ProjectManagerId = environment.PMId
+  ManagerId = environment.MId
+  MemberId = environment.member
+  loggedIn = UserLogin()
   constructor(private projectService: ProjectService, private router: Router, private dialog: MatDialog) {
   }
   ngOnInit(): void {
-    this.getProjects()
-  }
-  ngOnDestroy(): void {
-    this.projectsubscriptions.unsubscribe()
+    if(this.loggedIn.roleId === this.MemberId  ){
+      this.getProjectsforMember()
+    }else{
+      this.getProjects()
+    }
+  
   }
   getProjects() {
-    const subscribe = this.projectService.getProjects().
+    this.projectService.getProjects().
       subscribe({
         next: (res) => {
           this.ProjectList = res
-          console.log(res)
         },
         error: (err) => {
           console.log(err)
         }
       })
-      this.projectsubscriptions.add(subscribe)
+  }
+  getProjectsforMember(){
+    this.projectService.getAssignedProjects(this.loggedIn.userId).subscribe({
+      next:(res)=>{
+        this.ProjectList = res
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
   }
   getProjectLead(item){
     const lead = item.find((user) => user.isLead);
@@ -95,5 +106,23 @@ export class ProjectsComponent implements OnInit,OnDestroy {
       }
     })
   }
-  
+  AccessToProject(element):boolean{
+    if(this.Credentials.roleId === this.AdminId){
+      return true
+    }
+    else if(this.Credentials.roleId === this.ManagerId){
+      return true
+    }
+    else if(this.Credentials.userId === this.getProjectLead(element.users).userId){
+      return true
+    }
+    return false
+  }
+  RedirectBasedOnRoles(element: any): void {
+    if (this.Credentials.userId === this.getProjectLead(element.users)?.userId) {
+        this.router.navigate(['projects',element.projectId, 'people']);
+    } else {
+        this.router.navigate(['projects',element.projectId, 'details']);
+    }
+}
 }

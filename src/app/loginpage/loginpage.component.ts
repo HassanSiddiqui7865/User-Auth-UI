@@ -25,7 +25,7 @@ export class LoginpageComponent implements OnInit{
       password: new FormControl(null, [Validators.required])
     })
     if (this.loginService.isLoggedIn()) {
-      this.router.navigate(['/board']);
+      this.router.navigate(['/projects']);
     }
   }
   LoginUser() {
@@ -35,7 +35,7 @@ export class LoginpageComponent implements OnInit{
         next: (res) => {
           this.loading = false
           localStorage.setItem('login', JSON.stringify(res))
-          this.router.navigate(['/board'])
+          this.router.navigate(['/projects'])
           this.toastr.success('','Account Login Successfully', {
             timeOut: 2000,
           });

@@ -36,7 +36,7 @@
       <td mat-cell *matCellDef="let element">
         <div class="d-flex align-items-center gap-2">
           <img class="rounded-1 " width="30" height="30" src="/assets/10402.svg">
-          <div [routerLink]="'12/details'" style="cursor: pointer;color: blue;text-decoration: underline;">{{ element.projectname }}</div>
+          <div  style="cursor: pointer;color: blue;text-decoration: underline;">{{ element.projectname }}</div>
         </div>
         
       </td>
@@ -60,7 +60,7 @@
         Lead
       </th>
       <td mat-cell *matCellDef="let element">
-        <div class="d-flex align-items-center gap-1 ">
+        <div *ngIf="getProjectLead(element.users)" class="d-flex align-items-center gap-1 ">
           <div  style="
                 display: flex;
                 width: 25px;
@@ -74,6 +74,9 @@
             {{getProjectLead(element.users).username[0].toUpperCase()}}
           </div>      
           <div>{{getProjectLead(element.users).username}}</div>
+        </div>
+        <div *ngIf="!getProjectLead(element.users)">
+         <small>Not assigned</small>
         </div>
       </td>
     </ng-container>
@@ -96,10 +99,10 @@
         Actions
       </th>
       <td   mat-cell *matCellDef="let element">
-        <mat-icon style="cursor: pointer;" [matMenuTriggerFor]="menu">more_horiz</mat-icon>
+        <mat-icon *ngIf="AccessToProject(element)" style="cursor: pointer;" [matMenuTriggerFor]="menu">more_horiz</mat-icon>
         <mat-menu #menu="matMenu" xPosition="before">
-         <div [routerLink]="[element.projectId,'details']" mat-menu-item>Project Setting</div>
-         <div (click)="openDeleteDialog(element.projectId)" mat-menu-item>Delete Project</div>
+         <div (click)="RedirectBasedOnRoles(element)" mat-menu-item>Project Setting</div>
+         <div *ngIf="Credentials.roleId === AdminId" (click)="openDeleteDialog(element.projectId)" mat-menu-item>Delete Project</div>
         </mat-menu>
         
       </td>
@@ -115,6 +118,7 @@
   <div class="d-flex justify-content-center align-items-center flex-column" style="height: 50vh;"
     *ngIf="ProjectList && ProjectList.length===0">
       <img width="180" height="180" src="https://cdni.iconscout.com/illustration/premium/thumb/no-projects-4064370-3363931.png">
-      <div class="fs-5">No Project Click to Create new Project</div>
+      <div *ngIf="loggedIn.roleId !== MemberId" class="fs-5">No Project Click to Create new Project</div>
+      <div *ngIf="loggedIn.roleId === MemberId" class="fs-5">You are not asssigned in to any project</div>
   </div>
 </div>

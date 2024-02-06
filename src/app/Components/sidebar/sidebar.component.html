@@ -31,7 +31,7 @@
                 src="/assets/10402.svg"
               />
               <div>
-                <div class="fw-medium">{{data}}</div>
+                <div class="fw-medium">{{project && project.projectname}}</div>
                 <div style="color: rgb(94, 94, 94); font-size: small">
                   Software Project
                 </div>
@@ -71,7 +71,7 @@
               <div class="m-3 fw-medium">Project Setting</div>
             </div>
             <div
-            [routerLink]="['/projects','12','details']"
+            [routerLink]="['/projects',projectId,'details']"
               id="Link"
               class="d-flex align-items-center p-3"
             >
@@ -79,7 +79,7 @@
             </div>
             <div
             id="Link"
-            [routerLink]="['/projects','12','people']"
+            [routerLink]="['/projects',projectId,'people']"
             class="d-flex align-items-center p-3"
           >
             <div>Peoples</div>

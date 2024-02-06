@@ -11,7 +11,7 @@ import { environment } from 'src/environment/environment';
 export class ShowMembersComponent {
   userList: any; // Declare userList property
   projectname:string;
-  PmId = environment.PMId
+  PmId = environment.MId
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this.userList = data.projectDetail.users
     this.projectname = data.projectDetail.projectname

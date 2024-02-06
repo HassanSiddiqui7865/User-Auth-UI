@@ -1,8 +1,9 @@
-<div style="display: flex">
-  <div>
-    <app-sidebar [data]="project.projectname"></app-sidebar>
+<div>
+  <div *ngIf="CheckIfAssigned()" class="alert alert-info w-100 " role="alert">
+    You cannot Update the Project
   </div>
   <div style="display: flex;justify-content: center;width: 100%;margin-top: 30px;">
+   
     <div style="width: 50%;">
       <form class="w-100" [formGroup]="UpdateProjectForm" (ngSubmit)="handleUpdateProject()">
         <div class="d-flex justify-content-between">
@@ -38,8 +39,9 @@
             id="form3Example1"
             class="border-0 p-2 w-100"
             autocomplete="off"
-            [value]="selectedLead && selectedLead.username"
+            [value]="selectedLead ? selectedLead.username : ''"
             style="outline: none;"
+            placeholder="Select Lead"
             (input)="handleChange($event)"
             >
           </div>
@@ -74,7 +76,7 @@
           ></textarea>
         </div>
         <div class="mt-4 pt-2">
-          <button class="btn btn-primary">SAVE</button>
+          <button [disabled]="UpdateProjectForm.invalid || CheckIfAssigned()" class="btn btn-primary">SAVE</button>
         </div>
       </form>
     </div>

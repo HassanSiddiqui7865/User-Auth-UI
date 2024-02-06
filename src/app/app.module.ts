@@ -8,7 +8,7 @@ import { LoginpageComponent } from './loginpage/loginpage.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProjectsComponent } from './projects/projects.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { UsersManageComponent } from './users-manage/users-manage.component';
+import { ProjectUserManageComponent } from './project-user-manage/project-user-manage.component';
 import { ManageuserComponent } from './manageuser/manageuser.component';
 import {HttpClientModule} from '@angular/common/http'
 import { ToastrModule } from 'ngx-toastr';
@@ -31,10 +31,11 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { ShowMembersComponent } from './Components/show-members/show-members.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
-import { CreateUserComponent } from './Components/create-user/create-user.component';
+import { AssignUserComponent } from './Components/assign-user/assign-user.component';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { ProjectLayoutComponent } from './project-layout/project-layout.component';
 import { ProjectDetailsLayoutComponent } from './project-details-layout/project-details-layout.component';
+import { CreateUserComponent } from './Components/create-user/create-user.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +46,7 @@ import { ProjectDetailsLayoutComponent } from './project-details-layout/project-
     LayoutComponent,
     ProjectsComponent,
     NavbarComponent,
-    UsersManageComponent,
+    ProjectUserManageComponent,
     ManageuserComponent,
     SinglebookComponent,
     ForgetpasswordComponent,
@@ -57,10 +58,11 @@ import { ProjectDetailsLayoutComponent } from './project-details-layout/project-
     CreateProjectComponent,
     CreateTaskComponent,
     ShowMembersComponent,
-    CreateUserComponent,
+    AssignUserComponent,
     ProjectDetailsComponent,
     ProjectLayoutComponent,
     ProjectDetailsLayoutComponent,
+    CreateUserComponent,
    
     
     ],

@@ -10,10 +10,16 @@ import { environment } from 'src/environment/environment';
   templateUrl: './create-user.component.html',
   styleUrls: ['./create-user.component.css']
 })
-export class CreateUserComponent implements OnInit {
+export class CreateUserComponent {
   CreateUserForm : FormGroup
   roleList:any[]
   loading:boolean =false
+  OpenRoles:boolean = false;
+  selectedRole:string
+  selectedRoleId:any;
+  AdminId = environment.admin
+  ManagerId = environment.MId
+  MemberId = environment.member
   constructor(private userService : UserService,
     public dialogRef: MatDialogRef<CreateUserComponent>,private toastr : ToastrService,
     @Inject(MAT_DIALOG_DATA) public data){}
@@ -23,7 +29,6 @@ export class CreateUserComponent implements OnInit {
       username: new FormControl(null, Validators.required),
       email:new FormControl(null, Validators.required),
       pass: new FormControl(null, [Validators.required]),
-      roleId: new FormControl(null, [Validators.required])
     })
     this.getRole()
   }
@@ -36,7 +41,7 @@ export class CreateUserComponent implements OnInit {
   }
   handleCreateUser(){
     this.loading =true
-    this.userService.createUser(this.CreateUserForm.value).subscribe({
+    this.userService.createUser(this.CreateUserForm.value,this.selectedRoleId).subscribe({
       next:(res)=>{
        this.data.LoadUsers()
        this.loading = false
@@ -49,4 +54,13 @@ export class CreateUserComponent implements OnInit {
       }
     })
   }
+  handleOpenRole(){
+    this.OpenRoles = !this.OpenRoles;
+  }
+  handleSelectRole(value,id){
+    this.selectedRole = value
+    this.selectedRoleId = id
+    this.handleOpenRole()
+  }
 }
+

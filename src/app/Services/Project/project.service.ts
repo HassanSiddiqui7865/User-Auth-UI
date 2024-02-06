@@ -18,10 +18,10 @@ export class ProjectService {
     })
   }
   getAssignedProjects(id:any):Observable<any>{
-    return this.http.get(`${environment.BASEURL}/AssignedProject/${id}`)
+    return this.http.get(`${environment.BASEURL}/Project/user/${id}`)
   }
   getProjectManager():Observable<any>{
-    return this.http.get(`${environment.BASEURL}/User/role/${environment.PMId}`)
+    return this.http.get(`${environment.BASEURL}/User/role/${environment.MId}`)
   }
   AssignedUser(userId:any,projectId:any,isLead:boolean):Observable<any>{
     return this.http.post(`${environment.BASEURL}/AssignedProject`,{
@@ -45,7 +45,19 @@ export class ProjectService {
       projectdescription:projectData.projectdescription
     })
   }
-  getProjectWithoutusers():Observable<any>{
+  getProjectsWithoutusers():Observable<any>{
     return this.http.get(`${environment.BASEURL}/Project/withoutUsers`)
+  }
+  getProjectWithoutusers(projectid:any):Observable<any>{
+    return this.http.get(`${environment.BASEURL}/Project/withoutUsers/${projectid}`)
+  }
+  ChangeLeadIfNoLead(projectId:any,userId:any):Observable<any>{
+    return this.http.put(`${environment.BASEURL}/AssignedProject/${projectId}/${userId}`,{})
+  }
+  ChangeLeadIfLead(projectId:any,leadId:any,userId:any):Observable<any>{
+    return this.http.put(`${environment.BASEURL}/AssignedProject/${projectId}/${leadId}/${userId}`,{})
+  }
+  GetProjectById(projectId:any):Observable<any>{
+    return this.http.get(`${environment.BASEURL}/Project/${projectId}`)
   }
 }

@@ -5,6 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../Services/Users/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environment/environment';
+import { UserLogin } from 'src/Auth';
 
 @Component({
   selector: 'app-project-details',
@@ -21,12 +22,13 @@ export class ProjectDetailsComponent implements OnInit {
   selectedLead = null
   currentLead = null
   AdminId:any;
+  ManagerId:any
+  userLoggedIn = UserLogin()
  constructor(private projectService : ProjectService,private route : ActivatedRoute,
   private userService : UserService,private toastr : ToastrService,private router : Router){
   this.AdminId = environment.admin
-  this.route.paramMap.subscribe(params => {
-    this.id = params.get('id')
-  });
+  this.ManagerId = environment.MId
+  this.id = this.router.url.split("/")[2]
  }
  ngOnInit(): void {
   this.UpdateProjectForm = new FormGroup({
@@ -46,15 +48,14 @@ export class ProjectDetailsComponent implements OnInit {
       });
       if (this.project) {
         this.selectedLead = this.currentLead = this.project.users.find((items) => items.isLead);
-        console.log(this.selectedLead,this.currentLead)
       }
     }
   })
  }
  getAllUsers(){
-  this.userService.getUsersWithoutProjects().subscribe({
+  this.userService.getUserByProject(this.id).subscribe({
     next:(res)=>{
-      this.userList = res.filter((items)=>items.roleId !== this.AdminId)
+      this.userList = res
     }
   })
 }
@@ -62,22 +63,22 @@ handleUpdateProject(){
   this.loading =true
   this.projectService.updateProject(this.project.projectId,this.UpdateProjectForm.value).subscribe({
     next:(res)=>{
-      this.DeleteAssignedLead(this.project.projectId)
-      this.AssignedProjectLead(this.project.projectId)
+      if(this.currentLead){
+        this.projectService.ChangeLeadIfLead(this.id,this.currentLead.userId,this.selectedLead.userId).subscribe()
+      }
+      if(!this.currentLead){
+        this.projectService.ChangeLeadIfNoLead(this.id,this.selectedLead.userId).subscribe()
+      }
       this.loading = false
-      this.router.navigate(['/projects'])
+      this.router.navigate(['/projects']).then(()=>{
+        window.location.reload()
+      })
       this.toastr.success("Updated Successfully")
     },
     error:()=>{
       this.loading = false
     }
   })
-}
-AssignedProjectLead(projectId){
-  this.projectService.AssignedUser(this.selectedLead.userId,projectId,true).subscribe()
-}
-DeleteAssignedLead(projectId){
-  this.projectService.DeleteAssignedUser(projectId,this.currentLead.userId).subscribe()
 }
  handleChange(event){
   const filteredUser = this.userList.filter((item) => {
@@ -96,4 +97,17 @@ SetLead(user){
   this.selectedLead = user
   this.filteredArray =null
 }
+CheckIfAssigned(){
+  const user = this.userList.find((item)=>item.userId === this.userLoggedIn.userId)
+  if((this.userLoggedIn.roleId === this.ManagerId ) && user){
+    return false
+  }
+  if(this.userLoggedIn.roleId === this.AdminId){
+    return false
+  }
+  return true
+}
+// CheckLead(element){
+//   this.userList.find((item)=>)
+// }
 }

@@ -4,7 +4,7 @@ import { RegisterpageComponent } from './registerpage/registerpage.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { LoginpageComponent } from './loginpage/loginpage.component';
 import { ProjectsComponent } from './projects/projects.component';
-import { UsersManageComponent } from './users-manage/users-manage.component';
+import { ProjectUserManageComponent } from './project-user-manage/project-user-manage.component';
 import { ManageuserComponent } from './manageuser/manageuser.component';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 import { LayoutComponent } from './layout/layout.component';
@@ -28,13 +28,16 @@ const routes: Routes = [
         component: ProjectLayoutComponent,
         children: [
           { path: "", component: ProjectsComponent },
-          { path: ":id/details", component: ProjectDetailsComponent},
-          { path: ":id/people", component: UsersManageComponent}
+          { path: `:id`, component: ProjectDetailsLayoutComponent,
+        children:[
+          { path: "details", component: ProjectDetailsComponent},
+          { path: "people", component: ProjectUserManageComponent}
+        ]},
+         
         ],
       },
-      { path: "users", component: UsersManageComponent },
-      { path: "create-project", component: CreateProjectComponent },
-      { path: "", redirectTo: "board", pathMatch: "full" }
+      { path: "users", component: ManageuserComponent },
+      { path: "", redirectTo: "project", pathMatch: "full" }
     ],
   },
   { path: "**", component: PagenotfoundComponent },

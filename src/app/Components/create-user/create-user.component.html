@@ -1,69 +1,113 @@
 <div class="p-4">
-    <form class="w-75 example-form" [formGroup]="CreateUserForm" (ngSubmit)="handleCreateUser()" >
-      <div>
-        <h1 style="color: rgb(1, 1, 102)" class="mb-3">Create User</h1>
-      </div>
-      <div class="form-outline mb-3">
-        <label class="form-label" for="form3Example1">Fullname</label>
+  <form
+    class="w-75 example-form"
+    [formGroup]="CreateUserForm"
+    (ngSubmit)="handleCreateUser()"
+  >
+    <div>
+      <h1 style="color: rgb(1, 1, 102)" class="mb-3">Create User</h1>
+    </div>
+    <div class="form-outline mb-3">
+      <label class="form-label" for="form3Example1">Fullname</label>
+      <input
+        type="text"
+        id="form3Example1"
+        formControlName="fullname"
+        class="form-control"
+        placeholder="Enter Full Name"
+      />
+    </div>
+    <div class="form-outline mb-3">
+      <label class="form-label" for="form3Example2">Username</label>
+      <input
+        type="text"
+        id="form3Example2"
+        class="form-control"
+        formControlName="username"
+        placeholder="Enter Username"
+      />
+    </div>
+    <div class="form-outline mb-3">
+      <label class="form-label" for="form3Example3">Email</label>
+      <input
+        type="email"
+        id="form3Example3"
+        formControlName="email"
+        class="form-control"
+        placeholder="Enter Email"
+      />
+    </div>
+    <div class="form-outline mb-3">
+      <label class="form-label" for="form3Example3">Password</label>
+      <input
+        type="password"
+        id="form3Example4"
+        formControlName="pass"
+        class="form-control"
+        placeholder="Enter Password"
+      />
+    </div>
+    <div class="form-outline mb-3" style="position: relative">
+      <label for="exampleFormControlSelect2">Choose User Role</label>
+      <div class="border w-100 d-flex align-items-center">
         <input
           type="text"
           id="form3Example1"
-          formControlName="fullname"
-          class="form-control"
-          placeholder="Enter Full Name"
+          class="border-0 p-2 w-100"
+          style="outline: none"
+          readonly
+          [value]="selectedRole ? selectedRole : 'Select User Role'"
         />
+        <mat-icon (click)="handleOpenRole()">expand_more</mat-icon>
       </div>
-      <div class="form-outline mb-3">
-        <label class="form-label" for="form3Example2">Username</label>
-        <input
-          type="text"
-          id="form3Example2"
-          class="form-control"
-          formControlName="username"
-          placeholder="Enter Username"
-        />
+      <div *ngIf="OpenRoles"
+        style="
+          position: absolute;
+          width: 100%;
+          background-color:white;
+          height: 200px;
+          overflow-y: auto;
+          z-index: 99;
+          margin-top: 10px;
+        "
+        class="border p-3 rounded "
+
+      >
+        <div class="m-3" (click)="handleSelectRole('Administrator',AdminId)">
+          <div style="font-size: medium;">Administrator</div>
+          <div style="font-size: small;color: rgb(88, 88, 88);">
+            Admin can do most thing, like update settings and add other admin
+          </div>
+        </div>
+        <div class="m-3" (click)="handleSelectRole('Manager',ManagerId)">
+          <div style="font-size: medium;">Manager</div>
+          <div  style="font-size: small;color: rgb(88, 88, 88);">
+            Manager can access all over the projects but they can only manage
+            assigned projects
+          </div>
+        </div>
+        <div class="m-3" (click)="handleSelectRole('Member',MemberId)">
+          <div style="font-size: medium;">Member</div>
+          <div  style="font-size: small;color: rgb(88, 88, 88);">
+            Member can only access the project and perform the task they are
+            assigned
+          </div>
+        </div>
       </div>
-      <div class="form-outline mb-3">
-        <label class="form-label" for="form3Example3">Email</label>
-        <input
-          type="email"
-          id="form3Example3"
-          formControlName="email"
-          class="form-control"
-          placeholder="Enter Email"
-        />
-      </div>
-      <div class="form-outline mb-3">
-        <label class="form-label" for="form3Example3">Password</label>
-        <input
-          type="password"
-          id="form3Example4"
-          formControlName="pass"
-          class="form-control"
-          placeholder="Enter Password"
-        />
-      </div>
-      <div class="form-outline mb-3">
-        <label for="exampleFormControlSelect2">Choose User Role</label>
-        <select
-          class="form-control form-control-sm"
-          id="exampleFormControlSelect1"
-          formControlName="roleId"
-        >
-        <option disabled selected value="">Select User Role</option>
-          <option *ngFor="let item of roleList"[value]="item.roleId" >{{item.roleName}}</option>
-        </select>
-      </div>
-      <div class="mt-4 pt-2">
-        <button [disabled]="CreateUserForm.invalid" type="submit" class="btn btn-primary">
-          <div
+    </div>
+    <div class="mt-4 pt-2">
+      <button
+        [disabled]="CreateUserForm.invalid || !selectedRoleId"
+        type="submit"
+        class="btn btn-primary"
+      >
+        <div
           *ngIf="loading"
           class="spinner-border spinner-border-sm"
           role="status"
         ></div>
         <span *ngIf="!loading">Create</span>
-        </button>
-      </div>
-    </form>
-  </div>
-  
+      </button>
+    </div>
+  </form>
+</div>
