@@ -1,5 +1,5 @@
 <div>
-  <div *ngIf="!AccessToDelete()" class="alert alert-info w-100 " role="alert">
+  <div *ngIf="userList && !AccessToDelete()" class="alert alert-info w-100 " role="alert">
     You cannot Create or Delete members for projects
   </div>
 <div class="p-4 w-100">

@@ -4,6 +4,7 @@ import { LoginService } from '../Services/Login/login.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { isLoggedIn } from 'src/Auth';
 
 @Component({
   selector: 'app-loginpage',
@@ -24,9 +25,7 @@ export class LoginpageComponent implements OnInit{
       username: new FormControl(null, Validators.required),
       password: new FormControl(null, [Validators.required])
     })
-    if (this.loginService.isLoggedIn()) {
-      this.router.navigate(['/projects']);
-    }
+   
   }
   LoginUser() {
     this.loading = true

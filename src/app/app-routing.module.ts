@@ -13,14 +13,17 @@ import { CreateProjectComponent } from './create-project/create-project.componen
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { ProjectLayoutComponent } from './project-layout/project-layout.component';
 import { ProjectDetailsLayoutComponent } from './project-details-layout/project-details-layout.component';
+import { loginGuard } from './Guards/login.guard';
+import { projectsGuard } from './Guards/projects.guard';
 
 const routes: Routes = [
-  { path: "login", component: LoginpageComponent },
+  { path: "login", component: LoginpageComponent,canActivate:[loginGuard]},
   { path: "forgetPassword", component: ForgetpasswordComponent },
   { path: "register", component: RegisterpageComponent },
   {
     path: "",
     component: LayoutComponent,
+    canActivate:[projectsGuard],
     children: [
       {
         path: "projects",
@@ -32,7 +35,6 @@ const routes: Routes = [
           { path: "details", component: ProjectDetailsComponent},
           { path: "people", component: ProjectUserManageComponent}
         ]},
-         
         ],
       },
       { path: "users", component: ManageuserComponent },

@@ -23,9 +23,7 @@ export class LoginService {
     return this.http.get(`${environment.BASEURL}/User/${username}`)
   }
 
-  isLoggedIn(){
-    return localStorage.getItem('login')!==null;
-  }
+
 
   logout() {
     localStorage.removeItem('login');

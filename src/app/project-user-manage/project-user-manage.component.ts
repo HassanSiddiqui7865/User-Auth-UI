@@ -44,7 +44,6 @@ export class ProjectUserManageComponent implements OnInit {
           }
           return 0; // no change in ordering
         });
-        console.log(res)
       }
      })
     }

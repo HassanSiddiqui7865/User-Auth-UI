@@ -59,7 +59,7 @@ export class SidebarComponent implements AfterViewInit ,OnInit {
   AccessToDetails() {
     const user = this.userList?.find((item) => item.userId === this.userLoggedIn.userId);
 
-    if (this.userLoggedIn.roleId === this.AdminId || this.userLoggedIn.roleId === this.ManagerId || user.isLead) {
+    if (this.userLoggedIn.roleId === this.AdminId || this.userLoggedIn.roleId === this.ManagerId || user?.isLead) {
       return true;
     }
   

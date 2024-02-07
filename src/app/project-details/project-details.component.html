@@ -1,9 +1,9 @@
 <div>
-  <div *ngIf="AccessToUpdate()" class="alert alert-info w-100 " role="alert">
+  <div *ngIf="userList && AccessToUpdate()" class="alert alert-info w-100 " role="alert">
     You cannot Update the Project
   </div>
   
-  <div style="display: flex;justify-content: center;width: 100%;margin-top: 30px;position: relative;">
+  <div *ngIf="project" style="display: flex;justify-content: center;width: 100%;margin-top: 30px;position: relative;">
     <div *ngIf="AccessToUpdate()" style="position: absolute;height: 100%;width: 100%;background-color: #FFFF;z-index: 999;opacity: 0.4;"></div>
     <div style="width: 50%;">
       <form class="w-100" [formGroup]="UpdateProjectForm" (ngSubmit)="handleUpdateProject()">
@@ -80,6 +80,10 @@
           <button [disabled]="UpdateProjectForm.invalid || AccessToUpdate()" class="btn btn-primary">SAVE</button>
         </div>
       </form>
+    </div>
+  </div>
+  <div *ngIf="!project" class="d-flex justify-content-center align-items-center" style="height: 50vh;">
+    <div class="spinner-border spinner-border" style="width: 3rem; height: 3rem;" role="status">
     </div>
   </div>
 </div>

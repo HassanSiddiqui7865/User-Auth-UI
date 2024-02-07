@@ -13,7 +13,6 @@ import { ManageuserComponent } from './manageuser/manageuser.component';
 import {HttpClientModule} from '@angular/common/http'
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SinglebookComponent } from './singlebook/singlebook.component';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 import { LayoutComponent } from './layout/layout.component';
 import { BoardComponent } from './board/board.component';
@@ -48,7 +47,6 @@ import { CreateUserComponent } from './Components/create-user/create-user.compon
     NavbarComponent,
     ProjectUserManageComponent,
     ManageuserComponent,
-    SinglebookComponent,
     ForgetpasswordComponent,
     LayoutComponent,
     BoardComponent,
