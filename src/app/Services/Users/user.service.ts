@@ -33,7 +33,5 @@ export class UserService {
     getUsersWithoutProjects():Observable<any>{
       return this.http.get(`${environment.BASEURL}/User/withoutProjects`)
     }
-    getUserByProject(projectId:any):Observable<any>{
-      return this.http.get(`${environment.BASEURL}/User/${projectId}`)
-    }
+
 }

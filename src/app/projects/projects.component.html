@@ -2,6 +2,7 @@
   <div class="d-flex justify-content-between mb-4 align-items-center ">
     <h1>Projects</h1>
     <button
+      *ngIf="LoggedInUser.roleId === AdminId"
       (click)="OpenCreateProjectDialog()"
       class="btn btn-primary h-25 rounded-1  "
     >
@@ -102,7 +103,7 @@
         <mat-icon *ngIf="AccessToProject(element)" style="cursor: pointer;" [matMenuTriggerFor]="menu">more_horiz</mat-icon>
         <mat-menu #menu="matMenu" xPosition="before">
          <div (click)="RedirectBasedOnRoles(element)" mat-menu-item>Project Setting</div>
-         <div *ngIf="Credentials.roleId === AdminId" (click)="openDeleteDialog(element.projectId)" mat-menu-item>Delete Project</div>
+         <div *ngIf="LoggedInUser.roleId === AdminId" (click)="openDeleteDialog(element.projectId)" mat-menu-item>Delete Project</div>
         </mat-menu>
         
       </td>
@@ -118,7 +119,7 @@
   <div class="d-flex justify-content-center align-items-center flex-column" style="height: 50vh;"
     *ngIf="ProjectList && ProjectList.length===0">
       <img width="180" height="180" src="https://cdni.iconscout.com/illustration/premium/thumb/no-projects-4064370-3363931.png">
-      <div *ngIf="loggedIn.roleId !== MemberId" class="fs-5">No Project Click to Create new Project</div>
-      <div *ngIf="loggedIn.roleId === MemberId" class="fs-5">You are not asssigned in to any project</div>
+      <div *ngIf="LoggedInUser.roleId !== MemberId" class="fs-5">No Project Click to Create new Project</div>
+      <div *ngIf="LoggedInUser.roleId === MemberId" class="fs-5">You are not asssigned in to any project</div>
   </div>
 </div>

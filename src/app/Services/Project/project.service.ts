@@ -33,9 +33,7 @@ export class ProjectService {
   DeleteAssignedUser(projectId:any,userId:any):Observable<any>{
     return this.http.delete(`${environment.BASEURL}/AssignedProject/${projectId}/${userId}`)
   }
-  getProject(id:any): Observable<any> {
-    return this.http.get(`${environment.BASEURL}/Project/${id}`);
-  }
+  
   DeleteProject(id:any):Observable<any>{
     return this.http.delete(`${environment.BASEURL}/Project/${id}`); 
   }

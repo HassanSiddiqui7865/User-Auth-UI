@@ -18,11 +18,11 @@ import { AssignUserComponent } from '../Components/assign-user/assign-user.compo
 export class ProjectUserManageComponent implements OnInit {
   loading:boolean = false;
   ProjectId:any
-  userList:any
+  userList:any[]
   displayedColumns: string[] = ['Username','Fullname','Email','CreatedAt','Actions'];
-  Credentials = UserLogin()
+  userLoggedIn = UserLogin()
   AdminId = environment.admin
-  ManagerId = environment.member
+  ManagerId = environment.MId
   constructor(private userService : UserService, private dialog: MatDialog,private projectService : ProjectService,
     private router : Router
     ) {
@@ -35,7 +35,15 @@ export class ProjectUserManageComponent implements OnInit {
   GetUserList(){
      this.projectService.GetProjectById(this.ProjectId).subscribe({
       next:(res)=>{
-        this.userList = res.users
+        this.userList = res.users.sort((a, b) => {
+          if (a.isLead && !b.isLead) {
+            return -1; // a should come before b
+          }
+          if (!a.isLead && b.isLead) {
+            return 1; // b should come before a
+          }
+          return 0; // no change in ordering
+        });
         console.log(res)
       }
      })
@@ -64,18 +72,17 @@ export class ProjectUserManageComponent implements OnInit {
       }
     })
   }
-  AccessToDelete(element):boolean{
-    const user = this.userList.find((item)=>item.isLead)
-    const Manager = this.userList.find((item)=>item.userId === element.userId)
-      if(user){
-        return true
-      }
-      else if(this.Credentials.roleId === this.AdminId){
-        return true
-      }
-      else if((this.Credentials.roled === this.ManagerId) && Manager){
-        return true
-      }
-      return false
+  AccessToDelete():boolean{
+    const user = this.userList?.find((item)=>item.userId === this.userLoggedIn.userId)
+    if(this.userLoggedIn.roleId === this.AdminId){
+      return true
     }
+    else if((this.userLoggedIn.roleId === this.ManagerId ) && user){
+      return true
+    }
+    else if(user && user.isLead){
+      return true
+    }
+    return false
+  }
 }

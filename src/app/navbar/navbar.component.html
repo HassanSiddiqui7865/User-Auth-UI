@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class="mt-4">
-          <button [routerLink]="['/users']" class="btn btn-light w-100 border">
+          <button *ngIf="LoggedInUser.roleId === AdminId" [routerLink]="['/users']" class="btn btn-light w-100 border">
             Users
           </button>
           <button

@@ -22,7 +22,6 @@ const routes: Routes = [
     path: "",
     component: LayoutComponent,
     children: [
-      { path: "board", component: BoardComponent },
       {
         path: "projects",
         component: ProjectLayoutComponent,
@@ -37,7 +36,7 @@ const routes: Routes = [
         ],
       },
       { path: "users", component: ManageuserComponent },
-      { path: "", redirectTo: "project", pathMatch: "full" }
+      { path: "", redirectTo: "projects", pathMatch: "full" }
     ],
   },
   { path: "**", component: PagenotfoundComponent },

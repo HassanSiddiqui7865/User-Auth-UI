@@ -70,7 +70,7 @@
             <div>
               <div class="m-3 fw-medium">Project Setting</div>
             </div>
-            <div
+            <div *ngIf="AccessToDetails()"
             [routerLink]="['/projects',projectId,'details']"
               id="Link"
               class="d-flex align-items-center p-3"

@@ -4,6 +4,8 @@ import { CreateTaskComponent } from '../create-task/create-task.component';
 import { MatDrawerContainer } from '@angular/material/sidenav';
 import { ProjectService } from 'src/app/Services/Project/project.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserLogin } from 'src/Auth';
+import { environment } from 'src/environment/environment';
 
 @Component({
   selector: 'app-sidebar',
@@ -16,6 +18,10 @@ export class SidebarComponent implements AfterViewInit ,OnInit {
   project: any;
   comp:boolean=true;
   projectId : any
+  userList:any[]
+  userLoggedIn = UserLogin()
+  AdminId = environment.admin
+  ManagerId = environment.MId
   constructor(private dialog: MatDialog,private projectService : ProjectService,private router : Router) {
     this.projectId = this.router.url.split("/")[2]
   }
@@ -43,10 +49,21 @@ export class SidebarComponent implements AfterViewInit ,OnInit {
   }
 
   getProject(){
-    this.projectService.getProjectWithoutusers(this.projectId).subscribe({
+    this.projectService.GetProjectById(this.projectId).subscribe({
       next:(res)=>{
         this.project = res
+        this.userList =res.users 
       }
     })
   }
+  AccessToDetails() {
+    const user = this.userList?.find((item) => item.userId === this.userLoggedIn.userId);
+
+    if (this.userLoggedIn.roleId === this.AdminId || this.userLoggedIn.roleId === this.ManagerId || user.isLead) {
+      return true;
+    }
+  
+    return false;
+  }
+  
 }

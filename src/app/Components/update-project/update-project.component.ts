@@ -35,7 +35,7 @@ export class UpdateProjectComponent implements OnInit{
     this.getUsers()
   }
   getProjectDetail(){
-    this.projectService.getProject(this.data.projectId).subscribe({
+    this.projectService.GetProjectById(this.data.projectId).subscribe({
       next:(res)=>{
         this.AddedMember = res.users
         this.UpdateProjectForm.patchValue({
