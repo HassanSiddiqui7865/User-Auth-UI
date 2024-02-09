@@ -1,220 +1,412 @@
-<div
-  class="d-flex align-items-center justify-content-center"
-  style="height: 80vh"
->
-  <div class="d-flex align gap-2">
-    <div
-      class="border p-2 bg-light rounded"
-      style="height: 300px; width: 250px"
-    >
-      <h4 style="color: rgb(102, 102, 102)">BACKLOG</h4>
-      <div draggable="true" style="background-color: white" class="p-3 border mt-2 rounded ">
-        <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
-          laboriosam perferendis quis quisquam commodi,
+<div class="d-flex" style="overflow: hidden">
+  <app-sidebar></app-sidebar>
+  <div class="w-100 p-4">
+    <div>
+      <h1>Application Board</h1>
+      <div class="d-flex align-items-center gap-3">
+        <div class="border w-25 d-flex align-items-center">
+          <input
+            type="text"
+            id="form3Example1"
+            class="border-0 p-2 w-100"
+            style="outline: none"
+            placeholder="Enter Search Project"
+          />
+          <mat-icon>search</mat-icon>
         </div>
-        <div class="d-flex justify-content-between mt-3">
-          <div
-            class="d-flex position-relative"
-            style="color: white; margin: 0px 0px 10px 10px; position: relative"
-          >
-            <div
-              style="
-                display: flex;
-                width: 30px;
-                height: 30px;
-                background-color: rgb(92, 89, 255);
-                border-radius: 50%;
-                justify-content: center;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                left: -2px;
-              "
-            >
-              H
-            </div>
-            <div
-              style="
-                display: flex;
-                width: 30px;
-                height: 30px;
-                background-color: rgb(203, 61, 247);
-                border-radius: 50%;
-                justify-content: center;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                left: 15px;
-              "
-            >
-              H
-            </div>
-            <div
-              style="
-                display: flex;
-                width: 30px;
-                height: 30px;
-                background-color: rgb(255, 88, 88);
-                border-radius: 50%;
-                justify-content: center;
-                font-size: 15px;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                left: 30px;
-              "
-            >
-              +6
-            </div>
+        <div class="avatar-group">
+          <div class="avatar">
+            <span class="avatar-name">Someone 1</span>
+            <img
+              src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+              alt="Image"
+            />
           </div>
-          <mat-icon>arrow_upward</mat-icon>
+          <div class="avatar">
+            <span class="avatar-name">Someone 2</span>
+            <img
+              src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+              alt="Image"
+            />
+          </div>
+          <div class="avatar">
+            <span class="avatar-name">Someone 3</span>
+            <img
+              src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+              alt="Image"
+            />
+          </div>
+          <div class="avatar">
+            <span class="avatar-name">Someone 4</span>
+            <img
+              src="https://images.unsplash.com/photo-1499952127939-9bbf5af6c51c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+              alt="Image"
+            />
+          </div>
+          <div class="avatar">
+            <span class="avatar-name">Someone 5</span>
+            <img
+              src="https://images.unsplash.com/photo-1504593811423-6dd665756598?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+              alt="Image"
+            />
+          </div>
         </div>
       </div>
-    </div>
-    <div
-      class="border p-2 bg-light rounded scroll-behave"
-      style="height: 300px; width: 250px;overflow-y: auto;"
-    >
-      <h4 style="color: rgb(102, 102, 102)">SELECTED FOR DEVELOPMENT</h4>
-      <div style="background-color: white" class="p-3 border mt-2 rounded ">
-        <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
-          laboriosam perferendis quis quisquam commodi,
-        </div>
-        <div class="d-flex justify-content-between mt-3">
-          <div
-            class="d-flex position-relative"
-            style="color: white; margin: 0px 0px 10px 10px; position: relative"
-          >
-            <div
-              style="
-                display: flex;
-                width: 30px;
-                height: 30px;
-                background-color: rgb(92, 89, 255);
-                border-radius: 50%;
-                justify-content: center;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                left: -2px;
-              "
-            >
-              H
-            </div>
-            <div
-              style="
-                display: flex;
-                width: 30px;
-                height: 30px;
-                background-color: rgb(203, 61, 247);
-                border-radius: 50%;
-                justify-content: center;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                left: 15px;
-              "
-            >
-              H
-            </div>
-            <div
-              style="
-                display: flex;
-                width: 30px;
-                height: 30px;
-                background-color: rgb(255, 88, 88);
-                border-radius: 50%;
-                justify-content: center;
-                font-size: 15px;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                left: 30px;
-              "
-            >
-              +6
+      <div class="d-flex gap-2 mt-4">
+        <div
+          style="height: 55vh; background-color: #f4f5f7; flex: 1"
+          class="p-2"
+          id="board"
+        >
+          <h3 style="position: sticky;top: 0;">BackLog</h3>
+          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2 ">
+            <div>Summmary of the ticket</div>
+            <div class="d-flex justify-content-end ">
+              <div
+                style="
+                  display: flex;
+                  width: 25px;
+                  height: 25px;
+                  background-color: rgb(92, 89, 255);
+                  border-radius: 50%;
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
+                "
+              >
+                H
+              </div>
             </div>
           </div>
-          <mat-icon>arrow_upward</mat-icon>
-        </div>
-      </div>
-      <div  style="background-color: white" class="p-3 border mt-2 rounded ">
-        <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
-          laboriosam perferendis quis quisquam commodi,
-        </div>
-        <div class="d-flex justify-content-between mt-3">
-          <div
-            class="d-flex position-relative"
-            style="color: white; margin: 0px 0px 10px 10px; position: relative"
-          >
-            <div
-              style="
-                display: flex;
-                width: 30px;
-                height: 30px;
-                background-color: rgb(92, 89, 255);
-                border-radius: 50%;
-                justify-content: center;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                left: -2px;
-              "
-            >
-              H
-            </div>
-            <div
-              style="
-                display: flex;
-                width: 30px;
-                height: 30px;
-                background-color: rgb(203, 61, 247);
-                border-radius: 50%;
-                justify-content: center;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                left: 15px;
-              "
-            >
-              H
-            </div>
-            <div
-              style="
-                display: flex;
-                width: 30px;
-                height: 30px;
-                background-color: rgb(255, 88, 88);
-                border-radius: 50%;
-                justify-content: center;
-                font-size: 15px;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                left: 30px;
-              "
-            >
-              +6
+          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2 ">
+            <div>Summmary of the ticket</div>
+            <div class="d-flex justify-content-end ">
+              <div
+                style="
+                  display: flex;
+                  width: 25px;
+                  height: 25px;
+                  background-color: rgb(92, 89, 255);
+                  border-radius: 50%;
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
+                "
+              >
+                H
+              </div>
             </div>
           </div>
-          <mat-icon>arrow_upward</mat-icon>
+          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
+            <div>Summmary of the ticket</div>
+            <div class="d-flex justify-content-end ">
+              <div
+                style="
+                  display: flex;
+                  width: 25px;
+                  height: 25px;
+                  background-color: rgb(92, 89, 255);
+                  border-radius: 50%;
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
+                "
+              >
+                H
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div
+          style="height: 55vh; background-color: #f4f5f7; flex: 1"
+          id="board"
+        >
+        <div style="position: sticky;top: 0; background-color: #f4f5f7" class="p-2">To DO</div>
+        <div class="p-2 ">
+          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
+            <div>Summmary of the ticket</div>
+            <div class="d-flex justify-content-end ">
+              <div
+                style="
+                  display: flex;
+                  width: 25px;
+                  height: 25px;
+                  background-color: rgb(92, 89, 255);
+                  border-radius: 50%;
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
+                "
+              >
+                H
+              </div>
+            </div>
+          </div>
+        </div>
+          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
+            <div>Summmary of the ticket</div>
+            <div class="d-flex justify-content-end ">
+              <div
+                style="
+                  display: flex;
+                  width: 25px;
+                  height: 25px;
+                  background-color: rgb(92, 89, 255);
+                  border-radius: 50%;
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
+                "
+              >
+                H
+              </div>
+            </div>
+          </div>
+          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
+            <div>Summmary of the ticket</div>
+            <div class="d-flex justify-content-end ">
+              <div
+                style="
+                  display: flex;
+                  width: 25px;
+                  height: 25px;
+                  background-color: rgb(92, 89, 255);
+                  border-radius: 50%;
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
+                "
+              >
+                H
+              </div>
+            </div>
+          </div>
+          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
+            <div>Summmary of the ticket</div>
+            <div class="d-flex justify-content-end ">
+              <div
+                style="
+                  display: flex;
+                  width: 25px;
+                  height: 25px;
+                  background-color: rgb(92, 89, 255);
+                  border-radius: 50%;
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
+                "
+              >
+                H
+              </div>
+            </div>
+          </div>
+          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
+            <div>Summmary of the ticket</div>
+            <div class="d-flex justify-content-end ">
+              <div
+                style="
+                  display: flex;
+                  width: 25px;
+                  height: 25px;
+                  background-color: rgb(92, 89, 255);
+                  border-radius: 50%;
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
+                "
+              >
+                H
+              </div>
+            </div>
+          </div>
+          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
+            <div>Summmary of the ticket</div>
+            <div class="d-flex justify-content-end ">
+              <div
+                style="
+                  display: flex;
+                  width: 25px;
+                  height: 25px;
+                  background-color: rgb(92, 89, 255);
+                  border-radius: 50%;
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
+                "
+              >
+                H
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          style="height: 55vh; background-color: #f4f5f7; flex: 1"
+          class="p-2"
+          id="board"
+        >
+          <h3>In Progress</h3>
+          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
+            <div>Summmary of the ticket</div>
+            <div class="d-flex justify-content-end ">
+              <div
+                style="
+                  display: flex;
+                  width: 25px;
+                  height: 25px;
+                  background-color: rgb(92, 89, 255);
+                  border-radius: 50%;
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
+                "
+              >
+                H
+              </div>
+            </div>
+          </div>
+          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
+            <div>Summmary of the ticket</div>
+            <div class="d-flex justify-content-end ">
+              <div
+                style="
+                  display: flex;
+                  width: 25px;
+                  height: 25px;
+                  background-color: rgb(92, 89, 255);
+                  border-radius: 50%;
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
+                "
+              >
+                H
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          style="height: 55vh; background-color: #f4f5f7; flex: 1"
+          class="p-2"
+          id="board"
+        >
+          <h3>Done</h3>
+          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
+            <div>Summmary of the ticket</div>
+            <div class="d-flex justify-content-end ">
+              <div
+                style="
+                  display: flex;
+                  width: 25px;
+                  height: 25px;
+                  background-color: rgb(92, 89, 255);
+                  border-radius: 50%;
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
+                "
+              >
+                H
+              </div>
+            </div>
+          </div>
+          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
+            <div>Summmary of the ticket</div>
+            <div class="d-flex justify-content-end ">
+              <div
+                style="
+                  display: flex;
+                  width: 25px;
+                  height: 25px;
+                  background-color: rgb(92, 89, 255);
+                  border-radius: 50%;
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
+                "
+              >
+                H
+              </div>
+            </div>
+          </div>
+          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
+            <div>Summmary of the ticket</div>
+            <div class="d-flex justify-content-end ">
+              <div
+                style="
+                  display: flex;
+                  width: 25px;
+                  height: 25px;
+                  background-color: rgb(92, 89, 255);
+                  border-radius: 50%;
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
+                "
+              >
+                H
+              </div>
+            </div>
+          </div>
+          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
+            <div>Summmary of the ticket</div>
+            <div class="d-flex justify-content-end ">
+              <div
+                style="
+                  display: flex;
+                  width: 25px;
+                  height: 25px;
+                  background-color: rgb(92, 89, 255);
+                  border-radius: 50%;
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
+                "
+              >
+                H
+              </div>
+            </div>
+          </div>
+          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
+            <div>Summmary of the ticket</div>
+            <div class="d-flex justify-content-end ">
+              <div
+                style="
+                  display: flex;
+                  width: 25px;
+                  height: 25px;
+                  background-color: rgb(92, 89, 255);
+                  border-radius: 50%;
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
+                "
+              >
+                H
+              </div>
+            </div>
+          </div>
+          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
+            <div>Summmary of the ticket</div>
+            <div class="d-flex justify-content-end ">
+              <div
+                style="
+                  display: flex;
+                  width: 25px;
+                  height: 25px;
+                  background-color: rgb(92, 89, 255);
+                  border-radius: 50%;
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
+                "
+              >
+                H
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div
-      class="border p-2 bg-light rounded"
-      style="height: 300px; width: 250px"
-    >
-      <h4 style="color: rgb(102, 102, 102)">IN PROGRESS</h4>
-    </div>
-    <div
-      class="border p-2 bg-light rounded"
-      style="height: 300px; width: 250px"
-    >
-      <h4 style="color: rgb(102, 102, 102)">DONE</h4>
     </div>
   </div>
 </div>

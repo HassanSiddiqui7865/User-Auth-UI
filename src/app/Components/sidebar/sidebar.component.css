@@ -3,7 +3,7 @@
   height: 90vh;
 }
 mat-drawer {
-  width: 18vw;
+  width:max-content;
 }
 mat-drawer-content {
   display: flex;

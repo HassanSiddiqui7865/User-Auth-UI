@@ -31,7 +31,9 @@
                 src="/assets/10402.svg"
               />
               <div>
-                <div class="fw-medium">{{project && project.projectname}}</div>
+                <div class="fw-medium">
+                  {{ project && project.projectname }}
+                </div>
                 <div style="color: rgb(94, 94, 94); font-size: small">
                   Software Project
                 </div>
@@ -40,7 +42,7 @@
             <div
               [routerLink]="'/projects'"
               id="Link"
-              class="d-flex align-items-center p-3 gap-3 mt-4"
+              class="d-flex align-items-center p-3 gap-3 mt-3"
             >
               <div
                 style="
@@ -70,20 +72,21 @@
             <div>
               <div class="m-3 fw-medium">Project Setting</div>
             </div>
-            <div *ngIf="AccessToDetails()"
-            [routerLink]="['/projects',projectId,'details']"
+            <div
+              *ngIf="AccessToDetails()"
+              [routerLink]="['/projects', projectId, 'details']"
               id="Link"
               class="d-flex align-items-center p-3"
             >
               <div>Details</div>
             </div>
             <div
-            id="Link"
-            [routerLink]="['/projects',projectId,'people']"
-            class="d-flex align-items-center p-3"
-          >
-            <div>Peoples</div>
-          </div>
+              id="Link"
+              [routerLink]="['/projects', projectId, 'people']"
+              class="d-flex align-items-center p-3"
+            >
+              <div>Peoples</div>
+            </div>
           </div>
         </div>
         <div (click)="closeDrawer()" id="sidenav-item" class="border">

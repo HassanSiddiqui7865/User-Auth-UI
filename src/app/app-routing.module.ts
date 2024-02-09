@@ -23,7 +23,7 @@ const routes: Routes = [
   {
     path: "",
     component: LayoutComponent,
-    canActivate:[projectsGuard],
+   
     children: [
       {
         path: "projects",
@@ -37,6 +37,7 @@ const routes: Routes = [
         ]},
         ],
       },
+      {path:"board/:id",component:BoardComponent},
       { path: "users", component: ManageuserComponent },
       { path: "", redirectTo: "projects", pathMatch: "full" }
     ],

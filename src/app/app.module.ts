@@ -35,6 +35,8 @@ import { ProjectDetailsComponent } from './project-details/project-details.compo
 import { ProjectLayoutComponent } from './project-layout/project-layout.component';
 import { ProjectDetailsLayoutComponent } from './project-details-layout/project-details-layout.component';
 import { CreateUserComponent } from './Components/create-user/create-user.component';
+import { SidenavComponent } from './Components/sidenav/sidenav.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +63,7 @@ import { CreateUserComponent } from './Components/create-user/create-user.compon
     ProjectLayoutComponent,
     ProjectDetailsLayoutComponent,
     CreateUserComponent,
+    SidenavComponent,
    
     
     ],
