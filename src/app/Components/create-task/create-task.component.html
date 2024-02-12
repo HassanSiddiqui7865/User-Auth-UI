@@ -1,175 +1,114 @@
-<div class="p-4">
-  <form class="w-100">
-    <div class="d-flex justify-content-between ">
-      <h1 style="color: rgb(1, 1, 102)" class="mb-3">Create Task</h1>
-      <mat-icon (click)="handleDialogClose()">close</mat-icon>
-    </div>
-    <div class="form-outline mb-4">
-      <label class="form-label" for="form3Example3">Name</label>
-      <input
-        type="text"
-        id="form3Example3"
-        class="form-control form-control-sm"
-        placeholder="Enter the name of the task"
-      />
-    </div>
-    <div class="form-outline mb-2">
-      <label class="form-label" for="form3Example4">Project Name</label>
-      <input
-        type="text"
-        id="form3Example4"
-        class="form-control form-control-sm"
-        placeholder="Enter Project Name"
-      />
-    </div>
-    <div class="form-outline mb-2">
-      <label for="exampleFormControlSelect1">Status</label>
-      <select
-        class="form-control form-control-sm"
-        id="exampleFormControlSelect1"
-      >
-        <option>Backlog</option>
-        <option>To DO</option>
-        <option>In Progress</option>
-        <option>Done</option>
-      </select>
-    </div>
-    <div class="row mt-3">
-      <div class="col">
-        <label for="exampleFormControlSelect1">Priority</label>
-        <select
-          class="form-control form-control-sm"
-          id="exampleFormControlSelect1"
-        >
-          <option>High</option>
-          <option>Low</option>
-        </select>
-      </div>
-      <div class="col">
-        <label for="exampleFormControlSelect1">Task type</label>
-        <select
-          class="form-control form-control-sm"
-          id="exampleFormControlSelect1"
-        >
-          <option>New task</option>
-          <option>Bug</option>
-        </select>
-      </div>
-    </div>
-    <div class="row mt-3">
-      <div class="form-outline mb-3 col">
-        <label for="exampleFormControlSelect2">Members</label>
-        <div
-          *ngIf="AddedMember && AddedMember.length > 0"
-          class="w-100 border p-3 d-flex flex-wrap gap-2"
-        >
-          <div
-            *ngFor="let item of AddedMember"
-            class="d-flex align-items-center gap-1 rounded-2 p-1"
-            style="width: max-content; background-color: rgb(223, 223, 223)"
-          >
-            <div
-              style="
-                display: flex;
-                width: 20px;
-                height: 20px;
-                background-color: rgb(203, 61, 247);
-                border-radius: 50%;
-                justify-content: center;
-                align-items: center;
-              "
-            >
-              H
-            </div>
-            <div>{{ item.full_name }}</div>
-            <mat-icon
-              (click)="handleDeleteMember(item.id)"
-              class="fs-5 d-flex aiign-item-center justify-content-center"
-              style="cursor: pointer"
-              >close</mat-icon
-            >
-          </div>
+<div>
+  <div class="d-flex justify-content-between position-sticky top-0 px-4 pt-4 bg-white border-bottom z-3">
+    <h1 style="color: rgb(1, 1, 102)" class="mb-3">Create Task</h1>
+    <mat-icon (click)="handleDialogClose()">close</mat-icon>
+  </div>
+  <div class="p-4">
+    <form class="w-100" [formGroup]="CreateTicketForm" (ngSubmit)="handleCreateTicket()">
+      <div>
+        <div class="mb-2">
+          <label class="form-label">Project</label>
+          <mat-select  class="form-control">
+            <mat-select-trigger class="d-flex align-items-center">
+              <img width="20" height="20" class="rounded-1" [src]="selectedProject?.avatarUrl" />
+              <span class="mx-1">{{ selectedProject?.projectkey }}</span>
+            </mat-select-trigger>
+            <mat-option (click)="handleSelectProject(item)" [value]="item.projectId" *ngFor="let item of ProjectList">
+              <img width="20" height="20" class="rounded-1" [src]="item?.avatarUrl" />
+              <span class="mx-2">{{ item?.projectkey }}</span>
+            </mat-option>
+          </mat-select>
         </div>
-        <div class="position-relative">
-          <input
-            (input)="handleChange($event)"
-            class="form-control"
-            placeholder="Select Member"
-          />
-
-          <div
-            *ngIf="filteredArray && filteredArray.length > 0"
-            class="position-absolute border w-100 p-2"
-            style="max-height: 100px; background-color: white; overflow-y: auto"
-          >
-            <div
-              (click)="handleAddMember(item.id)"
-              *ngFor="let item of filteredArray"
-              class="d-flex align-items-center gap-2 m-3"
-              style="cursor: pointer"
-            >
-              <div
-                style="
-                  display: flex;
-                  width: 30px;
-                  height: 30px;
-                  background-color: rgb(203, 61, 247);
-                  border-radius: 50%;
-                  justify-content: center;
-                  align-items: center;
-                "
-              >
-                {{ item.full_name[0] }}
+        <div class="form-outline mb-3">
+          <label class="form-label" for="form3Example4">Ticket summary</label>
+          <input formControlName="ticketsummary" type="text" id="form3Example4" class="form-control"
+            autocomplete="off" />
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Priority</label>
+          <mat-select formControlName="priority" class="form-control" >
+            <mat-select-trigger class="d-flex align-items-center">
+              <mat-icon class="fs-5" [ngClass]="CreateTicketForm.value.priority?.color">{{
+                CreateTicketForm.value.priority?.icon
+                }}</mat-icon><span class="mx-1">{{ CreateTicketForm.value.priority?.optionname }}</span>
+            </mat-select-trigger>
+            <mat-option [value]="item" *ngFor="let item of priorityElementArray">
+              <mat-icon class="fs-5" [ngClass]="item.color">{{
+                item.icon
+                }}</mat-icon><span class="mx-1">{{ item.optionname }}</span>
+            </mat-option>
+          </mat-select>
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Ticket type</label>
+          <mat-select formControlName="type" class="form-control" >
+            <mat-select-trigger class="d-flex align-items-center">
+              <mat-icon class="fs-5" [ngClass]="CreateTicketForm.value.type?.color">{{
+                CreateTicketForm.value.type?.icon
+                }}</mat-icon><span class="mx-1">{{ CreateTicketForm.value.type?.name }}</span>
+            </mat-select-trigger>
+            <mat-option [value]="item" *ngFor="let item of tickettypeArray">
+              <mat-icon class="fs-5" [ngClass]="item.color">{{
+                item.icon
+                }}</mat-icon><span class="mx-1">{{ item.name }}</span>
+            </mat-option>
+          </mat-select>
+        </div>
+        <div class="form-outline mb-3">
+          <label class="form-label" for="form3Example4">Ticket Description</label>
+          <textarea formControlName="ticketdescription" type="text" id="form3Example4" rows="3" class="form-control"
+            autocomplete="off"></textarea>
+        </div>
+        <div class="mb-2 w-25 ">
+          <label class="form-label">Status</label>
+          <mat-select formControlName="status" class="form-control bg-primary text-white" [(value)]="selectedStatus">
+            <mat-option value="Backlog">Backlog</mat-option>
+            <mat-option value="InProgress">InProgress</mat-option>
+            <mat-option value="Done">Done</mat-option>
+          </mat-select>
+        </div>
+        <div *ngIf="selectedProject">
+          <div class="mb-2">
+            <label class="form-label">Select Assignee</label>
+            <div class="mb-2 d-flex align-items-center form-control gap-1  ">
+              <div *ngIf="selectedUser" class="profile">
+                {{selectedUser?.username[0].toUpperCase()}}
               </div>
-              <div>{{ item.full_name }}</div>
+              <div *ngIf="!selectedUser" class="d-flex align-items-center justify-content-center ">
+                <mat-icon class="m-0 ">account_circle</mat-icon>
+              </div>
+              <input type="text" placeholder="Unassigned" style="outline: none;width: 100%;height: 100%;border: none;"
+                (focus)="handleFocus()" (input)="handleChange($event)" [matAutocomplete]="auto"
+                [value]="selectedUser ? selectedUser.username : selectedUser" />
+              <mat-icon *ngIf="selectedUser" (click)="handleSelectUser(null)">close</mat-icon>
             </div>
+            <mat-autocomplete class="z-3 " #auto="matAutocomplete">
+              <ng-container *ngIf="filteredArray && filteredArray.length > 0">
+                <mat-option (click)="handleSelectUser(option)" *ngFor="let option of filteredArray">
+                  <div class="d-flex align-items-center gap-2 ">
+                    <div class="profile">
+                      {{option.username[0].toUpperCase()}}
+                    </div>
+                    <div>{{option.username}}</div>
+                  </div>
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Reported By</label>
+            <div class="d-flex align-items-center gap-2 form-control  ">
+              <div class="profile">
+                {{LoggedInUser.username[0].toUpperCase()}}
+              </div>
+              <div>{{LoggedInUser.username}}</div>
+            </div>
+          </div>
+          <div class="mt-4 pt-2">
+            <button class="btn btn-primary" type="submit">CREATE</button>
           </div>
         </div>
       </div>
-
-      <div class="col mt-3 ">
-        <label  class="form-label">Time Tracking</label>
-        <mat-progress-bar  mode="determinate" value="40"></mat-progress-bar>
-      </div>
-    </div>
-    <div class="row">
-        <div class="col">
-          <label class="form-label">Original Estimate</label>
-          <input type="text" class="form-control" placeholder="Estimate" />
-        </div>
-        <div class="col">
-          <div class="row">
-            <div class="col">
-                <label class="form-label">Time Spent</label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Time spent"
-              />
-            </div>
-            <div class="col">
-                <label class="form-label">Time Left</label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Time remaining"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    <div class="form-outline mb-2">
-      <label class="form-label" for="form3Example4">Project Description</label>
-      <textarea
-        rows="3"
-        type="text"
-        id="form3Example4"
-        class="form-control form-control-sm"
-      ></textarea>
-    </div>
-
-    <div class="mt-4 pt-2">
-      <button class="btn btn-primary">SAVE</button>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>

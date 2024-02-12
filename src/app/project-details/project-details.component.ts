@@ -6,6 +6,8 @@ import { UserService } from '../Services/Users/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environment/environment';
 import { UserLogin } from 'src/Auth';
+import { MatDialog } from '@angular/material/dialog';
+import { AvatarSelectComponent } from '../Components/avatar-select/avatar-select.component';
 
 @Component({
   selector: 'app-project-details',
@@ -23,13 +25,15 @@ export class ProjectDetailsComponent implements OnInit {
   currentLead = null;
   AdminId: any;
   ManagerId: any;
+  avatarselected:string;
   userLoggedIn = UserLogin();
   constructor(
     private projectService: ProjectService,
     private route: ActivatedRoute,
     private userService: UserService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private dialog : MatDialog
   ) {
     this.AdminId = environment.admin;
     this.ManagerId = environment.MId;
@@ -38,6 +42,7 @@ export class ProjectDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.UpdateProjectForm = new FormGroup({
       projectname: new FormControl(null, Validators.required),
+      projectkey:new FormControl(null,[Validators.required]),
       projectdescription: new FormControl(null, [Validators.required]),
     });
     this.getProject();
@@ -48,12 +53,14 @@ export class ProjectDetailsComponent implements OnInit {
         this.project = res;
         this.UpdateProjectForm.patchValue({
           projectname: res.projectname,
+          projectkey:res.projectkey,
           projectdescription: res.projectdescription,
         });
         if (this.project) {
           this.selectedLead = this.currentLead = this.project.users.find(
             (items) => items.isLead
           );
+          this.avatarselected = res.avatarUrl
         }
         this.userList = res.users;
       },
@@ -63,7 +70,7 @@ export class ProjectDetailsComponent implements OnInit {
     if (!this.AccessToUpdate()) {
       this.loading = true;
       this.projectService
-        .updateProject(this.project.projectId, this.UpdateProjectForm.value)
+        .updateProject(this.project.projectId,this.UpdateProjectForm.value,this.avatarselected)
         .subscribe({
           next: (res) => {
             if (this.currentLead) {
@@ -81,10 +88,10 @@ export class ProjectDetailsComponent implements OnInit {
                 .subscribe();
             }
             this.loading = false;
+            this.toastr.success('Updated Successfully');
             this.router.navigate(['/projects']).then(() => {
               window.location.reload();
             });
-            this.toastr.success('Updated Successfully');
           },
           error: () => {
             this.loading = false;
@@ -120,5 +127,21 @@ export class ProjectDetailsComponent implements OnInit {
       return false;
     }
     return true;
+  }
+  openAvatarDialog(){
+    const dialogRefAvatar = this.dialog.open(AvatarSelectComponent, {
+      width: "500px",
+      maxHeight: "400px",
+      data: {
+        avatarUrl: this.avatarselected
+      }
+    });
+  
+    
+    dialogRefAvatar.afterClosed().subscribe((selectedAvatar: string) => {
+      if (selectedAvatar) {
+        this.avatarselected = selectedAvatar;
+      }
+    });
   }
 }

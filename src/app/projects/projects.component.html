@@ -34,7 +34,7 @@
             class="rounded-1"
             width="30"
             height="30"
-            src="/assets/10402.svg"
+            src={{element.avatarUrl}}
           />
           <div [routerLink]="['/board',element.projectId]" style="cursor: pointer; color: blue; text-decoration: underline">
             {{ element.projectname }}
@@ -45,8 +45,7 @@
     <ng-container matColumnDef="Key">
       <th mat-header-cell *matHeaderCellDef>Key</th>
       <td mat-cell *matCellDef="let element">
-        <div></div>
-        NAC
+        {{element.projectkey}}
       </td>
     </ng-container>
     <ng-container matColumnDef="Lead">

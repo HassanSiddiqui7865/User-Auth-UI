@@ -7,7 +7,6 @@ import { DeleteComponentComponent } from '../Components/delete-component/delete-
 import { UserLogin } from 'src/Auth';
 import { CreateProjectComponent } from '../create-project/create-project.component';
 
-
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -20,89 +19,102 @@ export interface PeriodicElement {
   styleUrls: ['./projects.component.css'],
 })
 export class ProjectsComponent implements OnInit {
-  ProjectList: any[]
+  ProjectList: any[];
   ProjectId: any;
-  projectData: any
-  loading: boolean = false
-  displayedColumns: string[] = ['ProjectName','Key','Lead','Created At','Actions'];
-  LoggedInUser = UserLogin()
-  AssignedProjects:any[]
-  AdminId = environment.admin 
-  ManagerId = environment.MId
-  MemberId = environment.member
-  constructor(private projectService: ProjectService, private router: Router, private dialog: MatDialog) {
-  }
+  projectData: any;
+  loading: boolean = false;
+  displayedColumns: string[] = [
+    'ProjectName',
+    'Key',
+    'Lead',
+    'Created At',
+    'Actions',
+  ];
+  LoggedInUser = UserLogin();
+  AssignedProjects: any[];
+  AdminId = environment.admin;
+  ManagerId = environment.MId;
+  MemberId = environment.member;
+  constructor(
+    private projectService: ProjectService,
+    private router: Router,
+    private dialog: MatDialog,
+    
+  ) {}
   ngOnInit(): void {
-    if(this.LoggedInUser.roleId === this.MemberId  ){
-      this.getProjectsforMember()
-    }else{
-      this.getProjects()
+    if (this.LoggedInUser.roleId === this.MemberId) {
+      this.getProjectsforMember();
+    } else {
+      this.getProjects();
     }
-  
   }
   getProjects() {
-    this.projectService.getProjects().
-      subscribe({
-        next: (res) => {
-          this.ProjectList = res
-        },
-        error: (err) => {
-          console.log(err)
-        }
-      })
-  }
-  getProjectsforMember(){
-    this.projectService.getAssignedProjects(this.LoggedInUser.userId).subscribe({
-      next:(res)=>{
-        this.ProjectList = res
+    this.projectService.getProjects().subscribe({
+      next: (res) => {
+        this.ProjectList = res;
       },
       error: (err) => {
-        console.log(err)
-      }
-    })
+        console.log(err);
+      },
+    });
   }
-  getProjectLead(item){
+  getProjectsforMember() {
+    this.projectService
+      .getAssignedProjects(this.LoggedInUser.userId)
+      .subscribe({
+        next: (res) => {
+          this.ProjectList = res;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+  }
+  getProjectLead(item) {
     const lead = item.find((user) => user.isLead);
     return lead;
-}
+  }
   openDeleteDialog(id: any) {
     this.dialog.open(DeleteComponentComponent, {
       height: 'max-content',
       width: '350px',
       data: {
-        type:"project",
+        type: 'project',
         projectId: id,
-        loadProject: this.getProjects.bind(this)
-      }
-    })
+        loadProject: this.getProjects.bind(this),
+      },
+    });
   }
-  OpenCreateProjectDialog(){
+  OpenCreateProjectDialog() {
     this.dialog.open(CreateProjectComponent, {
       height: '100vh',
       width: '600px',
-      position:{"right":"0px","top":"0px"},
-      data:{
-        LoadProjects:this.getProjects.bind(this)
-      }
-    })
+      position: { right: '0px', top: '0px' },
+      data: {
+        LoadProjects: this.getProjects.bind(this),
+      },
+    });
   }
-  AccessToProject(element):boolean{
-    if(this.LoggedInUser.roleId === this.AdminId){
-      return true
+  AccessToProject(element): boolean {
+    if (this.LoggedInUser.roleId === this.AdminId) {
+      return true;
+    } else if (this.LoggedInUser.roleId === this.ManagerId) {
+      return true;
+    } else if (
+      this.LoggedInUser.userId === this.getProjectLead(element.users).userId
+    ) {
+      return true;
     }
-    else if(this.LoggedInUser.roleId === this.ManagerId){
-      return true
-    }
-    else if(this.LoggedInUser.userId === this.getProjectLead(element.users).userId){
-      return true
-    }
-    return false
+    return false;
   }
   RedirectBasedOnRoles(element: any): void {
-    if (this.LoggedInUser.userId === this.getProjectLead(element.users)?.userId) {
-        this.router.navigate(['projects',element.projectId, 'people']);
+    if (
+      this.LoggedInUser.userId === this.getProjectLead(element.users)?.userId
+    ) {
+      this.router.navigate(['projects', element.projectId, 'people']);
     } else {
-        this.router.navigate(['projects',element.projectId, 'details']);
+      this.router.navigate(['projects', element.projectId, 'details']);
     }
-}
+  }
+
 }

@@ -1,0 +1,54 @@
+<div class="overflow-hidden ">
+    <div class="position-sticky top-0 d-flex justify-content-between" style="padding: 30px 20px 0px 20px;">
+        <div [matTooltip]="ticket.tickettype">
+            <mat-icon [ngClass]=" typeIcons[ticket.tickettype].color">
+              {{ typeIcons[ticket.tickettype].icon}}
+            </mat-icon>
+        </div>
+        <div>
+            <mat-icon>close</mat-icon>
+        </div>
+    </div>
+    <div class="d-flex p-4">
+        <div style="flex: 3;">
+            <h2>{{ticket.ticketsummary}}</h2>
+            <div>
+                <h3 style="color: rgb(99, 99, 99);">Description</h3>
+                <p>{{ticket.ticketdescription}}</p>
+            </div>
+        </div>
+        <div style="flex: 1;">
+            <h2>Details</h2>
+            <div class="d-flex flex-column gap-3 ">
+                <div class="d-flex align-items-center justify-content-between  ">
+                    <div  style="color: rgb(99, 99, 99);" >Assignee</div>
+                    <div  *ngIf="ticket.assignedTo" class="d-flex align-items-center gap-1">
+                        <div class="profile">{{ticket.assignedTo.username[0].toUpperCase()}}</div>
+                        <div>{{ticket.assignedTo.username}}</div>
+                    </div>
+                    <div *ngIf="!ticket.assignedTo" class="d-flex align-items-center gap-1" >
+                        <img style="width: 25px; height: 25px;" src="assets/user.png"  class="fs-4">
+                        <div>UnAssigned</div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center justify-content-between  ">
+                    <div  style="color: rgb(99, 99, 99);" >Reporter</div>
+                    <div class="d-flex align-items-center gap-1 ">
+                        <div class="profile" *ngIf="ticket.reportedBy">{{ticket.reportedBy.username[0].toUpperCase()}}</div>
+                        <div >{{ticket.reportedBy.username}}</div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center justify-content-between  ">
+                    <div  style="color: rgb(99, 99, 99);" >Priority</div>
+                    <div class="d-flex align-items-center gap-1   ">
+                        <mat-icon  class="fs-5"
+                          [ngClass]="priorityicon[ticket.ticketpriority].color">
+                          {{priorityicon[ticket.ticketpriority].icon}}
+                        </mat-icon>
+                        <div>{{ticket.ticketpriority}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

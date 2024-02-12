@@ -18,7 +18,6 @@ import { LayoutComponent } from './layout/layout.component';
 import { BoardComponent } from './board/board.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { DeleteComponentComponent } from './Components/delete-component/delete-component.component';
-import { UpdateProjectComponent } from './Components/update-project/update-project.component';
 import {MatIconModule} from '@angular/material/icon'
 import {MatTableModule} from '@angular/material/table';
 import { SidebarComponent } from './Components/sidebar/sidebar.component';
@@ -26,7 +25,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
 import { CreateProjectComponent } from './create-project/create-project.component';
 import { CreateTaskComponent } from './Components/create-task/create-task.component';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+
 import { ShowMembersComponent } from './Components/show-members/show-members.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
@@ -35,7 +34,18 @@ import { ProjectDetailsComponent } from './project-details/project-details.compo
 import { ProjectLayoutComponent } from './project-layout/project-layout.component';
 import { ProjectDetailsLayoutComponent } from './project-details-layout/project-details-layout.component';
 import { CreateUserComponent } from './Components/create-user/create-user.component';
+import { AvatarSelectComponent } from './Components/avatar-select/avatar-select.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {
+  CdkDrag,
+  CdkDropList,
+  CdkDropListGroup,
+} from '@angular/cdk/drag-drop';
 import { SidenavComponent } from './Components/sidenav/sidenav.component';
+import {MatSelectModule} from '@angular/material/select';
+import {TooltipPosition, MatTooltipModule} from '@angular/material/tooltip';
+import { ViewTicketComponent } from './Components/view-ticket/view-ticket.component';
+
 
 @NgModule({
   declarations: [
@@ -51,9 +61,7 @@ import { SidenavComponent } from './Components/sidenav/sidenav.component';
     ManageuserComponent,
     ForgetpasswordComponent,
     LayoutComponent,
-    BoardComponent,
     DeleteComponentComponent,
-    UpdateProjectComponent,
     SidebarComponent,
     CreateProjectComponent,
     CreateTaskComponent,
@@ -63,12 +71,18 @@ import { SidenavComponent } from './Components/sidenav/sidenav.component';
     ProjectLayoutComponent,
     ProjectDetailsLayoutComponent,
     CreateUserComponent,
+    AvatarSelectComponent,
+    BoardComponent,
     SidenavComponent,
+    ViewTicketComponent,
+    
    
     
     ],
   imports: [
-    MatProgressBarModule,
+    MatAutocompleteModule,
+    MatSelectModule,
+    MatTooltipModule,
     CommonModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
@@ -82,7 +96,11 @@ import { SidenavComponent } from './Components/sidenav/sidenav.component';
     MatIconModule,
     MatSidenavModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    CdkDrag,
+    CdkDropList,
+    CdkDropListGroup,
+   
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -11,9 +11,11 @@ export class ProjectService {
     return this.http.get(`${environment.BASEURL}/Project`);
   }
 
-  createProject(projectData:any):Observable<any>{
+  createProject(projectData:any,avatarUrl:string):Observable<any>{
     return this.http.post(`${environment.BASEURL}/Project`,{
       projectname:projectData.projectname,
+      projectkey:projectData.projectkey,
+      avatarUrl:avatarUrl,
       projectdescription:projectData.projectdescription
     })
   }
@@ -37,9 +39,11 @@ export class ProjectService {
   DeleteProject(id:any):Observable<any>{
     return this.http.delete(`${environment.BASEURL}/Project/${id}`); 
   }
-  updateProject(id:any,projectData:any):Observable<any>{
+  updateProject(id:any,projectData:any,avatarUrl:string):Observable<any>{
     return this.http.put(`${environment.BASEURL}/Project/${id}`,{
       projectname:projectData.projectname,
+      projectkey:projectData.projectkey,
+      avatarUrl:avatarUrl,
       projectdescription:projectData.projectdescription
     })
   }

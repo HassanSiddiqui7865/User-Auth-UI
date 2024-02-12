@@ -9,7 +9,6 @@ import { ManageuserComponent } from './manageuser/manageuser.component';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 import { LayoutComponent } from './layout/layout.component';
 import { BoardComponent } from './board/board.component';
-import { CreateProjectComponent } from './create-project/create-project.component';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { ProjectLayoutComponent } from './project-layout/project-layout.component';
 import { ProjectDetailsLayoutComponent } from './project-details-layout/project-details-layout.component';
@@ -23,6 +22,7 @@ const routes: Routes = [
   {
     path: "",
     component: LayoutComponent,
+    canActivate:[projectsGuard],
    
     children: [
       {

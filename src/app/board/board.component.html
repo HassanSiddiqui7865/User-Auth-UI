@@ -1,17 +1,12 @@
-<div class="d-flex" style="overflow: hidden">
+<div class="d-flex">
   <app-sidebar></app-sidebar>
-  <div class="w-100 p-4">
+  <div class="w-100 p-4 overflow-hidden ">
     <div>
       <h1>Application Board</h1>
       <div class="d-flex align-items-center gap-3">
         <div class="border w-25 d-flex align-items-center">
-          <input
-            type="text"
-            id="form3Example1"
-            class="border-0 p-2 w-100"
-            style="outline: none"
-            placeholder="Enter Search Project"
-          />
+          <input type="text" id="form3Example1" class="border-0 p-2 w-100" style="outline: none"
+            placeholder="Enter Search Project" />
           <mat-icon>search</mat-icon>
         </div>
         <div class="avatar-group">
@@ -19,389 +14,126 @@
             <span class="avatar-name">Someone 1</span>
             <img
               src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-              alt="Image"
-            />
+              alt="Image" />
           </div>
           <div class="avatar">
             <span class="avatar-name">Someone 2</span>
             <img
               src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-              alt="Image"
-            />
+              alt="Image" />
           </div>
           <div class="avatar">
             <span class="avatar-name">Someone 3</span>
             <img
               src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-              alt="Image"
-            />
+              alt="Image" />
           </div>
           <div class="avatar">
             <span class="avatar-name">Someone 4</span>
             <img
               src="https://images.unsplash.com/photo-1499952127939-9bbf5af6c51c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-              alt="Image"
-            />
+              alt="Image" />
           </div>
           <div class="avatar">
             <span class="avatar-name">Someone 5</span>
             <img
-              src="https://images.unsplash.com/photo-1504593811423-6dd665756598?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-              alt="Image"
-            />
+              src="https://images.unsplash.com/photo-1504593811423-6dd665756598?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHBlcnNvbnxlbnwwfHwwfHw%3D%3D&auto=format&fit=crop&w=500&q=60"
+              alt="Image" />
           </div>
         </div>
       </div>
-      <div class="d-flex gap-2 mt-4">
-        <div
-          style="height: 55vh; background-color: #f4f5f7; flex: 1"
-          class="p-2"
-          id="board"
-        >
-          <h3 style="position: sticky;top: 0;">BackLog</h3>
-          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2 ">
-            <div>Summmary of the ticket</div>
-            <div class="d-flex justify-content-end ">
-              <div
-                style="
-                  display: flex;
-                  width: 25px;
-                  height: 25px;
-                  background-color: rgb(92, 89, 255);
-                  border-radius: 50%;
-                  justify-content: center;
-                  align-items: center;
-                  color: white;
-                "
-              >
-                H
+      <div class="mt-4 overflow-x-auto">
+        <div cdkDropListGroup>
+          <div class="d-flex gap-2" style="width: max-content;">
+            <div id="board" class="example-container rounded">
+              <div class="position-sticky top-0 p-3" style="background-color: #f4f5f7">
+                <div style="font-size: small;color: gray;">BACKLOG</div>
+              </div>
+              <div cdkDropList [cdkDropListData]="backlog" [id]="'Backlog'" class="example-list" 
+                (cdkDropListDropped)="drop($event)">
+                <div (cdkDragDropped)="handleGetId(item.ticketId)"  *ngFor="let item of backlog" class="example-box" cdkDrag>
+                  <div class="w-100 ">
+                    <div (click)="handleOpenTicket(item)" class="ticket-summary">{{item.ticketsummary}}</div>
+                    <div class="d-flex align-items-center justify-content-between mt-3 ">
+                      <div [matTooltip]="item.tickettype">
+                        <mat-icon [ngClass]=" typeIcons[item.tickettype].color">
+                          {{ typeIcons[item.tickettype].icon}}
+                        </mat-icon>
+                      </div>
+                      <div class="d-flex align-items-center gap-1 ">
+                        <mat-icon  class="fs-5" [matTooltip]="item.ticketpriority"
+                          [ngClass]="priorityicon[item.ticketpriority].color">
+                          {{priorityicon[item.ticketpriority].icon}}
+                        </mat-icon>
+                        <div class="d-flex align-items-center ">
+                          <img style="width: 25px; height: 25px;" src="assets/user.png" *ngIf="!item.assignedTo" class="fs-4">
+                          <div *ngIf="item.assignedTo" class="profile">{{item.assignedTo.username[0].toUpperCase()}}</div>
+                         </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2 ">
-            <div>Summmary of the ticket</div>
-            <div class="d-flex justify-content-end ">
-              <div
-                style="
-                  display: flex;
-                  width: 25px;
-                  height: 25px;
-                  background-color: rgb(92, 89, 255);
-                  border-radius: 50%;
-                  justify-content: center;
-                  align-items: center;
-                  color: white;
-                "
-              >
-                H
+
+            <div id="board" class="example-container rounded">
+              <div class="position-sticky top-0 p-3 " style="background-color: #f4f5f7">
+                <div style="font-size: small;color: gray;">In Progress</div>
+              </div>
+              <div cdkDropList  [cdkDropListData]="progress" [id]="'InProgress'" class="example-list"
+                (cdkDropListDropped)="drop($event)">
+                <div (cdkDragDropped)="handleGetId(item.ticketId)" *ngFor="let item of progress" class="example-box" cdkDrag>
+                  <div class="w-100 ">
+                    <div (click)="handleOpenTicket(item)" class="ticket-summary">{{item.ticketsummary}}</div>
+                    <div class="d-flex align-items-center justify-content-between mt-3 ">
+                      <div [matTooltip]="item.tickettype">
+                        <mat-icon [ngClass]=" typeIcons[item.tickettype].color">
+                          {{ typeIcons[item.tickettype].icon}}
+                        </mat-icon>
+                      </div>
+                      <div class="d-flex align-items-center gap-1 ">
+                        <mat-icon  class="fs-5" [matTooltip]="item.ticketpriority"
+                          [ngClass]="priorityicon[item.ticketpriority].color">
+                          {{priorityicon[item.ticketpriority].icon}}
+                        </mat-icon>
+                        <div class="d-flex align-items-center ">
+                          <img style="width: 25px; height: 25px;" src="assets/user.png" *ngIf="!item.assignedTo" class="fs-4">
+                          <div *ngIf="item.assignedTo" class="profile">{{item.assignedTo.username[0].toUpperCase()}}</div>
+                         </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
-            <div>Summmary of the ticket</div>
-            <div class="d-flex justify-content-end ">
-              <div
-                style="
-                  display: flex;
-                  width: 25px;
-                  height: 25px;
-                  background-color: rgb(92, 89, 255);
-                  border-radius: 50%;
-                  justify-content: center;
-                  align-items: center;
-                  color: white;
-                "
-              >
-                H
+            <div id="board" class="example-container rounded">
+              <div class="position-sticky top-0 p-3" style="background-color: #f4f5f7">
+                <div style="font-size: small;color: gray;">DONE</div>
               </div>
-            </div>
-          </div>
-        </div>
-        
-        <div
-          style="height: 55vh; background-color: #f4f5f7; flex: 1"
-          id="board"
-        >
-        <div style="position: sticky;top: 0; background-color: #f4f5f7" class="p-2">To DO</div>
-        <div class="p-2 ">
-          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
-            <div>Summmary of the ticket</div>
-            <div class="d-flex justify-content-end ">
-              <div
-                style="
-                  display: flex;
-                  width: 25px;
-                  height: 25px;
-                  background-color: rgb(92, 89, 255);
-                  border-radius: 50%;
-                  justify-content: center;
-                  align-items: center;
-                  color: white;
-                "
-              >
-                H
-              </div>
-            </div>
-          </div>
-        </div>
-          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
-            <div>Summmary of the ticket</div>
-            <div class="d-flex justify-content-end ">
-              <div
-                style="
-                  display: flex;
-                  width: 25px;
-                  height: 25px;
-                  background-color: rgb(92, 89, 255);
-                  border-radius: 50%;
-                  justify-content: center;
-                  align-items: center;
-                  color: white;
-                "
-              >
-                H
-              </div>
-            </div>
-          </div>
-          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
-            <div>Summmary of the ticket</div>
-            <div class="d-flex justify-content-end ">
-              <div
-                style="
-                  display: flex;
-                  width: 25px;
-                  height: 25px;
-                  background-color: rgb(92, 89, 255);
-                  border-radius: 50%;
-                  justify-content: center;
-                  align-items: center;
-                  color: white;
-                "
-              >
-                H
-              </div>
-            </div>
-          </div>
-          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
-            <div>Summmary of the ticket</div>
-            <div class="d-flex justify-content-end ">
-              <div
-                style="
-                  display: flex;
-                  width: 25px;
-                  height: 25px;
-                  background-color: rgb(92, 89, 255);
-                  border-radius: 50%;
-                  justify-content: center;
-                  align-items: center;
-                  color: white;
-                "
-              >
-                H
-              </div>
-            </div>
-          </div>
-          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
-            <div>Summmary of the ticket</div>
-            <div class="d-flex justify-content-end ">
-              <div
-                style="
-                  display: flex;
-                  width: 25px;
-                  height: 25px;
-                  background-color: rgb(92, 89, 255);
-                  border-radius: 50%;
-                  justify-content: center;
-                  align-items: center;
-                  color: white;
-                "
-              >
-                H
-              </div>
-            </div>
-          </div>
-          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
-            <div>Summmary of the ticket</div>
-            <div class="d-flex justify-content-end ">
-              <div
-                style="
-                  display: flex;
-                  width: 25px;
-                  height: 25px;
-                  background-color: rgb(92, 89, 255);
-                  border-radius: 50%;
-                  justify-content: center;
-                  align-items: center;
-                  color: white;
-                "
-              >
-                H
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          style="height: 55vh; background-color: #f4f5f7; flex: 1"
-          class="p-2"
-          id="board"
-        >
-          <h3>In Progress</h3>
-          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
-            <div>Summmary of the ticket</div>
-            <div class="d-flex justify-content-end ">
-              <div
-                style="
-                  display: flex;
-                  width: 25px;
-                  height: 25px;
-                  background-color: rgb(92, 89, 255);
-                  border-radius: 50%;
-                  justify-content: center;
-                  align-items: center;
-                  color: white;
-                "
-              >
-                H
-              </div>
-            </div>
-          </div>
-          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
-            <div>Summmary of the ticket</div>
-            <div class="d-flex justify-content-end ">
-              <div
-                style="
-                  display: flex;
-                  width: 25px;
-                  height: 25px;
-                  background-color: rgb(92, 89, 255);
-                  border-radius: 50%;
-                  justify-content: center;
-                  align-items: center;
-                  color: white;
-                "
-              >
-                H
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          style="height: 55vh; background-color: #f4f5f7; flex: 1"
-          class="p-2"
-          id="board"
-        >
-          <h3>Done</h3>
-          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
-            <div>Summmary of the ticket</div>
-            <div class="d-flex justify-content-end ">
-              <div
-                style="
-                  display: flex;
-                  width: 25px;
-                  height: 25px;
-                  background-color: rgb(92, 89, 255);
-                  border-radius: 50%;
-                  justify-content: center;
-                  align-items: center;
-                  color: white;
-                "
-              >
-                H
-              </div>
-            </div>
-          </div>
-          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
-            <div>Summmary of the ticket</div>
-            <div class="d-flex justify-content-end ">
-              <div
-                style="
-                  display: flex;
-                  width: 25px;
-                  height: 25px;
-                  background-color: rgb(92, 89, 255);
-                  border-radius: 50%;
-                  justify-content: center;
-                  align-items: center;
-                  color: white;
-                "
-              >
-                H
-              </div>
-            </div>
-          </div>
-          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
-            <div>Summmary of the ticket</div>
-            <div class="d-flex justify-content-end ">
-              <div
-                style="
-                  display: flex;
-                  width: 25px;
-                  height: 25px;
-                  background-color: rgb(92, 89, 255);
-                  border-radius: 50%;
-                  justify-content: center;
-                  align-items: center;
-                  color: white;
-                "
-              >
-                H
-              </div>
-            </div>
-          </div>
-          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
-            <div>Summmary of the ticket</div>
-            <div class="d-flex justify-content-end ">
-              <div
-                style="
-                  display: flex;
-                  width: 25px;
-                  height: 25px;
-                  background-color: rgb(92, 89, 255);
-                  border-radius: 50%;
-                  justify-content: center;
-                  align-items: center;
-                  color: white;
-                "
-              >
-                H
-              </div>
-            </div>
-          </div>
-          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
-            <div>Summmary of the ticket</div>
-            <div class="d-flex justify-content-end ">
-              <div
-                style="
-                  display: flex;
-                  width: 25px;
-                  height: 25px;
-                  background-color: rgb(92, 89, 255);
-                  border-radius: 50%;
-                  justify-content: center;
-                  align-items: center;
-                  color: white;
-                "
-              >
-                H
-              </div>
-            </div>
-          </div>
-          <div style="background-color: #FFFF;" class="p-3 rounded-1 mb-2">
-            <div>Summmary of the ticket</div>
-            <div class="d-flex justify-content-end ">
-              <div
-                style="
-                  display: flex;
-                  width: 25px;
-                  height: 25px;
-                  background-color: rgb(92, 89, 255);
-                  border-radius: 50%;
-                  justify-content: center;
-                  align-items: center;
-                  color: white;
-                "
-              >
-                H
+              <div cdkDropList [cdkDropListData]="done"  [id]="'Done'" class="example-list"
+                (cdkDropListDropped)="drop($event)">
+                <div (cdkDragDropped)="handleGetId(item.ticketId)" *ngFor="let item of done" class="example-box" cdkDrag>
+                  <div class="w-100 ">
+                    <div (click)="handleOpenTicket(item)" class="ticket-summary">{{item.ticketsummary}}</div>
+                    <div class="d-flex align-items-center justify-content-between mt-3 ">
+                      <div [matTooltip]="item.tickettype">
+                        <mat-icon [ngClass]=" typeIcons[item.tickettype].color">
+                          {{ typeIcons[item.tickettype].icon}}
+                        </mat-icon>
+                      </div>
+                      <div class="d-flex align-items-center gap-1 ">
+                        <mat-icon  class="fs-5" [matTooltip]="item.ticketpriority"
+                          [ngClass]="priorityicon[item.ticketpriority].color">
+                          {{priorityicon[item.ticketpriority].icon}}
+                        </mat-icon>
+                        <div class="d-flex align-items-center ">
+                          <img style="width: 25px; height: 25px;" src="assets/user.png" *ngIf="!item.assignedTo" class="fs-4">
+                          <div *ngIf="item.assignedTo" class="profile">{{item.assignedTo.username[0].toUpperCase()}}</div>
+                         </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

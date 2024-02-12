@@ -1,0 +1,10 @@
+<div class="p-4">
+    <h2>Select Avatar</h2>
+    <div class="d-flex align-items-center flex-wrap justify-content-center ">
+        <div (click)="selectAvatar(item.imgUrl)" *ngFor="let item of avatarList" class="m-2 position-relative" style="cursor: pointer;">
+            <span *ngIf="item.imgUrl === selectedAvatarUrl" class="position-absolute top-0 start-100 translate-middle p-2 bg-success  border border-light rounded-circle z-3 "></span>
+            <img  width="80" height="80" class="rounded-1  position-relative " src={{item.imgUrl}}> 
+        </div>
+        
+    </div>
+</div>

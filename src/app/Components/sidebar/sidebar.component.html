@@ -1,7 +1,7 @@
-<div class="d-flex" style="position: sticky; top: 0">
+<div class="d-flex" style="position: sticky;top: 60px;">
   <div
     *ngIf="comp"
-    style="height: 90vh; width: 30px; position: relative"
+    style="height:calc(100vh - 60px); width: 30px; position: relative;"
     id="side"
   >
     <div (click)="openDrawer()" id="side-item" class="border">
@@ -28,14 +28,11 @@
                 class="rounded-1"
                 width="30"
                 height="30"
-                src="/assets/10402.svg"
+                src={{project?.avatarUrl}}
               />
               <div>
                 <div class="fw-medium">
                   {{ project && project.projectname }}
-                </div>
-                <div style="color: rgb(94, 94, 94); font-size: small">
-                  Software Project
                 </div>
               </div>
             </div>

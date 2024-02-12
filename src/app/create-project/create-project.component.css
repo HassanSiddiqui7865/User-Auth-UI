@@ -4,3 +4,7 @@
         background-color:  var(--ds-background-selected, #E6EFFC);
     }
 }
+::ng-deep .mat-mdc-snack-bar-container.snackbar {
+    --mdc-snackbar-container-color: #FFFF;
+    --mdc-snackbar-supporting-text-color: #0000;
+  }
