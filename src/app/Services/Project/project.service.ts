@@ -11,17 +11,19 @@ export class ProjectService {
     return this.http.get(`${environment.BASEURL}Project`);
   }
 
-  createProject(projectData:any):Observable<any>{
+  createProject(projectData:any,avatarUrl:string):Observable<any>{
     return this.http.post(`${environment.BASEURL}/Project`,{
       projectname:projectData.projectname,
+      projectkey:projectData.projectkey,
+      avatarUrl:avatarUrl,
       projectdescription:projectData.projectdescription
     })
   }
   getAssignedProjects(id:any):Observable<any>{
-    return this.http.get(`${environment.BASEURL}/AssignedProject/${id}`)
+    return this.http.get(`${environment.BASEURL}/Project/user/${id}`)
   }
   getProjectManager():Observable<any>{
-    return this.http.get(`${environment.BASEURL}/User/role/${environment.PMId}`)
+    return this.http.get(`${environment.BASEURL}/User/role/${environment.MId}`)
   }
   AssignedUser(userId:any,projectId:any,isLead:boolean):Observable<any>{
     return this.http.post(`${environment.BASEURL}/AssignedProject`,{
@@ -33,19 +35,31 @@ export class ProjectService {
   DeleteAssignedUser(projectId:any,userId:any):Observable<any>{
     return this.http.delete(`${environment.BASEURL}/AssignedProject/${projectId}/${userId}`)
   }
-  getProject(id:any): Observable<any> {
-    return this.http.get(`${environment.BASEURL}Project/${id}`);
-  }
+  
   DeleteProject(id:any):Observable<any>{
     return this.http.delete(`${environment.BASEURL}Project/${id}`); 
   }
-  updateProject(id:any,projectData:any):Observable<any>{
+  updateProject(id:any,projectData:any,avatarUrl:string):Observable<any>{
     return this.http.put(`${environment.BASEURL}/Project/${id}`,{
       projectname:projectData.projectname,
+      projectkey:projectData.projectkey,
+      avatarUrl:avatarUrl,
       projectdescription:projectData.projectdescription
     })
   }
-  getProjectWithoutusers():Observable<any>{
+  getProjectsWithoutusers():Observable<any>{
     return this.http.get(`${environment.BASEURL}/Project/withoutUsers`)
+  }
+  getProjectWithoutusers(projectid:any):Observable<any>{
+    return this.http.get(`${environment.BASEURL}/Project/withoutUsers/${projectid}`)
+  }
+  ChangeLeadIfNoLead(projectId:any,userId:any):Observable<any>{
+    return this.http.put(`${environment.BASEURL}/AssignedProject/${projectId}/${userId}`,{})
+  }
+  ChangeLeadIfLead(projectId:any,leadId:any,userId:any):Observable<any>{
+    return this.http.put(`${environment.BASEURL}/AssignedProject/${projectId}/${leadId}/${userId}`,{})
+  }
+  GetProjectById(projectId:any):Observable<any>{
+    return this.http.get(`${environment.BASEURL}/Project/${projectId}`)
   }
 }

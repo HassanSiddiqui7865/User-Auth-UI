@@ -8,18 +8,16 @@ import { LoginpageComponent } from './loginpage/loginpage.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProjectsComponent } from './projects/projects.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { UsersManageComponent } from './users-manage/users-manage.component';
+import { ProjectUserManageComponent } from './project-user-manage/project-user-manage.component';
 import { ManageuserComponent } from './manageuser/manageuser.component';
 import {HttpClientModule} from '@angular/common/http'
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SinglebookComponent } from './singlebook/singlebook.component';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 import { LayoutComponent } from './layout/layout.component';
 import { BoardComponent } from './board/board.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { DeleteComponentComponent } from './Components/delete-component/delete-component.component';
-import { UpdateProjectComponent } from './Components/update-project/update-project.component';
 import {MatIconModule} from '@angular/material/icon'
 import {MatTableModule} from '@angular/material/table';
 import { SidebarComponent } from './Components/sidebar/sidebar.component';
@@ -27,15 +25,29 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
 import { CreateProjectComponent } from './create-project/create-project.component';
 import { CreateTaskComponent } from './Components/create-task/create-task.component';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+
 import { ShowMembersComponent } from './Components/show-members/show-members.component';
 import { DialerComponent } from './dialer/dialer.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
-import { CreateUserComponent } from './Components/create-user/create-user.component';
+import { AssignUserComponent } from './Components/assign-user/assign-user.component';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { ProjectLayoutComponent } from './project-layout/project-layout.component';
 import { ProjectDetailsLayoutComponent } from './project-details-layout/project-details-layout.component';
+import { CreateUserComponent } from './Components/create-user/create-user.component';
+import { AvatarSelectComponent } from './Components/avatar-select/avatar-select.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {
+  CdkDrag,
+  CdkDropList,
+  CdkDropListGroup,
+} from '@angular/cdk/drag-drop';
+import { SidenavComponent } from './Components/sidenav/sidenav.component';
+import {MatSelectModule} from '@angular/material/select';
+import {TooltipPosition, MatTooltipModule} from '@angular/material/tooltip';
+import { ViewTicketComponent } from './Components/view-ticket/view-ticket.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,27 +58,33 @@ import { ProjectDetailsLayoutComponent } from './project-details-layout/project-
     LayoutComponent,
     ProjectsComponent,
     NavbarComponent,
-    UsersManageComponent,
+    ProjectUserManageComponent,
     ManageuserComponent,
-    SinglebookComponent,
     ForgetpasswordComponent,
     LayoutComponent,
-    BoardComponent,
     DeleteComponentComponent,
-    UpdateProjectComponent,
     SidebarComponent,
     CreateProjectComponent,
     DialerComponent,
     CreateTaskComponent,
     ShowMembersComponent,
-    CreateUserComponent,
+    AssignUserComponent,
     ProjectDetailsComponent,
     ProjectLayoutComponent,
     ProjectDetailsLayoutComponent,
-    ShowMembersComponent,
+    CreateUserComponent,
+    AvatarSelectComponent,
+    BoardComponent,
+    SidenavComponent,
+    ViewTicketComponent,
+    
+   
+    
     ],
   imports: [
-    MatProgressBarModule,
+    MatAutocompleteModule,
+    MatSelectModule,
+    MatTooltipModule,
     CommonModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
@@ -80,7 +98,11 @@ import { ProjectDetailsLayoutComponent } from './project-details-layout/project-
     MatIconModule,
     MatSidenavModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    CdkDrag,
+    CdkDropList,
+    CdkDropListGroup,
+   
   ],
   providers: [],
   bootstrap: [AppComponent]

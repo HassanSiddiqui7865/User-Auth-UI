@@ -14,6 +14,24 @@
         placeholder="Enter Project Full Name"
       />
     </div>
+    <div class="form-outline mb-3">
+      <label class="form-label" for="form3Example4">Project Key</label>
+      <input
+        type="text"
+        id="form3Example4"
+        class="form-control"
+        formControlName="projectkey"
+        autocomplete="off"
+        placeholder="Enter Project Key"
+      />
+    </div>
+    <div class="form-outline mb-3">
+      <label class="form-label">Avatar</label>
+      <div class="d-flex align-items-center gap-2 ">
+        <img width="40" height="40" class="rounded-1 " src={{avatarselected}}>
+       <div (click)="openAvatarDialog()" style="cursor: pointer;text-decoration: underline;color: blue;">select image</div>
+      </div>
+    </div>
     <label>Project Lead</label>
     <div style="position: relative; width: 50%;" class="mb-3">
       <div class="border d-flex align-items-center px-2 ">

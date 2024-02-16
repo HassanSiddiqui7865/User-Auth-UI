@@ -1,17 +1,20 @@
-<div style="display: flex;">
-  <app-sidebar></app-sidebar>
-<div class="p-3 w-100">
+<div>
+  <div *ngIf="userList && !AccessToDelete()" class="alert alert-info w-100 " role="alert">
+    You cannot Create or Delete members for projects
+  </div>
+<div class="p-4 w-100">
     <div class="d-flex justify-content-between mb-4">
-      <h1 style="color: rgb(1, 1, 102)">Project Management</h1>
+      <h1 style="color: rgb(1, 1, 102)">Members</h1>
       <button
+        *ngIf="AccessToDelete()"
         (click)="openCreateUserDialog()"
         class="btn btn-primary btn-sm  d-flex align-items-center h-25"
       >
-        <mat-icon>add</mat-icon>
-        Create
+        Add Members
       </button>
     </div>
     <table
+    *ngIf="userList && userList.length>0"
       mat-table
       [dataSource]="userList"
       class="mat-elevation-z8"
@@ -19,19 +22,36 @@
     >
       <ng-container matColumnDef="Username">
         <th
-          style="background-color: rgb(243, 243, 243)"
           mat-header-cell
           *matHeaderCellDef
         >
           Username
         </th>
         <td class="name" mat-cell *matCellDef="let element">
-          {{ element.username }}
+          <div class="d-flex align-items-center gap-2 ">
+           
+            <div  style="
+                display: flex;
+                width: 30px;
+                position: relative;
+                height: 30px;
+                background-color: rgb(92, 89, 255);
+                border-radius: 50%;
+                justify-content: center;
+                align-items: center;
+                color: white;
+              ">
+              <span *ngIf="element.isLead" class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"></span>
+            {{element.username[0].toUpperCase()}}
+           
+          </div>      
+            {{ element.username }}
+            <span *ngIf="element.userId === userLoggedIn.userId">(You)</span>
+          </div>
         </td>
       </ng-container>
       <ng-container matColumnDef="Fullname">
         <th
-          style="background-color: rgb(243, 243, 243)"
           mat-header-cell
           *matHeaderCellDef
         >
@@ -43,7 +63,6 @@
       </ng-container>
       <ng-container matColumnDef="Email">
         <th
-          style="background-color: rgb(243, 243, 243)"
           mat-header-cell
           *matHeaderCellDef
         >
@@ -53,21 +72,8 @@
           {{ element.email }}
         </td>
       </ng-container>
-      <ng-container matColumnDef="Role">
-        <th
-          style="background-color: rgb(243, 243, 243)"
-          mat-header-cell
-          *matHeaderCellDef
-        >
-          Role
-        </th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.roleName }}
-        </td>
-      </ng-container>
       <ng-container matColumnDef="CreatedAt">
         <th
-          style="background-color: rgb(243, 243, 243)"
           mat-header-cell
           *matHeaderCellDef
         >
@@ -79,40 +85,30 @@
       </ng-container>
       <ng-container matColumnDef="Actions">
         <th
-          style="background-color: rgb(243, 243, 243)"
           mat-header-cell
           *matHeaderCellDef
         >
           Actions
         </th>
         <td mat-cell *matCellDef="let element">
-          <div class="d-flex gap-2 align-items-center">
-            <mat-icon
-              
-              style="color: #0d6efd; cursor: pointer"
-             
-              >edit</mat-icon
-            >
-            <mat-icon
-              style="color: #dc3545; cursor: pointer"
-              (click)="openDeleteDialog(element.userId)"
-              >delete</mat-icon
-            >
-          </div>
+          <mat-icon *ngIf="AccessToDelete()"  style="cursor: pointer;" [matMenuTriggerFor]="menu">more_horiz</mat-icon>
+          <mat-menu #menu="matMenu" xPosition="before">
+           <div (click)="openDeleteDialog(element.userId)" mat-menu-item>Delete Member</div>
+          </mat-menu>
         </td>
       </ng-container>
   
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
-    <!-- <div *ngIf="!ProjectList" class="d-flex justify-content-center align-items-center" style="height: 50vh;">
+    <div *ngIf="!userList" class="d-flex justify-content-center align-items-center" style="height: 50vh;">
       <div class="spinner-border spinner-border" style="width: 3rem; height: 3rem;" role="status">
       </div>
     </div>
     <div class="d-flex justify-content-center align-items-center" style="height: 50vh;"
-      *ngIf="ProjectList && ProjectList.length===0">
-      <h1>No Project Click to Create new Project</h1>
-    </div> -->
+      *ngIf="userList && userList.length===0">
+      <h1>No User assigned to Project</h1>
+    </div>
   </div>
 </div>
   

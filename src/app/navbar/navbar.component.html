@@ -1,6 +1,6 @@
-<nav
-  class="navbar navbar-light border p-2"
-  style="position: sticky; top: 0; background-color: white; z-index: 999"
+<div
+  class="d-flex justify-content-between border"
+  style="position: sticky; top: 0; background-color: white; z-index: 999;height: 60px;"
 >
   <div class="d-flex align-items-center gap-5">
     <div class="d-flex align-items-center gap-2">
@@ -8,7 +8,7 @@
         src="assets/logo.svg"
         width="30"
         height="30"
-        class="mx-2  d-inline-block align-top"
+        class="mx-2 d-inline-block align-top"
         alt=""
       />
       <div class="fs-5">Ticket Management System</div>
@@ -18,25 +18,47 @@
     class="d-flex align-items-center gap-2"
     style="margin-right: 5px; cursor: pointer"
   >
-    <div class="">
-      <div>{{ LoggedInUser.email }}</div>
-      <div style="text-transform: capitalize; color: rgb(141, 141, 141)">
-        {{ LoggedInUser.roleName }}
-      </div>
-    </div>
-    <div mat-button [matMenuTriggerFor]="userMenu"  data-toggle="tooltip" data-placement="right" title="Tooltip on top" id="output"></div>
-    <mat-menu #userMenu="matMenu" xPosition="before" style="width:max-content;height: 30vh;">
-      <div style="height: 100%;width:100%">
-        <!-- <app-board></app-board> -->
-        <!-- <button
-        *ngIf="LoggedInUser.roleId === AdminId"
-        [routerLink]="'users'"
-        mat-menu-item
-      >
-        Manage Users
-      </button>
-      <button (click)="onHandleLogout()" mat-menu-item>Logout</button> -->
+    <div mat-button [matMenuTriggerFor]="userMenu" id="output"></div>
+    <mat-menu #userMenu="matMenu" xPosition="before">
+      <div class="p-3 px-4">
+        <h3>Account</h3>
+        <div class="d-flex align-items-center gap-2">
+          <div
+            style="
+              display: flex;
+              width: 40px;
+              height: 40px;
+              background-color: rgb(40, 38, 207);
+              border-radius: 50%;
+              justify-content: center;
+              align-items: center;
+              color: white;
+            "
+          >
+            {{ LoggedInUser.username[0].toUpperCase() }}
+          </div>
+          <div>
+            <div>{{ LoggedInUser.username }}</div>
+            <div style="font-size: small; color: rgb(82, 82, 82)">
+              {{ LoggedInUser.email }}
+            </div>
+            <div style="font-size: small; color: rgb(82, 82, 82)">
+              {{ LoggedInUser.roleName }}
+            </div>
+          </div>
+        </div>
+        <div class="mt-4">
+          <button *ngIf="LoggedInUser.roleId === AdminId" [routerLink]="['/users']" class="btn btn-light w-100 border">
+            Users
+          </button>
+          <button
+            (click)="onHandleLogout()"
+            class="btn btn-dark  w-100 border mt-2 "
+          >
+            Logout
+          </button>
+        </div>
       </div>
     </mat-menu>
   </div>
-</nav>
+</div>

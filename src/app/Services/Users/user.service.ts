@@ -18,13 +18,13 @@ export class UserService {
       return this.http.delete(`${environment.BASEURL}/User/${id}`)
     }
 
-    createUser(userData:any):Observable<any>{
+    createUser(userData:any,roleId:any):Observable<any>{
       return this.http.post(`${environment.BASEURL}/User/register`,{
         fullname:userData.fullname,
         username:userData.username,
         email:userData.email,
         pass:userData.pass,
-        roleId:userData.roleId
+        roleId:roleId
       })
     }
     getRoles():Observable<any>{
@@ -33,4 +33,5 @@ export class UserService {
     getUsersWithoutProjects():Observable<any>{
       return this.http.get(`${environment.BASEURL}/User/withoutProjects`)
     }
+
 }

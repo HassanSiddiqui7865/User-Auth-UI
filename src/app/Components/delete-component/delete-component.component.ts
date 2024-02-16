@@ -37,7 +37,7 @@ export class DeleteComponentComponent {
       this.loading = true
       this.userService.DeleteUser(this.data.userId).subscribe({
         next:()=>{
-          this.data.loadUsers()
+          this.data.LoadUsers()
           this.loading = false
           this.dialogRef.close()
               this.toastr.success('','User Deleted Successfully', {

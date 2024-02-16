@@ -1,10 +1,39 @@
-<div style="display: flex">
-  <div>
-    <app-sidebar [data]="project.projectname"></app-sidebar>
+<div>
+  <div
+    *ngIf="userList && AccessToUpdate()"
+    class="alert alert-info w-100"
+    role="alert"
+  >
+    You cannot Update the Project
   </div>
-  <div style="display: flex;justify-content: center;width: 100%;margin-top: 30px;">
-    <div style="width: 50%;">
-      <form class="w-100" [formGroup]="UpdateProjectForm" (ngSubmit)="handleUpdateProject()">
+
+  <div
+    *ngIf="project"
+    style="
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin-top: 30px;
+      position: relative;
+    "
+  >
+    <div
+      *ngIf="AccessToUpdate()"
+      style="
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-color: #ffff;
+        z-index: 999;
+        opacity: 0.4;
+      "
+    ></div>
+    <div style="width: 60%">
+      <form
+        class="w-100"
+        [formGroup]="UpdateProjectForm"
+        (ngSubmit)="handleUpdateProject()"
+      >
         <div class="d-flex justify-content-between">
           <h1 class="mb-3">Details</h1>
         </div>
@@ -19,44 +48,88 @@
             placeholder="Enter Project Name"
           />
         </div>
-        <label>Project Lead</label>
-        <div style="position: relative; width: 50%;" class="mb-3">
-          <div class="border d-flex align-items-center px-2 ">
-          <div [ngStyle]="{'background-color': selectedLead ? 'rgb(92, 89, 255)' : 'white'}"
-            style="
-                    display: flex;
-                    width: 20px;
-                    height: 20px;
-                    border-radius: 50%;
-                    justify-content: center;
-                    align-items: center;
-                    color: white;
-                    font-size: small;
-                  ">{{selectedLead && selectedLead.username[0].toUpperCase()}}</div>
-            <input
+        <div class="form-outline mb-3">
+          <label class="form-label" for="form3Example4">Project Key</label>
+          <input
             type="text"
-            id="form3Example1"
-            class="border-0 p-2 w-100"
+            id="form3Example4"
+            class="form-control"
+            formControlName="projectkey"
             autocomplete="off"
-            [value]="selectedLead && selectedLead.username"
-            style="outline: none;"
-            (input)="handleChange($event)"
-            >
+            placeholder="Enter Project Key"
+          />
+        </div>
+        <div class="form-outline mb-3">
+          <label class="form-label">Avatar</label>
+          <div class="d-flex align-items-center gap-2 ">
+            <img width="30" height="30" class="rounded-1 " src={{avatarselected}}>
+           <div (click)="openAvatarDialog()" style="cursor: pointer;text-decoration: underline;color: blue;">select image</div>
           </div>
-          
-          <div *ngIf="filteredArray && filteredArray.length>0" style="position: absolute;width: 100%;max-height:80px;background-color:#FFFF;margin-top:5px;" class="rounded border p-1 ">
-            <div (click)="SetLead(item)" *ngFor="let item of filteredArray" id="Lead-item" class="d-flex align-items-center gap-2 p-2 ">
-              <div  style="
-              display: flex;
-              width: 20px;
-              height: 20px;
-              background-color: rgb(92, 89, 255);
-              border-radius: 50%;
-              justify-content: center;
-              align-items: center;
-              color: white;
-            ">{{item.username[0].toUpperCase()}}</div>
-            <div>{{item.username}}</div>
+        </div>
+        <label>Project Lead</label>
+        <div style="position: relative; width: 50%" class="mb-3">
+          <div class="border d-flex align-items-center px-2">
+            <div
+              [ngStyle]="{
+                'background-color': selectedLead ? 'rgb(92, 89, 255)' : 'white'
+              }"
+              style="
+                display: flex;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                justify-content: center;
+                align-items: center;
+                color: white;
+                font-size: small;
+              "
+            >
+              {{ selectedLead && selectedLead.username[0].toUpperCase() }}
+            </div>
+            <input
+              type="text"
+              id="form3Example1"
+              class="border-0 p-2 w-100"
+              autocomplete="off"
+              [value]="selectedLead ? selectedLead.username : ''"
+              style="outline: none"
+              placeholder="Select Lead"
+              (input)="handleChange($event)"
+            />
+          </div>
+
+          <div
+            *ngIf="filteredArray && filteredArray.length > 0"
+            style="
+              position: absolute;
+              width: 100%;
+              max-height: 80px;
+              background-color: #ffff;
+              margin-top: 5px;
+            "
+            class="rounded border p-1"
+          >
+            <div
+              (click)="SetLead(item)"
+              *ngFor="let item of filteredArray"
+              id="Lead-item"
+              class="d-flex align-items-center gap-2 p-2"
+            >
+              <div
+                style="
+                  display: flex;
+                  width: 20px;
+                  height: 20px;
+                  background-color: rgb(92, 89, 255);
+                  border-radius: 50%;
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
+                "
+              >
+                {{ item.username[0].toUpperCase() }}
+              </div>
+              <div>{{ item.username }}</div>
             </div>
           </div>
         </div>
@@ -73,10 +146,26 @@
             class="form-control"
           ></textarea>
         </div>
-        <div class="mt-4 pt-2">
-          <button class="btn btn-primary">SAVE</button>
+        <div class="mt-4">
+          <button
+            [disabled]="UpdateProjectForm.invalid || AccessToUpdate()"
+            class="btn btn-primary"
+          >
+            SAVE
+          </button>
         </div>
       </form>
     </div>
+  </div>
+  <div
+    *ngIf="!project"
+    class="d-flex justify-content-center align-items-center"
+    style="height: 50vh"
+  >
+    <div
+      class="spinner-border spinner-border"
+      style="width: 3rem; height: 3rem"
+      role="status"
+    ></div>
   </div>
 </div>

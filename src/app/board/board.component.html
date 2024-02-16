@@ -1,220 +1,144 @@
-<div
-  class="d-flex align-items-center justify-content-center"
-  style="height: 80vh"
->
-  <div class="d-flex align gap-2">
-    <div
-      class="border p-2 bg-light rounded"
-      style="height: 300px; width: 250px"
-    >
-      <h4 style="color: rgb(102, 102, 102)">BACKLOG</h4>
-      <div draggable="true" style="background-color: white" class="p-3 border mt-2 rounded ">
-        <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
-          laboriosam perferendis quis quisquam commodi,
+<div class="d-flex">
+  <app-sidebar></app-sidebar>
+  <div class="w-100 p-4 overflow-hidden ">
+    <div>
+      <h1>Application Board</h1>
+      <div class="d-flex align-items-center gap-3">
+        <div class="border w-25 d-flex align-items-center">
+          <input type="text" id="form3Example1" class="border-0 p-2 w-100" style="outline: none"
+            placeholder="Enter Search Project" />
+          <mat-icon>search</mat-icon>
         </div>
-        <div class="d-flex justify-content-between mt-3">
-          <div
-            class="d-flex position-relative"
-            style="color: white; margin: 0px 0px 10px 10px; position: relative"
-          >
-            <div
-              style="
-                display: flex;
-                width: 30px;
-                height: 30px;
-                background-color: rgb(92, 89, 255);
-                border-radius: 50%;
-                justify-content: center;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                left: -2px;
-              "
-            >
-              H
-            </div>
-            <div
-              style="
-                display: flex;
-                width: 30px;
-                height: 30px;
-                background-color: rgb(203, 61, 247);
-                border-radius: 50%;
-                justify-content: center;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                left: 15px;
-              "
-            >
-              H
-            </div>
-            <div
-              style="
-                display: flex;
-                width: 30px;
-                height: 30px;
-                background-color: rgb(255, 88, 88);
-                border-radius: 50%;
-                justify-content: center;
-                font-size: 15px;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                left: 30px;
-              "
-            >
-              +6
-            </div>
+        <div class="avatar-group">
+          <div class="avatar">
+            <span class="avatar-name">Someone 1</span>
+            <img
+              src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+              alt="Image" />
           </div>
-          <mat-icon>arrow_upward</mat-icon>
+          <div class="avatar">
+            <span class="avatar-name">Someone 2</span>
+            <img
+              src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+              alt="Image" />
+          </div>
+          <div class="avatar">
+            <span class="avatar-name">Someone 3</span>
+            <img
+              src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+              alt="Image" />
+          </div>
+          <div class="avatar">
+            <span class="avatar-name">Someone 4</span>
+            <img
+              src="https://images.unsplash.com/photo-1499952127939-9bbf5af6c51c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+              alt="Image" />
+          </div>
+          <div class="avatar">
+            <span class="avatar-name">Someone 5</span>
+            <img
+              src="https://images.unsplash.com/photo-1504593811423-6dd665756598?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHBlcnNvbnxlbnwwfHwwfHw%3D%3D&auto=format&fit=crop&w=500&q=60"
+              alt="Image" />
+          </div>
         </div>
       </div>
-    </div>
-    <div
-      class="border p-2 bg-light rounded scroll-behave"
-      style="height: 300px; width: 250px;overflow-y: auto;"
-    >
-      <h4 style="color: rgb(102, 102, 102)">SELECTED FOR DEVELOPMENT</h4>
-      <div style="background-color: white" class="p-3 border mt-2 rounded ">
-        <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
-          laboriosam perferendis quis quisquam commodi,
-        </div>
-        <div class="d-flex justify-content-between mt-3">
-          <div
-            class="d-flex position-relative"
-            style="color: white; margin: 0px 0px 10px 10px; position: relative"
-          >
-            <div
-              style="
-                display: flex;
-                width: 30px;
-                height: 30px;
-                background-color: rgb(92, 89, 255);
-                border-radius: 50%;
-                justify-content: center;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                left: -2px;
-              "
-            >
-              H
+      <div class="mt-4 overflow-x-auto">
+        <div cdkDropListGroup>
+          <div class="d-flex gap-2" style="width: max-content;">
+            <div id="board" class="example-container rounded">
+              <div class="position-sticky top-0 p-3" style="background-color: #f4f5f7">
+                <div style="font-size: small;color: gray;">BACKLOG</div>
+              </div>
+              <div cdkDropList [cdkDropListData]="backlog" [id]="'Backlog'" class="example-list" 
+                (cdkDropListDropped)="drop($event)">
+                <div (cdkDragDropped)="handleGetId(item.ticketId)"  *ngFor="let item of backlog" class="example-box" cdkDrag>
+                  <div class="w-100 ">
+                    <div (click)="handleOpenTicket(item)" class="ticket-summary">{{item.ticketsummary}}</div>
+                    <div class="d-flex align-items-center justify-content-between mt-3 ">
+                      <div [matTooltip]="item.tickettype">
+                        <mat-icon [ngClass]=" typeIcons[item.tickettype].color">
+                          {{ typeIcons[item.tickettype].icon}}
+                        </mat-icon>
+                      </div>
+                      <div class="d-flex align-items-center gap-1 ">
+                        <mat-icon  class="fs-5" [matTooltip]="item.ticketpriority"
+                          [ngClass]="priorityicon[item.ticketpriority].color">
+                          {{priorityicon[item.ticketpriority].icon}}
+                        </mat-icon>
+                        <div class="d-flex align-items-center ">
+                          <img style="width: 25px; height: 25px;" src="assets/user.png" *ngIf="!item.assignedTo" class="fs-4">
+                          <div *ngIf="item.assignedTo" class="profile">{{item.assignedTo.username[0].toUpperCase()}}</div>
+                         </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div
-              style="
-                display: flex;
-                width: 30px;
-                height: 30px;
-                background-color: rgb(203, 61, 247);
-                border-radius: 50%;
-                justify-content: center;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                left: 15px;
-              "
-            >
-              H
+
+            <div id="board" class="example-container rounded">
+              <div class="position-sticky top-0 p-3 " style="background-color: #f4f5f7">
+                <div style="font-size: small;color: gray;">In Progress</div>
+              </div>
+              <div cdkDropList  [cdkDropListData]="progress" [id]="'InProgress'" class="example-list"
+                (cdkDropListDropped)="drop($event)">
+                <div (cdkDragDropped)="handleGetId(item.ticketId)" *ngFor="let item of progress" class="example-box" cdkDrag>
+                  <div class="w-100 ">
+                    <div (click)="handleOpenTicket(item)" class="ticket-summary">{{item.ticketsummary}}</div>
+                    <div class="d-flex align-items-center justify-content-between mt-3 ">
+                      <div [matTooltip]="item.tickettype">
+                        <mat-icon [ngClass]=" typeIcons[item.tickettype].color">
+                          {{ typeIcons[item.tickettype].icon}}
+                        </mat-icon>
+                      </div>
+                      <div class="d-flex align-items-center gap-1 ">
+                        <mat-icon  class="fs-5" [matTooltip]="item.ticketpriority"
+                          [ngClass]="priorityicon[item.ticketpriority].color">
+                          {{priorityicon[item.ticketpriority].icon}}
+                        </mat-icon>
+                        <div class="d-flex align-items-center ">
+                          <img style="width: 25px; height: 25px;" src="assets/user.png" *ngIf="!item.assignedTo" class="fs-4">
+                          <div *ngIf="item.assignedTo" class="profile">{{item.assignedTo.username[0].toUpperCase()}}</div>
+                         </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div
-              style="
-                display: flex;
-                width: 30px;
-                height: 30px;
-                background-color: rgb(255, 88, 88);
-                border-radius: 50%;
-                justify-content: center;
-                font-size: 15px;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                left: 30px;
-              "
-            >
-              +6
-            </div>
-          </div>
-          <mat-icon>arrow_upward</mat-icon>
-        </div>
-      </div>
-      <div  style="background-color: white" class="p-3 border mt-2 rounded ">
-        <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
-          laboriosam perferendis quis quisquam commodi,
-        </div>
-        <div class="d-flex justify-content-between mt-3">
-          <div
-            class="d-flex position-relative"
-            style="color: white; margin: 0px 0px 10px 10px; position: relative"
-          >
-            <div
-              style="
-                display: flex;
-                width: 30px;
-                height: 30px;
-                background-color: rgb(92, 89, 255);
-                border-radius: 50%;
-                justify-content: center;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                left: -2px;
-              "
-            >
-              H
-            </div>
-            <div
-              style="
-                display: flex;
-                width: 30px;
-                height: 30px;
-                background-color: rgb(203, 61, 247);
-                border-radius: 50%;
-                justify-content: center;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                left: 15px;
-              "
-            >
-              H
-            </div>
-            <div
-              style="
-                display: flex;
-                width: 30px;
-                height: 30px;
-                background-color: rgb(255, 88, 88);
-                border-radius: 50%;
-                justify-content: center;
-                font-size: 15px;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                left: 30px;
-              "
-            >
-              +6
+            <div id="board" class="example-container rounded">
+              <div class="position-sticky top-0 p-3" style="background-color: #f4f5f7">
+                <div style="font-size: small;color: gray;">DONE</div>
+              </div>
+              <div cdkDropList [cdkDropListData]="done"  [id]="'Done'" class="example-list"
+                (cdkDropListDropped)="drop($event)">
+                <div (cdkDragDropped)="handleGetId(item.ticketId)" *ngFor="let item of done" class="example-box" cdkDrag>
+                  <div class="w-100 ">
+                    <div (click)="handleOpenTicket(item)" class="ticket-summary">{{item.ticketsummary}}</div>
+                    <div class="d-flex align-items-center justify-content-between mt-3 ">
+                      <div [matTooltip]="item.tickettype">
+                        <mat-icon [ngClass]=" typeIcons[item.tickettype].color">
+                          {{ typeIcons[item.tickettype].icon}}
+                        </mat-icon>
+                      </div>
+                      <div class="d-flex align-items-center gap-1 ">
+                        <mat-icon  class="fs-5" [matTooltip]="item.ticketpriority"
+                          [ngClass]="priorityicon[item.ticketpriority].color">
+                          {{priorityicon[item.ticketpriority].icon}}
+                        </mat-icon>
+                        <div class="d-flex align-items-center ">
+                          <img style="width: 25px; height: 25px;" src="assets/user.png" *ngIf="!item.assignedTo" class="fs-4">
+                          <div *ngIf="item.assignedTo" class="profile">{{item.assignedTo.username[0].toUpperCase()}}</div>
+                         </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <mat-icon>arrow_upward</mat-icon>
         </div>
       </div>
-    </div>
-    <div
-      class="border p-2 bg-light rounded"
-      style="height: 300px; width: 250px"
-    >
-      <h4 style="color: rgb(102, 102, 102)">IN PROGRESS</h4>
-    </div>
-    <div
-      class="border p-2 bg-light rounded"
-      style="height: 300px; width: 250px"
-    >
-      <h4 style="color: rgb(102, 102, 102)">DONE</h4>
     </div>
   </div>
 </div>

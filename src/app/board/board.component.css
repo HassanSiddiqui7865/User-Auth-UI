@@ -1,12 +1,124 @@
-.scroll-behave::-webkit-scrollbar {
+.avatar-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.avatar {
+    position: relative;
+    transition: .2s;
+}
+.avatar:not(:first-child) {
+    margin-left: -0.5rem;
+}
+.avatar:hover {
+    z-index: 1;
+    transform: translateY(-.5rem);
+}
+.avatar-name {
+    position: absolute;
+    bottom: calc(100% + .5rem);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: .5rem .75rem;
+    border-radius: .25rem;
+    background-color: rgba(0, 0, 0, .7);
+    color: #fff;
+    font-size: .875rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: .2s;
+}
+.avatar-name::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: .5rem solid;
+    border-color: rgba(0, 0, 0, .7) transparent transparent;
+}
+.avatar:hover .avatar-name {
+    opacity: 1;
+    visibility: visible;
+}
+.avatar img {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: block;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 .25rem 1rem rgba(0, 0, 0, .1);
+}
+#board{
+    overflow-y: auto;
+}
+#board::-webkit-scrollbar {
     width: 5px;
 }
 
-.scroll-behave::-webkit-scrollbar-track {
+#board::-webkit-scrollbar-track {
     background-color: #f1f1f1;
 }
 
-.scroll-behave::-webkit-scrollbar-thumb {
+#board::-webkit-scrollbar-thumb {
     background-color: #888;
     border-radius: 5px;
 }
+.example-container {
+    width: 300px;
+    overflow-y: auto;
+    height: 60vh;
+   
+    background-color:  #F4F5F7;
+  }
+  
+  .example-list {
+    min-height: 80%;
+    margin: 0px 5px 10px 5px;
+    
+    background: #F4F5F7;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .example-box {
+    padding: 10px 10px;
+    border:1px  solid #ccc;
+    color: rgba(0, 0, 0, 0.87);
+    background-color: white;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+  
+  .cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+                0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  }
+  
+  .cdk-drag-placeholder {
+    opacity: 0;
+  }
+  
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  .example-box:last-child {
+    border: none;
+  }
+  
+  .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  .ticket-summary{
+    cursor: pointer;
+    &:hover{
+      text-decoration: underline;
+      
+    }
+  }

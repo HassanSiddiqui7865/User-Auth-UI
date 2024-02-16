@@ -9,9 +9,7 @@ import { ProjectService } from '../Services/Project/project.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  login:string;
   LoggedInUser:any
-  projectList:any
   AdminId = environment.admin
   constructor(private loginService : LoginService,private projectService : ProjectService) {
     
@@ -22,18 +20,9 @@ export class NavbarComponent implements OnInit {
     const profileDiv = document.getElementById('output')
     profileDiv.style.backgroundColor = '#ecb731'
     profileDiv.innerText = this.LoggedInUser.username.slice(0,1)
-    this.getAllProjects()
   }
 
   onHandleLogout(){
     this.loginService.logout()
-  }
-  getAllProjects(){
-    this.projectService.getAssignedProjects(this.LoggedInUser.userId).subscribe({
-      next:(res)=>{
-        this.projectList = res
-        localStorage.setItem("Project",JSON.stringify(res))
-      }
-    })
   }
 }
