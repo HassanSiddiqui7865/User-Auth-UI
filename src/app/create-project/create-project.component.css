@@ -1,0 +1,6 @@
+#Lead-item{
+    cursor: pointer;
+    &:hover{
+        background-color:  var(--ds-background-selected, #E6EFFC);
+    }
+}

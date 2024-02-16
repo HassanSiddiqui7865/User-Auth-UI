@@ -1,0 +1,118 @@
+<div style="display: flex;">
+  <app-sidebar></app-sidebar>
+<div class="p-3 w-100">
+    <div class="d-flex justify-content-between mb-4">
+      <h1 style="color: rgb(1, 1, 102)">Project Management</h1>
+      <button
+        (click)="openCreateUserDialog()"
+        class="btn btn-primary btn-sm  d-flex align-items-center h-25"
+      >
+        <mat-icon>add</mat-icon>
+        Create
+      </button>
+    </div>
+    <table
+      mat-table
+      [dataSource]="userList"
+      class="mat-elevation-z8"
+      style="box-shadow: none"
+    >
+      <ng-container matColumnDef="Username">
+        <th
+          style="background-color: rgb(243, 243, 243)"
+          mat-header-cell
+          *matHeaderCellDef
+        >
+          Username
+        </th>
+        <td class="name" mat-cell *matCellDef="let element">
+          {{ element.username }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="Fullname">
+        <th
+          style="background-color: rgb(243, 243, 243)"
+          mat-header-cell
+          *matHeaderCellDef
+        >
+          Fullname
+        </th>
+        <td class="name" mat-cell *matCellDef="let element">
+          {{ element.fullname }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="Email">
+        <th
+          style="background-color: rgb(243, 243, 243)"
+          mat-header-cell
+          *matHeaderCellDef
+        >
+          Email
+        </th>
+        <td class="name" mat-cell *matCellDef="let element">
+          {{ element.email }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="Role">
+        <th
+          style="background-color: rgb(243, 243, 243)"
+          mat-header-cell
+          *matHeaderCellDef
+        >
+          Role
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.roleName }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="CreatedAt">
+        <th
+          style="background-color: rgb(243, 243, 243)"
+          mat-header-cell
+          *matHeaderCellDef
+        >
+          Created At
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.createdAt | date : "MMM dd,yyyy" }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="Actions">
+        <th
+          style="background-color: rgb(243, 243, 243)"
+          mat-header-cell
+          *matHeaderCellDef
+        >
+          Actions
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <div class="d-flex gap-2 align-items-center">
+            <mat-icon
+              
+              style="color: #0d6efd; cursor: pointer"
+             
+              >edit</mat-icon
+            >
+            <mat-icon
+              style="color: #dc3545; cursor: pointer"
+              (click)="openDeleteDialog(element.userId)"
+              >delete</mat-icon
+            >
+          </div>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <!-- <div *ngIf="!ProjectList" class="d-flex justify-content-center align-items-center" style="height: 50vh;">
+      <div class="spinner-border spinner-border" style="width: 3rem; height: 3rem;" role="status">
+      </div>
+    </div>
+    <div class="d-flex justify-content-center align-items-center" style="height: 50vh;"
+      *ngIf="ProjectList && ProjectList.length===0">
+      <h1>No Project Click to Create new Project</h1>
+    </div> -->
+  </div>
+</div>
+  

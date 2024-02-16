@@ -1,10 +1,9 @@
 .example-container {
   width: 100%;
-  height: 100vh;
+  height: 90vh;
 }
 mat-drawer {
-  width: 15vw;
-  background-color: rgb(247, 246, 246);
+  width: 18vw;
 }
 mat-drawer-content {
   display: flex;
@@ -16,4 +15,59 @@ mat-drawer-content {
     color: rgb(52, 52, 255);
     cursor: pointer;
   }
+}
+#side{
+  border-right: 0.5px solid rgb(212, 212, 212);
+  &:hover{
+    border-right: 2px solid  #0d6efd;
+  }
+}
+#sidenav-item{
+  width: 30px;
+  height: 30px;
+  border-radius: 50px 0px 0px 50px;
+  position: absolute;
+  right: 0;
+  z-index: 99;
+  top: 10%;
+  display: flex;
+  background-color: white;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  &:hover{
+    background-color: #0d6efd;
+    color: white;
+    
+  }
+}
+#side-item{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: absolute;
+  left: 15px;
+  top: 10%;
+  display: flex;
+  background-color: white;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  &:hover{
+    background-color: #0d6efd;
+    color: white;
+    
+  }
+}
+#Link{
+  cursor: pointer;
+  &:hover{
+    background-color:  var(--ds-background-selected, #E6EFFC);
+  }
+}
+#border{
+  margin-top: 5px;
+  width: 100%;
+  height: 2px;
+  background-color: rgb(219, 219, 219);
 }

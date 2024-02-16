@@ -1,42 +1,93 @@
-<div class="d-flex" style="position: sticky;top: 0;">
-  <div style="background-color: rgb(34, 34, 250); height: 100vh; width: 60px">
-    <div class="d-flex align-items-center flex-column mt-3 gap-3">
-      <img
-        src="assets/logo.svg"
-        width="40"
-        height="40"
-        class="d-inline-block align-top"
-        alt=""
-      />
-      <div class="d-flex flex-column gap-3">
-        <mat-icon class="text-light fs-3">search</mat-icon>
-        <mat-icon (click)="handleOpenTask()" class="text-light fs-3">add</mat-icon>
-        <mat-icon (click)="drawer.toggle()" class="text-light fs-3"
-          >view_sidebar</mat-icon
-        >
-      </div>
+<div class="d-flex" style="position: sticky; top: 0">
+  <div
+    *ngIf="comp"
+    style="height: 90vh; width: 30px; position: relative"
+    id="side"
+  >
+    <div (click)="openDrawer()" id="side-item" class="border">
+      <mat-icon>chevron_right</mat-icon>
     </div>
   </div>
   <div>
-    <mat-drawer-container class="example-container" [hasBackdrop]="false" >
-      <mat-drawer class="p-3" style="background-color:#f5f3f3;" #drawer [mode]="'side'">
-        <div>
-          <h1 class="text-primary ">TMS</h1>
-        </div>
-        <div
-          class="side-items d-flex flex-column gap-3 mt-4"
-          style="color: rgb(97, 97, 97)"
-        >
-          <div [routerLink]="'/board'" class="d-flex gap-1 align-items-center">
-            <mat-icon class="fs-5">view_kanban</mat-icon>
-            <div class="fs-6 ">Board</div>
-          </div>
-          <div [routerLink]="'/projects'" style="display: flex; gap: 3px">
-            <mat-icon class="fs-5"
-              >settings</mat-icon
+    <mat-drawer-container
+      class="example-container"
+      [hasBackdrop]="false"
+      #drawerContainer
+      style="position: relative"
+    >
+      <mat-drawer
+        style="background-color: #ffffff; height: 100%; position: relative"
+        #drawer
+        class="p-3"
+        [mode]="'side'"
+      >
+        <div class="mt-3">
+          <div>
+            <div class="d-flex align-items-center gap-2">
+              <img
+                class="rounded-1"
+                width="30"
+                height="30"
+                src="/assets/10402.svg"
+              />
+              <div>
+                <div class="fw-medium">{{data}}</div>
+                <div style="color: rgb(94, 94, 94); font-size: small">
+                  Software Project
+                </div>
+              </div>
+            </div>
+            <div
+              [routerLink]="'/projects'"
+              id="Link"
+              class="d-flex align-items-center p-3 gap-3 mt-4"
             >
-            <div  class="fs-6 ">Projects</div>
+              <div
+                style="
+                  width: 20px;
+                  height: 20px;
+                  background-color: rgb(90, 90, 90);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  border-radius: 50%;
+                "
+              >
+                <mat-icon
+                  style="
+                    font-size: medium;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                  "
+                  >arrow_back</mat-icon
+                >
+              </div>
+              <div>Back to Project</div>
+            </div>
+            <div id="border"></div>
+            <div>
+              <div class="m-3 fw-medium">Project Setting</div>
+            </div>
+            <div
+            [routerLink]="['/projects','12','details']"
+              id="Link"
+              class="d-flex align-items-center p-3"
+            >
+              <div>Details</div>
+            </div>
+            <div
+            id="Link"
+            [routerLink]="['/projects','12','people']"
+            class="d-flex align-items-center p-3"
+          >
+            <div>Peoples</div>
           </div>
+          </div>
+        </div>
+        <div (click)="closeDrawer()" id="sidenav-item" class="border">
+          <mat-icon>chevron_left</mat-icon>
         </div>
       </mat-drawer>
     </mat-drawer-container>

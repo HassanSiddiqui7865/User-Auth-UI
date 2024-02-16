@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { userlist } from 'src/app/create-project/userlist';
+import { environment } from 'src/environment/environment';
 
 @Component({
   selector: 'app-show-members',
@@ -7,5 +9,12 @@ import { userlist } from 'src/app/create-project/userlist';
   styleUrls: ['./show-members.component.css']
 })
 export class ShowMembersComponent {
-  usersList = userlist
+  userList: any; // Declare userList property
+  projectname:string;
+  PmId = environment.PMId
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+    this.userList = data.projectDetail.users
+    this.projectname = data.projectDetail.projectname
+  }
+  
 }

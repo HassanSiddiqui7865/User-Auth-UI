@@ -11,19 +11,26 @@ export class UserService {
   constructor(private http:HttpClient) {}
 
     getUser(): Observable<any> {
-      return this.http.get(`${environment.BASEURL}User`);
+      return this.http.get(`${environment.BASEURL}/User`);
     }
 
     DeleteUser(id:any):Observable<any>{
-      return this.http.delete(`${this.baseURL}User/${id}`)
+      return this.http.delete(`${environment.BASEURL}/User/${id}`)
     }
 
-    Addibrarian(userData):Observable<any>{
-      return this.http.post(this.baseURL+"User/register",{
+    createUser(userData:any):Observable<any>{
+      return this.http.post(`${environment.BASEURL}/User/register`,{
+        fullname:userData.fullname,
         username:userData.username,
         email:userData.email,
-        pass:userData.password,
-        userrole:"librarian"
+        pass:userData.pass,
+        roleId:userData.roleId
       })
+    }
+    getRoles():Observable<any>{
+      return this.http.get(`${environment.BASEURL}/Role`)
+    }
+    getUsersWithoutProjects():Observable<any>{
+      return this.http.get(`${environment.BASEURL}/User/withoutProjects`)
     }
 }

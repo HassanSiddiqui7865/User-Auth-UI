@@ -8,7 +8,7 @@ import { LoginpageComponent } from './loginpage/loginpage.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProjectsComponent } from './projects/projects.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { BookmanageComponent } from './bookmanage/bookmanage.component';
+import { UsersManageComponent } from './users-manage/users-manage.component';
 import { ManageuserComponent } from './manageuser/manageuser.component';
 import {HttpClientModule} from '@angular/common/http'
 import { ToastrModule } from 'ngx-toastr';
@@ -30,7 +30,12 @@ import { CreateTaskComponent } from './Components/create-task/create-task.compon
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { ShowMembersComponent } from './Components/show-members/show-members.component';
 import { DialerComponent } from './dialer/dialer.component';
-
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
+import { CreateUserComponent } from './Components/create-user/create-user.component';
+import { ProjectDetailsComponent } from './project-details/project-details.component';
+import { ProjectLayoutComponent } from './project-layout/project-layout.component';
+import { ProjectDetailsLayoutComponent } from './project-details-layout/project-details-layout.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +46,7 @@ import { DialerComponent } from './dialer/dialer.component';
     LayoutComponent,
     ProjectsComponent,
     NavbarComponent,
-    BookmanageComponent,
+    UsersManageComponent,
     ManageuserComponent,
     SinglebookComponent,
     ForgetpasswordComponent,
@@ -51,9 +56,14 @@ import { DialerComponent } from './dialer/dialer.component';
     UpdateProjectComponent,
     SidebarComponent,
     CreateProjectComponent,
+    DialerComponent,
     CreateTaskComponent,
     ShowMembersComponent,
-    DialerComponent,
+    CreateUserComponent,
+    ProjectDetailsComponent,
+    ProjectLayoutComponent,
+    ProjectDetailsLayoutComponent,
+    ShowMembersComponent,
     ],
   imports: [
     MatProgressBarModule,
@@ -68,7 +78,9 @@ import { DialerComponent } from './dialer/dialer.component';
     FormsModule,
     MatTableModule,
     MatIconModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatButtonModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]
