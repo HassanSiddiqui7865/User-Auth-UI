@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocomplete } from '@angular/material/autocomplete';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
 import { UserLogin } from 'src/Auth';
 import { ProjectService } from 'src/app/Services/Project/project.service';
 import { TicketService } from 'src/app/Services/Ticket/ticket.service';
@@ -14,26 +13,28 @@ import { environment } from 'src/environment/environment';
   templateUrl: './create-task.component.html',
   styleUrls: ['./create-task.component.css'],
 })
-export class CreateTaskComponent implements OnInit{
-  LoggedInUser = UserLogin(); // Instantiate UserLogin
+export class CreateTaskComponent implements OnInit {
+  LoggedInUser = UserLogin(); 
   MemberId: string = environment.member;
   userList: any[] = [];
   ProjectList: any[] = [];
-  filteredArray: any[] = []; // Change to Observable
+  filteredArray: any[] = []; 
+  MatchNotFound:boolean = false
+  inputValue:string;
   priorityElementArray: any[] = [
     {
       icon: 'keyboard_double_arrow_up',
-      optionname: 'High',
+      name: 'High',
       color: 'text-success',
     },
     {
       icon: 'density_medium',
-      optionname: 'Medium',
+      name: 'Medium',
       color: 'text-warning',
     },
     {
       icon: 'keyboard_double_arrow_down',
-      optionname: 'Low',
+      name: 'Low',
       color: 'text-danger',
     },
   ];
@@ -49,78 +50,101 @@ export class CreateTaskComponent implements OnInit{
       color: 'text-danger',
     },
   ];
-  selectedStatus:any = "Backlog"
   selectedProject: any;
-  selectedUser:any=null;
-  CreateTicketForm : FormGroup
+  selectedUser: any = null;
+  CreateTicketForm: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<CreateTaskComponent>,
     private projectService: ProjectService,
-    private ticketService : TicketService,
-    private toastr : ToastrService
+    private ticketService: TicketService,
+    private toastr: ToastrService
   ) {}
   ngOnInit(): void {
     this.CreateTicketForm = new FormGroup({
       ticketsummary: new FormControl(null, Validators.required),
       projectId: new FormControl(null, Validators.required),
-      priority:new FormControl(this.priorityElementArray[1], Validators.required),
-      type:new FormControl(this.tickettypeArray[0], Validators.required),
-      ticketdescription:new FormControl(null, Validators.required),
-      status:new FormControl("Backlog", Validators.required),
-      assignedto:new FormControl(null, Validators.required),
-      reportedby:new FormControl(this.LoggedInUser.userId, Validators.required),
+      priority: new FormControl(
+        'Medium',
+        Validators.required
+      ),
+      type: new FormControl('Task', Validators.required),
+      ticketdescription: new FormControl(null, Validators.required),
+      status: new FormControl('Backlog', Validators.required),
+      assignedto: new FormControl(null, Validators.required),
+      reportedby: new FormControl(
+        this.LoggedInUser.userId,
+        Validators.required
+      ),
     });
     if (this.LoggedInUser.roleId === this.MemberId) {
       this.getProjectsforMember();
     } else {
       this.getProjects();
     }
-  }  
+  }
 
   handleSelectProject(item: any) {
     this.selectedProject = item;
     this.userList = this.selectedProject.users;
     this.CreateTicketForm.patchValue({
-      projectId:item.projectId
-    })
+      projectId: item.projectId,
+    });
   }
 
   handleSelectUser(item: any) {
-    this.selectedUser = item
-    this.CreateTicketForm.patchValue({
-      assignedto : item.userId
-    })
+    this.selectedUser = item;
+    if(item){
+      this.CreateTicketForm.patchValue({
+        assignedto: item.userId,
+      });
+    }else{
+      this.CreateTicketForm.patchValue({
+        assignedto: null,
+      });
+    }
+    
   }
-
-  handleCreateTicket(){
+  
+  getIconInfo(array: any[], name: string) {
+    return array.find((items) => items.name === name);
+  }
+  handleCreateTicket() {
     this.ticketService.createticket(this.CreateTicketForm.value).subscribe({
-      next:(res)=>{
-        this.dialogRef.close()
-        this.toastr.success("Ticket Created Successfully")
-        setTimeout(()=>{
+      next: (res) => {
+        this.dialogRef.close();
+        this.toastr.success('Ticket Created Successfully');
+        setTimeout(() => {
           window.location.reload();
-        },2000)
+        }, 1500);
       },
-      error:(err)=>{
-        console.log(err)
-      }
-    })
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   handleChange(event: any) {
+    this.inputValue = event.target.value.toLowerCase();
     const filteredUser = this.userList?.filter((item) =>
-      item.fullname.toLowerCase().startsWith(event.target.value.toLowerCase())
+        item.fullname.toLowerCase().startsWith(this.inputValue)
     );
-    if(event.target.value === ''){ 
-      this.filteredArray = this.userList
-      this.selectedUser=null
+    
+    if (this.inputValue === '') {
+        this.filteredArray = this.userList;
+        this.MatchNotFound = false
+        this.selectedUser = null;
+    } else if (filteredUser.length > 0) {
+        this.filteredArray = filteredUser;
+        this.MatchNotFound = false
+    } else {
+        this.filteredArray = [];
+        this.MatchNotFound = true
     }
-    else{
-      this.filteredArray = filteredUser
-    }
-  }
+}
+
   handleFocus() {
+  if(this.inputValue === '' || !this.inputValue)
     this.filteredArray = this.userList;
   }
   getProjects() {
@@ -135,14 +159,16 @@ export class CreateTaskComponent implements OnInit{
   }
 
   getProjectsforMember() {
-    this.projectService.getAssignedProjects(this.LoggedInUser.userId).subscribe({
-      next: (res) => {
-        this.ProjectList = res;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.projectService
+      .getAssignedProjects(this.LoggedInUser.userId)
+      .subscribe({
+        next: (res) => {
+          this.ProjectList = res;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 
   handleDialogClose() {

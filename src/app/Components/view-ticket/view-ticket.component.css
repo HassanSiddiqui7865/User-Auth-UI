@@ -1,0 +1,9 @@
+textarea{
+    resize: none;
+}
+/* styles.css */
+.mat-option .mat-pseudo-checkbox {
+    display: none !important;
+}
+
+

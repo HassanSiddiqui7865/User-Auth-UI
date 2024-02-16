@@ -1,54 +1,275 @@
-<div class="overflow-hidden ">
-    <div class="position-sticky top-0 d-flex justify-content-between" style="padding: 30px 20px 0px 20px;">
-        <div [matTooltip]="ticket.tickettype">
-            <mat-icon [ngClass]=" typeIcons[ticket.tickettype].color">
-              {{ typeIcons[ticket.tickettype].icon}}
-            </mat-icon>
-        </div>
-        <div>
-            <mat-icon>close</mat-icon>
-        </div>
+<div class="overflow-hidden h-100 position-relative">
+  <form
+    [formGroup]="UpdateTicketForm"
+    (ngSubmit)="handleUpdateTicket()"
+    class="h-100"
+  >
+    <div
+      class="position-sticky top-0 d-flex justify-content-between border bg-white"
+      style="padding: 20px 20px 20px 20px"
+    >
+      <div class="w-25" *ngIf="update">
+        <mat-select class="form-control" formControlName="type">
+          <mat-select-trigger class="d-flex align-items-center">
+            <mat-icon
+              class="fs-5"
+              [ngClass]="
+                getIconInfo(tickettypeArray, UpdateTicketForm.get('type').value)
+                  ?.color
+              "
+              >{{
+                getIconInfo(tickettypeArray, UpdateTicketForm.get("type").value)
+                  ?.icon
+              }}</mat-icon
+            ><span>{{
+              getIconInfo(tickettypeArray, UpdateTicketForm.get("type").value)
+                ?.name
+            }}</span>
+          </mat-select-trigger>
+          <mat-option [value]="item.name" *ngFor="let item of tickettypeArray">
+            <mat-icon class="fs-5" [ngClass]="item.color">{{
+              item.icon
+            }}</mat-icon
+            ><span class="mx-1">{{ item.name }}</span>
+          </mat-option>
+        </mat-select>
+      </div>
+      <div *ngIf="!update">
+        <mat-icon
+          [matTooltip]="ticket.tickettype"
+          [ngClass]="
+            getIconInfo(tickettypeArray, UpdateTicketForm.get('type').value)
+              ?.color
+          "
+        >
+          {{
+            getIconInfo(tickettypeArray, UpdateTicketForm.get("type").value)
+              ?.icon
+          }}
+        </mat-icon>
+      </div>
+      <div class="d-flex align-items-center gap-1" style="cursor: pointer">
+        <mat-icon
+          *ngIf="
+            ticket.reportedBy.userId === LoggedInUser.userId ||
+            LoggedInUser.roleId === AdminId
+          "
+          (click)="handleOpenUpdate()"
+          class="text-primary"
+          >edit</mat-icon
+        >
+        <mat-icon
+          *ngIf="
+            ticket.reportedBy.userId === LoggedInUser.userId ||
+            LoggedInUser.roleId === AdminId
+          "
+          (click)="handleOpenDelete()"
+          class="text-danger"
+          >delete</mat-icon
+        >
+        <mat-icon style="cursor: pointer" (click)="handleCloseDialog()"
+          >close</mat-icon
+        >
+      </div>
     </div>
-    <div class="d-flex p-4">
-        <div style="flex: 3;">
-            <h2>{{ticket.ticketsummary}}</h2>
-            <div>
-                <h3 style="color: rgb(99, 99, 99);">Description</h3>
-                <p>{{ticket.ticketdescription}}</p>
-            </div>
+    <div class="h-100">
+      <div class="d-flex p-3 gap-5 h-100">
+        <div
+          style="flex: 2"
+          class="h-100 overflow-y-auto px-2"
+          [ngStyle]="{ 'padding-bottom': update ? '150px' : '' }"
+        >
+          <textarea
+            *ngIf="update"
+            formControlName="ticketsummary"
+            class="w-100 fs-5 fw-medium form-control"
+            [value]="ticket.ticketsummary"
+          ></textarea>
+          <h2 *ngIf="!update">{{ ticket.ticketsummary }}</h2>
+          <div class="mt-3">
+            <h3 style="color: rgb(99, 99, 99)">Description</h3>
+            <textarea
+              *ngIf="update"
+              rows="5"
+              formControlName="ticketdescription"
+              class="w-100 form-control"
+              >{{ ticket.ticketdescription }}</textarea
+            >
+            <p *ngIf="!update">{{ ticket.ticketdescription }}</p>
+          </div>
         </div>
-        <div style="flex: 1;">
-            <h2>Details</h2>
-            <div class="d-flex flex-column gap-3 ">
-                <div class="d-flex align-items-center justify-content-between  ">
-                    <div  style="color: rgb(99, 99, 99);" >Assignee</div>
-                    <div  *ngIf="ticket.assignedTo" class="d-flex align-items-center gap-1">
-                        <div class="profile">{{ticket.assignedTo.username[0].toUpperCase()}}</div>
-                        <div>{{ticket.assignedTo.username}}</div>
-                    </div>
-                    <div *ngIf="!ticket.assignedTo" class="d-flex align-items-center gap-1" >
-                        <img style="width: 25px; height: 25px;" src="assets/user.png"  class="fs-4">
-                        <div>UnAssigned</div>
-                    </div>
+        <div
+          style="flex: 1"
+          class="h-100 overflow-y-auto px-2"
+          [ngStyle]="{ 'padding-bottom': update ? '150px' : '' }"
+        >
+          <h2>Details</h2>
+          <div class="d-flex flex-column gap-3">
+            <div class="d-flex align-items-center">
+              <div style="color: rgb(99, 99, 99)" class="w-50">Assignee</div>
+              <div class="d-flex align-items-center gap-1 form-control">
+                <div *ngIf="selectedUser" class="profile">
+                  {{ selectedUser?.username[0].toUpperCase() }}
                 </div>
-                <div class="d-flex align-items-center justify-content-between  ">
-                    <div  style="color: rgb(99, 99, 99);" >Reporter</div>
-                    <div class="d-flex align-items-center gap-1 ">
-                        <div class="profile" *ngIf="ticket.reportedBy">{{ticket.reportedBy.username[0].toUpperCase()}}</div>
-                        <div >{{ticket.reportedBy.username}}</div>
-                    </div>
+                <div
+                  *ngIf="!selectedUser"
+                  class="d-flex align-items-center justify-content-center"
+                >
+                  <mat-icon class="m-0">account_circle</mat-icon>
                 </div>
-                <div class="d-flex align-items-center justify-content-between  ">
-                    <div  style="color: rgb(99, 99, 99);" >Priority</div>
-                    <div class="d-flex align-items-center gap-1   ">
-                        <mat-icon  class="fs-5"
-                          [ngClass]="priorityicon[ticket.ticketpriority].color">
-                          {{priorityicon[ticket.ticketpriority].icon}}
-                        </mat-icon>
-                        <div>{{ticket.ticketpriority}}</div>
+                <input
+                  [readOnly]="!update"
+                  type="text"
+                  placeholder="Unassigned"
+                  style="
+                    outline: none;
+                    width: 90%;
+                    height: 100%;
+                    border: none;
+                    cursor: default;
+                  "
+                  (focus)="handleFocus()"
+                  (input)="handleChange($event)"
+                  [matAutocomplete]="auto"
+                  [value]="selectedUser ? selectedUser.username : selectedUser"
+                />
+              </div>
+              <mat-autocomplete class="z-3" #auto="matAutocomplete">
+                <ng-container *ngIf="filteredArray && filteredArray.length > 0">
+                  <mat-option
+                    (click)="handleSelectUser(option)"
+                    *ngFor="let option of filteredArray"
+                  >
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="profile">
+                        {{ option.username[0].toUpperCase() }}
+                      </div>
+                      <div>{{ option.username }}</div>
                     </div>
-                </div>
+                  </mat-option>
+                </ng-container>
+              </mat-autocomplete>
             </div>
+            <div class="d-flex align-items-center">
+              <div style="color: rgb(99, 99, 99)" class="w-50">Reporter</div>
+              <div class="d-flex align-items-center gap-1 form-control">
+                <div class="profile">
+                  {{ ticket?.reportedBy.username[0].toUpperCase() }}
+                </div>
+                <input
+                  readonly
+                  type="text"
+                  style="
+                    outline: none;
+                    width: 90%;
+                    height: 100%;
+                    border: none;
+                    cursor: default;
+                  "
+                  [value]="ticket?.reportedBy.username"
+                />
+              </div>
+            </div>
+            <div class="d-flex align-items-center">
+              <div style="color: rgb(99, 99, 99)" class="w-50">Priority</div>
+              <div class="w-100" *ngIf="update">
+                <mat-select class="form-control" formControlName="priority">
+                  <mat-select-trigger class="d-flex align-items-center">
+                    <mat-icon
+                      class="fs-5"
+                      [ngClass]="
+                        getIconInfo(
+                          priorityElementArray,
+                          UpdateTicketForm.get('priority').value
+                        )?.color
+                      "
+                    >
+                      {{
+                        getIconInfo(
+                          priorityElementArray,
+                          UpdateTicketForm.get("priority").value
+                        )?.icon
+                      }}
+                    </mat-icon>
+                    <span class="mx-1">{{
+                      getIconInfo(
+                        priorityElementArray,
+                        UpdateTicketForm.get("priority").value
+                      )?.name
+                    }}</span>
+                  </mat-select-trigger>
+                  <mat-option
+                    [value]="item.name"
+                    *ngFor="let item of priorityElementArray"
+                  >
+                    <mat-icon class="fs-5" [ngClass]="item.color">{{
+                      item.icon
+                    }}</mat-icon>
+                    <span class="mx-1">{{ item.name }}</span>
+                  </mat-option>
+                </mat-select>
+              </div>
+              <div
+                *ngIf="!update"
+                class="d-flex align-items-center form-control"
+              >
+                <mat-icon
+                  class="fs-5"
+                  [ngClass]="
+                    getIconInfo(
+                      priorityElementArray,
+                      UpdateTicketForm.get('priority').value
+                    )?.color
+                  "
+                >
+                  {{
+                    getIconInfo(
+                      priorityElementArray,
+                      UpdateTicketForm.get("priority").value
+                    )?.icon
+                  }}
+                </mat-icon>
+                <span class="mx-1">{{
+                  getIconInfo(
+                    priorityElementArray,
+                    UpdateTicketForm.get("priority").value
+                  )?.name
+                }}</span>
+              </div>
+            </div>
+            <div class="h-100" style="color: rgb(99, 99, 99)">
+              <div class="mb-1">
+                Created {{ ticket?.createdAt | date : "MMM dd, yyyy" }} at
+                {{ ticket?.createdAt | date : "hh:mm a" | uppercase }}
+              </div>
+              <div>
+                Updated {{ ticket?.updatedAt | date : "MMM dd, yyyy" }} at
+                {{ ticket?.updatedAt | date : "hh:mm a" | uppercase }}
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div
+        *ngIf="update"
+        class="position-sticky bottom-0 border bg-white"
+        style="height: 80px"
+      >
+        <div class="p-3 d-flex gap-2">
+          <button type="submit" class="btn btn-primary">
+            <div
+              *ngIf="loading"
+              class="spinner-border spinner-border-sm"
+              role="status"
+            ></div>
+            <span *ngIf="!loading">Save</span>
+          </button>
+          <button (click)="handleCloseUpdate()" class="btn btn-light border">
+            cancel
+          </button>
+        </div>
+      </div>
     </div>
+  </form>
 </div>

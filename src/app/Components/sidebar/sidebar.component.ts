@@ -13,7 +13,7 @@ import { environment } from 'src/environment/environment';
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements AfterViewInit ,OnInit {
-  @Input() data: string; 
+  @Input() type: string; 
   @ViewChild('drawerContainer') drawerContainer: MatDrawerContainer;
   project: any;
   comp:boolean=true;

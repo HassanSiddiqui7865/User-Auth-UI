@@ -1,7 +1,7 @@
-<div class="d-flex" style="position: sticky;top: 60px;">
+<div class="d-flex" style="position: sticky; top: 60px">
   <div
     *ngIf="comp"
-    style="height:calc(100vh - 60px); width: 30px; position: relative;"
+    style="height: calc(100vh - 60px); width: 30px; position: relative"
     id="side"
   >
     <div (click)="openDrawer()" id="side-item" class="border">
@@ -28,7 +28,7 @@
                 class="rounded-1"
                 width="30"
                 height="30"
-                src={{project?.avatarUrl}}
+                src="{{ project?.avatarUrl }}"
               />
               <div>
                 <div class="fw-medium">
@@ -66,23 +66,25 @@
               <div>Back to Project</div>
             </div>
             <div id="border"></div>
-            <div>
-              <div class="m-3 fw-medium">Project Setting</div>
-            </div>
-            <div
-              *ngIf="AccessToDetails()"
-              [routerLink]="['/projects', projectId, 'details']"
-              id="Link"
-              class="d-flex align-items-center p-3"
-            >
-              <div>Details</div>
-            </div>
-            <div
-              id="Link"
-              [routerLink]="['/projects', projectId, 'people']"
-              class="d-flex align-items-center p-3"
-            >
-              <div>Peoples</div>
+            <div *ngIf="type!=='Board'">
+              <div>
+                <div class="m-3 fw-medium">Project Setting</div>
+              </div>
+              <div
+                *ngIf="AccessToDetails()"
+                [routerLink]="['/projects', projectId, 'details']"
+                id="Link"
+                class="d-flex align-items-center p-3"
+              >
+                <div>Details</div>
+              </div>
+              <div
+                id="Link"
+                [routerLink]="['/projects', projectId, 'people']"
+                class="d-flex align-items-center p-3"
+              >
+                <div>Peoples</div>
+              </div>
             </div>
           </div>
         </div>

@@ -123,10 +123,11 @@ export class BoardComponent implements OnInit {
   }
   handleOpenTicket(item){
     this.dialog.open(ViewTicketComponent,{
-      width:"70vw",
-      height:"50vh",
+      width:"90vw",
+      height:"70vh",
       data:{
-        ticketdata:item
+        ticketId:item.ticketId,
+        Loadticket:this.getTickets.bind(this)
       }
     })
   }

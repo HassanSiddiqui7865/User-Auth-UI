@@ -16,9 +16,9 @@ export class TicketService {
       assignedTo:ticketData.assignedto,
       reportedBy:ticketData.reportedby,
       projectId:ticketData.projectId,
-      ticketpriority:ticketData.priority.optionname,
+      ticketpriority:ticketData.priority,
       ticketstatus:ticketData.status,
-      tickettype:ticketData.type.name
+      tickettype:ticketData.type
     })
   }
   getAllticket():Observable<any>{
@@ -29,5 +29,20 @@ export class TicketService {
   }
   updateTicketStatus(ticketId:any,status:string):Observable<any>{
     return this.http.put(`${environment.BASEURL}/Ticket/${ticketId}/${status}`,{})
+  }
+  updateTicket(ticketId:any,ticketData):Observable<any>{
+    return this.http.put(`${environment.BASEURL}/Ticket/${ticketId}`,{
+      ticketsummary:ticketData.ticketsummary,
+      ticketdescription:ticketData.ticketdescription,
+      assignedTo:ticketData.assignedto,
+      ticketpriority:ticketData.priority,
+      tickettype:ticketData.type
+    })
+  }
+  getTicketById(ticketId:any):Observable<any>{
+    return this.http.get(`${environment.BASEURL}/Ticket/getticketById/${ticketId}`)
+  }
+  deleteTicket(ticketId:any):Observable<any>{
+    return this.http.delete(`${environment.BASEURL}/Ticket/${ticketId}`)
   }
 }

@@ -43,9 +43,8 @@ import {
 } from '@angular/cdk/drag-drop';
 import { SidenavComponent } from './Components/sidenav/sidenav.component';
 import {MatSelectModule} from '@angular/material/select';
-import {TooltipPosition, MatTooltipModule} from '@angular/material/tooltip';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import { ViewTicketComponent } from './Components/view-ticket/view-ticket.component';
-
 
 @NgModule({
   declarations: [
@@ -74,10 +73,7 @@ import { ViewTicketComponent } from './Components/view-ticket/view-ticket.compon
     AvatarSelectComponent,
     BoardComponent,
     SidenavComponent,
-    ViewTicketComponent,
-    
-   
-    
+    ViewTicketComponent, 
     ],
   imports: [
     MatAutocompleteModule,
@@ -100,6 +96,7 @@ import { ViewTicketComponent } from './Components/view-ticket/view-ticket.compon
     CdkDrag,
     CdkDropList,
     CdkDropListGroup,
+
    
   ],
   providers: [],
