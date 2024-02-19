@@ -20,6 +20,7 @@ export class ManageuserComponent {
   displayedColumns: string[] = ['Username','Fullname','Email','Role','CreatedAt','Actions'];
   Credentials = UserLogin()
   AdminId = environment.admin
+  LoggedInUser = UserLogin()
   constructor(private userService : UserService,private toastr : ToastrService,private dialog: MatDialog) {
   }
   ngOnInit(){
@@ -28,7 +29,16 @@ export class ManageuserComponent {
 GetUserList(){
    this.userService.getUsersWithoutProjects().subscribe({
     next:(res)=>{
-      this.userList = res
+      res.sort((a, b) => {
+        if (a.userId === this.LoggedInUser.userId) {
+          return -1; // Current user comes first
+        } else if (b.userId === this.LoggedInUser.userId) {
+          return 1; // Current user comes second
+        } else {
+          return 0; // Maintain the original order for other users
+        }
+      });
+      this.userList = res;
     }
    })
   }

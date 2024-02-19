@@ -28,24 +28,16 @@
           Username
         </th>
         <td class="name" mat-cell *matCellDef="let element">
-          <div class="d-flex align-items-center gap-2 ">
+          <div class="d-flex align-items-center gap-2" >
            
-            <div  style="
-                display: flex;
-                width: 30px;
-                position: relative;
-                height: 30px;
-                background-color: rgb(92, 89, 255);
-                border-radius: 50%;
-                justify-content: center;
-                align-items: center;
-                color: white;
-              ">
+            <div class="profile position-relative " >
               <span *ngIf="element.isLead" class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"></span>
             {{element.username[0].toUpperCase()}}
-           
-          </div>      
+           </div>     
+           <div  [routerLink]="['/user',element.userId]"style="cursor: pointer; color: blue; text-decoration: underline">
             {{ element.username }}
+           </div> 
+           
             <span *ngIf="element.userId === userLoggedIn.userId">(You)</span>
           </div>
         </td>
