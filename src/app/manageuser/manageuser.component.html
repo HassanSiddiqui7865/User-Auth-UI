@@ -24,7 +24,13 @@
               Username
             </th>
             <td class="name" mat-cell *matCellDef="let element">
-              {{ element.username }}
+              <div class="d-flex align-items-center gap-1 ">
+                <div class="profile">{{element.username[0].toUpperCase()}}</div>
+                <div  [routerLink]="['/user',element.userId]"style="cursor: pointer; color: blue; text-decoration: underline">
+                  {{ element.username }}
+                </div>
+                <small *ngIf="LoggedInUser.userId === element.userId">(You)</small>
+              </div>
             </td>
           </ng-container>
           <ng-container matColumnDef="Fullname">

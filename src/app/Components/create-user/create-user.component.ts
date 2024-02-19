@@ -15,7 +15,6 @@ export class CreateUserComponent {
   roleList:any[]
   loading:boolean =false
   OpenRoles:boolean = false;
-  selectedRole:string
   selectedRoleId:any;
   AdminId = environment.admin
   ManagerId = environment.MId

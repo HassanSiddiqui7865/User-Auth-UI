@@ -47,6 +47,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { ViewTicketComponent } from './Components/view-ticket/view-ticket.component';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { SingleUserComponent } from './single-user/single-user.component';
 @NgModule({
   
   declarations: [
@@ -76,7 +77,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     AvatarSelectComponent,
     BoardComponent,
     SidenavComponent,
-    ViewTicketComponent, 
+    ViewTicketComponent,
+    SingleUserComponent, 
     ],
   imports: [
     NgSelectModule,

@@ -55,21 +55,12 @@
           *ngIf="getProjectLead(element.users)"
           class="d-flex align-items-center gap-1"
         >
-          <div
-            style="
-              display: flex;
-              width: 25px;
-              height: 25px;
-              background-color: rgb(92, 89, 255);
-              border-radius: 50%;
-              justify-content: center;
-              align-items: center;
-              color: white;
-            "
-          >
+          <div class="profile">
             {{ getProjectLead(element.users).username[0].toUpperCase() }}
           </div>
-          <div>{{ getProjectLead(element.users).username }}</div>
+          <div [routerLink]="['/user',getProjectLead(element.users).userId]" style="cursor: pointer; color: blue; text-decoration: underline">
+            {{ getProjectLead(element.users).username }}
+          </div>
         </div>
         <div *ngIf="!getProjectLead(element.users)">
           <small>Not assigned</small>

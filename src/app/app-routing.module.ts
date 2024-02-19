@@ -14,6 +14,7 @@ import { ProjectLayoutComponent } from './project-layout/project-layout.componen
 import { ProjectDetailsLayoutComponent } from './project-details-layout/project-details-layout.component';
 import { loginGuard } from './Guards/login.guard';
 import { projectsGuard } from './Guards/projects.guard';
+import { SingleUserComponent } from './single-user/single-user.component';
 
 const routes: Routes = [
   { path: "login", component: LoginpageComponent,canActivate:[loginGuard]},
@@ -39,6 +40,7 @@ const routes: Routes = [
       },
       {path:"board/:id",component:BoardComponent},
       { path: "users", component: ManageuserComponent },
+      {path:"user/:id",component:SingleUserComponent},
       { path: "", redirectTo: "projects", pathMatch: "full" }
     ],
   },
