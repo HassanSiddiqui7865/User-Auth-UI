@@ -10,6 +10,7 @@ import {
 } from '@angular/material/dialog';
 import { environment } from 'src/environment/environment';
 import { AvatarSelectComponent } from '../Components/avatar-select/avatar-select.component';
+import { EmailService } from '../Services/email.service';
 
 @Component({
   selector: 'app-create-project',
@@ -31,6 +32,7 @@ export class CreateProjectComponent implements OnInit {
     private toastr: ToastrService,
     private userService: UserService,
     private dialogRef: MatDialogRef<CreateProjectComponent>,
+    private emailService : EmailService,
     @Inject(MAT_DIALOG_DATA) private data,
     private dialog: MatDialog,
   ) {
@@ -76,6 +78,7 @@ export class CreateProjectComponent implements OnInit {
       .subscribe({
         next: (res) => {
           this.AssignedProjectLead(res.projectId);
+          this.sendEmail()
           this.dialogRef.close();
           this.toastr.success("Project Created Successfully")
         },
@@ -93,9 +96,20 @@ export class CreateProjectComponent implements OnInit {
         next: (res) => {
           this.loading = false;
           this.data.LoadProjects();
-          console.log(res);
         },
       });
+  }
+  sendEmail(){
+    const Subject= "Assigned in the Project"
+    const message = `You are assigned Lead in the Project ${this.CreateProjectForm.value.projectname}`
+    this.emailService.Email(this.selectedLead.fullname,this.selectedLead.email,Subject,message).subscribe({
+      next:(res)=>{
+        console.log(res)
+      },
+      error:(err)=>{
+        console.log(err)
+      }
+    })
   }
   openAvatarDialog() {
     const dialogRefAvatar = this.dialog.open(AvatarSelectComponent, {
