@@ -66,7 +66,7 @@
                           {{priorityicon[item.ticketpriority].icon}}
                         </mat-icon>
                         <div class="d-flex align-items-center ">
-                          <img style="width: 25px; height: 25px;" src="assets/user.png" *ngIf="!item.assignedTo" class="fs-4">
+                          <img [matTooltip]="'Un Assigned'" style="width: 25px; height: 25px;" src="assets/user.png" *ngIf="!item.assignedTo" class="fs-4">
                           <div *ngIf="item.assignedTo" class="profile">{{item.assignedTo.username[0].toUpperCase()}}</div>
                          </div>
                       </div>
@@ -97,7 +97,7 @@
                           {{priorityicon[item.ticketpriority].icon}}
                         </mat-icon>
                         <div class="d-flex align-items-center ">
-                          <img style="width: 25px; height: 25px;" src="assets/user.png" *ngIf="!item.assignedTo" class="fs-4">
+                          <img [matTooltip]="'Un Assigned'" style="width: 25px; height: 25px;" src="assets/user.png" *ngIf="!item.assignedTo" class="fs-4">
                           <div *ngIf="item.assignedTo" class="profile">{{item.assignedTo.username[0].toUpperCase()}}</div>
                          </div>
                       </div>
@@ -127,7 +127,7 @@
                           {{priorityicon[item.ticketpriority].icon}}
                         </mat-icon>
                         <div class="d-flex align-items-center ">
-                          <img style="width: 25px; height: 25px;" src="assets/user.png" *ngIf="!item.assignedTo" class="fs-4">
+                          <img [matTooltip]="'Un Assigned'" style="width: 25px; height: 25px;" src="assets/user.png" *ngIf="!item.assignedTo" class="fs-4">
                           <div *ngIf="item.assignedTo" class="profile">{{item.assignedTo.username[0].toUpperCase()}}</div>
                          </div>
                       </div>

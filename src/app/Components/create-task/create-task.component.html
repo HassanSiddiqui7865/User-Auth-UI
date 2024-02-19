@@ -1,88 +1,55 @@
 <div>
-  <div
-    class="d-flex justify-content-between position-sticky top-0 px-4 pt-4 bg-white border-bottom z-3"
-  >
+  <div class="d-flex justify-content-between position-sticky top-0 px-4 pt-4 bg-white border-bottom z-3">
     <h1 style="color: rgb(1, 1, 102)" class="mb-3">Create Task</h1>
     <mat-icon (click)="handleDialogClose()">close</mat-icon>
   </div>
   <div class="p-4">
-    <form
-      class="w-100"
-      [formGroup]="CreateTicketForm"
-      (ngSubmit)="handleCreateTicket()"
-    >
+    <form class="w-100" [formGroup]="CreateTicketForm" (ngSubmit)="handleCreateTicket()">
       <div>
         <div class="mb-2">
           <label class="form-label">Project</label>
           <mat-select class="form-control">
             <mat-select-trigger class="d-flex align-items-center">
-              <img
-                width="20"
-                height="20"
-                class="rounded-1"
-                [src]="selectedProject?.avatarUrl"
-              />
+              <img width="20" height="20" class="rounded-1" [src]="selectedProject?.avatarUrl" />
               <span class="mx-1">{{ selectedProject?.projectkey }}</span>
             </mat-select-trigger>
-            <mat-option
-              (click)="handleSelectProject(item)"
-              [value]="item.projectId"
-              *ngFor="let item of ProjectList"
-            >
-              <img
-                width="20"
-                height="20"
-                class="rounded-1"
-                [src]="item?.avatarUrl"
-              />
+            <mat-option (click)="handleSelectProject(item)" [value]="item.projectId" *ngFor="let item of ProjectList">
+              <img width="20" height="20" class="rounded-1" [src]="item?.avatarUrl" />
               <span class="mx-2">{{ item?.projectkey }}</span>
             </mat-option>
           </mat-select>
         </div>
         <div class="form-outline mb-3">
           <label class="form-label" for="form3Example4">Ticket summary</label>
-          <input
-            formControlName="ticketsummary"
-            type="text"
-            id="form3Example4"
-            class="form-control"
-            autocomplete="off"
-          />
+          <input formControlName="ticketsummary" type="text" id="form3Example4" class="form-control"
+            autocomplete="off" />
         </div>
         <div class="mb-2">
           <label class="form-label">Priority</label>
           <mat-select class="form-control" formControlName="priority">
             <mat-select-trigger class="d-flex align-items-center">
-              <mat-icon
-                class="fs-5"
-                [ngClass]="
+              <mat-icon class="fs-5" [ngClass]="
                   getIconInfo(
                     priorityElementArray,
                     CreateTicketForm.get('priority').value
                   )?.color
-                "
-                >{{
-                  getIconInfo(
-                    priorityElementArray,
-                    CreateTicketForm.get("priority").value
-                  )?.icon
-                }}</mat-icon
-              >
+                ">{{
+                getIconInfo(
+                priorityElementArray,
+                CreateTicketForm.get("priority").value
+                )?.icon
+                }}</mat-icon>
               <span class="mx-1">{{
                 getIconInfo(
-                  priorityElementArray,
-                  CreateTicketForm.get("priority").value
+                priorityElementArray,
+                CreateTicketForm.get("priority").value
                 )?.name
-              }}</span>
+                }}</span>
             </mat-select-trigger>
-            <mat-option
-              [value]="item.name"
-              *ngFor="let item of priorityElementArray"
-            >
+            <mat-option [value]="item.name" *ngFor="let item of priorityElementArray">
               <mat-icon class="fs-5" [ngClass]="item.color">{{
                 item.icon
-              }}</mat-icon
-              ><span class="mx-1">{{ item.name }}</span>
+                }}</mat-icon><span class="mx-1">{{ item.name }}</span>
             </mat-option>
           </mat-select>
         </div>
@@ -90,96 +57,59 @@
           <label class="form-label">Ticket type</label>
           <mat-select class="form-control" formControlName="type">
             <mat-select-trigger class="d-flex align-items-center">
-              <mat-icon class="fs-5"  [ngClass]="
+              <mat-icon class="fs-5" [ngClass]="
               getIconInfo(tickettypeArray, CreateTicketForm.get('type').value)
                 ?.color
             ">{{
-              getIconInfo(tickettypeArray, CreateTicketForm.get('type').value)
+                getIconInfo(tickettypeArray, CreateTicketForm.get('type').value)
                 ?.icon
-              }}</mat-icon
-              ><span class="mx-1">{{ getIconInfo(tickettypeArray, CreateTicketForm.get('type').value)
+                }}</mat-icon><span class="mx-1">{{ getIconInfo(tickettypeArray, CreateTicketForm.get('type').value)
                 ?.name }}</span>
             </mat-select-trigger>
-            <mat-option
-              [value]="item.name"
-              *ngFor="let item of tickettypeArray"
-            >
+            <mat-option [value]="item.name" *ngFor="let item of tickettypeArray">
               <mat-icon class="fs-5" [ngClass]="item.color">{{
                 item.icon
-              }}</mat-icon
-              ><span class="mx-1">{{ item.name }}</span>
+                }}</mat-icon><span class="mx-1">{{ item.name }}</span>
             </mat-option>
           </mat-select>
         </div>
         <div class="form-outline mb-3">
-          <label class="form-label" for="form3Example4"
-            >Ticket Description</label
-          >
-          <textarea
-            formControlName="ticketdescription"
-            type="text"
-            id="form3Example4"
-            rows="3"
-            class="form-control"
-            autocomplete="off"
-          ></textarea>
+          <label class="form-label" for="form3Example4">Ticket Description</label>
+          <textarea formControlName="ticketdescription" type="text" id="form3Example4" rows="3" class="form-control"
+            autocomplete="off"></textarea>
         </div>
         <div class="mb-2 w-25">
           <label class="form-label">Status</label>
-          <mat-select
-            formControlName="status"
-            class="form-control bg-primary text-white"
-          >
+          <mat-select formControlName="status" class="form-control bg-primary text-white">
             <mat-option value="Backlog">Backlog</mat-option>
             <mat-option value="InProgress">InProgress</mat-option>
             <mat-option value="Done">Done</mat-option>
           </mat-select>
         </div>
         <div *ngIf="selectedProject">
-          <div class="mb-2">
-            <label class="form-label">Select Assignee</label>
-            <div class="mb-2 d-flex align-items-center form-control gap-1">
-              <div *ngIf="selectedUser" class="profile">
-                {{ selectedUser?.username[0].toUpperCase() }}
+          <label>Select Assignee</label>
+          <mat-select class="border p-2 mb-3 " placeholder="Select Member" #singleSelect [(value)]="selectedUser">
+            <mat-select-trigger>
+              <div class="d-flex justify-content-between ">
+                <div class="d-flex gap-1 ">
+                  <div class="profile">{{selectedUser?.username[0].toUpperCase()}}</div>
+                  <div>{{selectedUser?.username}}</div>
+                </div>
+                <mat-icon class="mx-2 " (click)="handleNullUser()">close</mat-icon>
               </div>
-              <div
-                *ngIf="!selectedUser"
-                class="d-flex align-items-center justify-content-center"
-              >
-                <mat-icon class="m-0">account_circle</mat-icon>
+            </mat-select-trigger>
+            <mat-option>
+              <ngx-mat-select-search placeholderLabel="Search User"
+                [noEntriesFoundLabel]="'No match found for ' + searchControl.value"
+                [formControl]="searchControl"></ngx-mat-select-search>
+            </mat-option>
+            <mat-option (click)="updateAssignee(item)" *ngFor="let item of filteredArray" [value]="item">
+              <div class="d-flex gap-1 ">
+                <div class="profile">{{item.username[0].toUpperCase()}}</div>
+                <div>{{item.username}}</div>
               </div>
-              <input
-                type="text"
-                placeholder="Unassigned"
-                style="outline: none; width: 100%; height: 100%; border: none"
-                (focus)="handleFocus()"
-                (input)="handleChange($event)"
-                [matAutocomplete]="auto"
-                [value]="selectedUser ? selectedUser.username : selectedUser"
-              />
-              <mat-icon *ngIf="selectedUser" (click)="handleSelectUser(null)"
-                >close</mat-icon
-              >
-            </div>
-            <mat-autocomplete class="z-3" #auto="matAutocomplete">
-              <mat-option disabled *ngIf="MatchNotFound">
-                Match Not Found
-              </mat-option>
-              <ng-container *ngIf="filteredArray && filteredArray.length > 0">
-                <mat-option
-                  (click)="handleSelectUser(option)"
-                  *ngFor="let option of filteredArray"
-                >
-                  <div class="d-flex align-items-center gap-2">
-                    <div class="profile">
-                      {{ option.username[0].toUpperCase() }}
-                    </div>
-                    <div>{{ option.username }}</div>
-                  </div>
-                </mat-option>
-              </ng-container>
-            </mat-autocomplete>
-          </div>
+            </mat-option>
+          </mat-select>
           <div class="mb-2">
             <label class="form-label">Reported By</label>
             <div class="d-flex align-items-center gap-2 form-control">

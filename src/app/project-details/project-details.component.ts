@@ -22,11 +22,12 @@ export class ProjectDetailsComponent implements OnInit {
   userList: any[];
   filteredArray: any[];
   selectedLead = null;
-  currentLead = null;
+  previousLead = null;
   AdminId: any;
   ManagerId: any;
   avatarselected:string;
   userLoggedIn = UserLogin();
+  searchControl = new FormControl();
   constructor(
     private projectService: ProjectService,
     private route: ActivatedRoute,
@@ -46,6 +47,9 @@ export class ProjectDetailsComponent implements OnInit {
       projectdescription: new FormControl(null, [Validators.required]),
     });
     this.getProject();
+    this.searchControl.valueChanges.subscribe(() => {
+      this.handleChange();
+    });
   }
   getProject() {
     this.projectService.GetProjectById(this.projectId).subscribe({
@@ -57,12 +61,12 @@ export class ProjectDetailsComponent implements OnInit {
           projectdescription: res.projectdescription,
         });
         if (this.project) {
-          this.selectedLead = this.currentLead = this.project.users.find(
+              this.previousLead = this.selectedLead = this.project.users.find(
             (items) => items.isLead
           );
           this.avatarselected = res.avatarUrl
         }
-        this.userList = res.users;
+        this.userList = this.filteredArray  = res.users;
       },
     });
   }
@@ -73,16 +77,16 @@ export class ProjectDetailsComponent implements OnInit {
         .updateProject(this.project.projectId,this.UpdateProjectForm.value,this.avatarselected)
         .subscribe({
           next: (res) => {
-            if (this.currentLead) {
+            if (this.previousLead) {
               this.projectService
                 .ChangeLeadIfLead(
                   this.projectId,
-                  this.currentLead.userId,
+                  this.previousLead.userId,
                   this.selectedLead.userId
                 )
                 .subscribe();
             }
-            if (!this.currentLead) {
+            if (!this.previousLead) {
               this.projectService
                 .ChangeLeadIfNoLead(this.projectId, this.selectedLead.userId)
                 .subscribe();
@@ -99,24 +103,20 @@ export class ProjectDetailsComponent implements OnInit {
         });
     }
   }
-  handleChange(event) {
-    const filteredUser = this.userList.filter((item) => {
-      return item.fullname
-        .toLowerCase()
-        .startsWith(event.target.value.toLowerCase());
-    });
-    this.filteredArray = event.target.value === '' ? null : filteredUser;
-    if (event.target.value === '') {
-      this.filteredArray = null;
-      this.selectedLead = null;
+  handleChange() {
+    const inputValue = this.searchControl.value.toLowerCase();
+    const filteredUser = this.userList?.filter((item) =>
+        item.fullname.toLowerCase().startsWith(inputValue)
+    );
+    
+    if (inputValue === '') {
+        this.filteredArray = this.userList;
+    } else if (filteredUser.length > 0) {
+        this.filteredArray = filteredUser;
     } else {
-      this.filteredArray;
+        this.filteredArray = [];
     }
-  }
-  SetLead(user) {
-    this.selectedLead = user;
-    this.filteredArray = null;
-  }
+}
   AccessToUpdate() {
     const user = this.userList?.find(
       (item) => item.userId === this.userLoggedIn.userId

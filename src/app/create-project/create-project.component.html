@@ -1,98 +1,54 @@
 <div class="p-4">
-  <form class="w-75 example-form"  [formGroup]="CreateProjectForm" (ngSubmit)="handleSubmitProject()">
+  <form class="w-75 example-form" [formGroup]="CreateProjectForm" (ngSubmit)="handleSubmitProject()">
     <div>
       <h1 style="color: rgb(1, 1, 102)" class="mb-3">Create New Project</h1>
     </div>
     <div class="form-outline mb-3">
       <label class="form-label" for="form3Example4">Project Fullname</label>
-      <input
-        type="text"
-        id="form3Example4"
-        class="form-control"
-        formControlName="projectname"
-        autocomplete="off"
-        placeholder="Enter Project Full Name"
-      />
+      <input type="text" id="form3Example4" class="form-control" formControlName="projectname" autocomplete="off"
+        placeholder="Enter Project Full Name" />
     </div>
     <div class="form-outline mb-3">
       <label class="form-label" for="form3Example4">Project Key</label>
-      <input
-        type="text"
-        id="form3Example4"
-        class="form-control"
-        formControlName="projectkey"
-        autocomplete="off"
-        placeholder="Enter Project Key"
-      />
+      <input type="text" id="form3Example4" class="form-control" formControlName="projectkey" autocomplete="off"
+        placeholder="Enter Project Key" />
     </div>
     <div class="form-outline mb-3">
       <label class="form-label">Avatar</label>
       <div class="d-flex align-items-center gap-2 ">
         <img width="40" height="40" class="rounded-1 " src={{avatarselected}}>
-       <div (click)="openAvatarDialog()" style="cursor: pointer;text-decoration: underline;color: blue;">select image</div>
-      </div>
-    </div>
-    <label>Project Lead</label>
-    <div style="position: relative; width: 50%;" class="mb-3">
-      <div class="border d-flex align-items-center px-2 ">
-      <div [ngStyle]="{'background-color': selectedLead ? 'rgb(92, 89, 255)' : 'white'}"
-        style="
-                display: flex;
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                justify-content: center;
-                align-items: center;
-                color: white;
-                font-size: small;
-              ">{{selectedLead && selectedLead.username[0].toUpperCase()}}</div>
-        <input
-        type="text"
-        id="form3Example1"
-        class="border-0 p-2 w-100"
-        [value]="selectedLead && selectedLead.username"
-        style="outline: none;"
-        autocomplete="off"
-        (input)="handleChange($event)"
-        >
-      </div>
-      
-      <div *ngIf="filteredArray && filteredArray.length>0" style="position: absolute;width: 100%;max-height:80px;background-color:#FFFF;margin-top:5px;" class="rounded border p-1 ">
-        <div (click)="SetLead(item)" *ngFor="let item of filteredArray" id="Lead-item" class="d-flex align-items-center gap-2 p-2 ">
-          <div  style="
-          display: flex;
-          width: 20px;
-          height: 20px;
-          background-color: rgb(92, 89, 255);
-          border-radius: 50%;
-          justify-content: center;
-          align-items: center;
-          color: white;
-        ">{{item.username[0].toUpperCase()}}</div>
-        <div>{{item.username}}</div>
+        <div (click)="openAvatarDialog()" style="cursor: pointer;text-decoration: underline;color: blue;">select image
         </div>
       </div>
     </div>
+    <label>Project Lead</label>
+    <mat-select class="border p-2 mb-3 " placeholder="Select Member" #singleSelect [(value)]="selectedLead">
+      <mat-select-trigger>
+        <div class="d-flex gap-1 ">
+          <div class="profile">{{selectedLead?.username[0].toUpperCase()}}</div>
+          <div>{{selectedLead?.username}}</div>
+        </div>
+      </mat-select-trigger>
+      <mat-option>
+        <ngx-mat-select-search  placeholderLabel="Search User"  [noEntriesFoundLabel]="'No match found for ' + searchControl.value" [formControl]="searchControl" ></ngx-mat-select-search>
+      </mat-option>
+      <mat-option  *ngFor="let item of filteredArray" [value]="item">
+        <div class="d-flex gap-1 ">
+          <div class="profile">{{item.username[0].toUpperCase()}}</div>
+          <div>{{item.username}}</div>
+        </div>
+      </mat-option>
+    </mat-select>
     <div class="form-outline">
       <label class="form-label" for="form3Example4">Project Description</label>
-      <textarea
-        rows="3"
-        type="text"
-        autocomplete="off"
-        id="form3Example4"
-        class="form-control"
-        formControlName="projectdescription"
-      ></textarea>
+      <textarea rows="3" type="text" autocomplete="off" id="form3Example4" class="form-control"
+        formControlName="projectdescription"></textarea>
     </div>
 
     <div class="mt-4 pt-2">
       <button [disabled]="CreateProjectForm.invalid || !selectedLead" class="btn btn-primary">
-        <div
-        *ngIf="loading"
-        class="spinner-border spinner-border-sm"
-        role="status"
-      ></div>
-      <span *ngIf="!loading">Create</span>
+        <div *ngIf="loading" class="spinner-border spinner-border-sm" role="status"></div>
+        <span *ngIf="!loading">Create</span>
       </button>
     </div>
   </form>

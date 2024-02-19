@@ -67,72 +67,23 @@
           </div>
         </div>
         <label>Project Lead</label>
-        <div style="position: relative; width: 50%" class="mb-3">
-          <div class="border d-flex align-items-center px-2">
-            <div
-              [ngStyle]="{
-                'background-color': selectedLead ? 'rgb(92, 89, 255)' : 'white'
-              }"
-              style="
-                display: flex;
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                justify-content: center;
-                align-items: center;
-                color: white;
-                font-size: small;
-              "
-            >
-              {{ selectedLead && selectedLead.username[0].toUpperCase() }}
+        <mat-select class="border p-2 mb-3 " placeholder="Select Member" #singleSelect [(value)]="selectedLead">
+          <mat-select-trigger>
+            <div class="d-flex gap-1 ">
+              <div class="profile">{{selectedLead?.username[0].toUpperCase()}}</div>
+              <div>{{selectedLead?.username}}</div>
             </div>
-            <input
-              type="text"
-              id="form3Example1"
-              class="border-0 p-2 w-100"
-              autocomplete="off"
-              [value]="selectedLead ? selectedLead.username : ''"
-              style="outline: none"
-              placeholder="Select Lead"
-              (input)="handleChange($event)"
-            />
-          </div>
-
-          <div
-            *ngIf="filteredArray && filteredArray.length > 0"
-            style="
-              position: absolute;
-              width: 100%;
-              max-height: 80px;
-              background-color: #ffff;
-              margin-top: 5px;
-            "
-            class="rounded border p-1"
-          >
-            <div
-              (click)="SetLead(item)"
-              *ngFor="let item of filteredArray"
-              id="Lead-item"
-              class="d-flex align-items-center gap-2 p-2"
-            >
-              <div
-                style="
-                  display: flex;
-                  width: 20px;
-                  height: 20px;
-                  background-color: rgb(92, 89, 255);
-                  border-radius: 50%;
-                  justify-content: center;
-                  align-items: center;
-                  color: white;
-                "
-              >
-                {{ item.username[0].toUpperCase() }}
-              </div>
-              <div>{{ item.username }}</div>
+          </mat-select-trigger>
+          <mat-option>
+            <ngx-mat-select-search  placeholderLabel="Search User"  [noEntriesFoundLabel]="'No match found for ' + searchControl.value" [formControl]="searchControl" ></ngx-mat-select-search>
+          </mat-option>
+          <mat-option  *ngFor="let item of filteredArray" [value]="item">
+            <div class="d-flex gap-1 ">
+              <div class="profile">{{item.username[0].toUpperCase()}}</div>
+              <div>{{item.username}}</div>
             </div>
-          </div>
-        </div>
+          </mat-option>
+        </mat-select>
         <div class="form-outline">
           <label class="form-label" for="form3Example4"
             >Project Description</label

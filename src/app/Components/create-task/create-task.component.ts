@@ -19,8 +19,6 @@ export class CreateTaskComponent implements OnInit {
   userList: any[] = [];
   ProjectList: any[] = [];
   filteredArray: any[] = []; 
-  MatchNotFound:boolean = false
-  inputValue:string;
   priorityElementArray: any[] = [
     {
       icon: 'keyboard_double_arrow_up',
@@ -53,6 +51,7 @@ export class CreateTaskComponent implements OnInit {
   selectedProject: any;
   selectedUser: any = null;
   CreateTicketForm: FormGroup;
+  searchControl = new FormControl();
 
   constructor(
     public dialogRef: MatDialogRef<CreateTaskComponent>,
@@ -82,30 +81,18 @@ export class CreateTaskComponent implements OnInit {
     } else {
       this.getProjects();
     }
+    this.searchControl.valueChanges.subscribe(() => {
+      this.handleChange();
+    });
   }
 
   handleSelectProject(item: any) {
     this.selectedProject = item;
-    this.userList = this.selectedProject.users;
+    this.userList = this.filteredArray = this.selectedProject.users;
     this.CreateTicketForm.patchValue({
       projectId: item.projectId,
     });
-  }
-
-  handleSelectUser(item: any) {
-    this.selectedUser = item;
-    if(item){
-      this.CreateTicketForm.patchValue({
-        assignedto: item.userId,
-      });
-    }else{
-      this.CreateTicketForm.patchValue({
-        assignedto: null,
-      });
-    }
-    
-  }
-  
+  }  
   getIconInfo(array: any[], name: string) {
     return array.find((items) => items.name === name);
   }
@@ -123,30 +110,25 @@ export class CreateTaskComponent implements OnInit {
       },
     });
   }
-
-  handleChange(event: any) {
-    this.inputValue = event.target.value.toLowerCase();
+  updateAssignee(item:any){
+   this.CreateTicketForm.patchValue({
+    assignedto:item.userId
+   })
+  }
+  handleChange() {
+    const inputValue = this.searchControl.value.toLowerCase();
     const filteredUser = this.userList?.filter((item) =>
-        item.fullname.toLowerCase().startsWith(this.inputValue)
+        item.fullname.toLowerCase().startsWith(inputValue)
     );
     
-    if (this.inputValue === '') {
+    if (inputValue === '') {
         this.filteredArray = this.userList;
-        this.MatchNotFound = false
-        this.selectedUser = null;
     } else if (filteredUser.length > 0) {
         this.filteredArray = filteredUser;
-        this.MatchNotFound = false
     } else {
         this.filteredArray = [];
-        this.MatchNotFound = true
     }
 }
-
-  handleFocus() {
-  if(this.inputValue === '' || !this.inputValue)
-    this.filteredArray = this.userList;
-  }
   getProjects() {
     this.projectService.getProjects().subscribe({
       next: (res) => {
@@ -157,7 +139,6 @@ export class CreateTaskComponent implements OnInit {
       },
     });
   }
-
   getProjectsforMember() {
     this.projectService
       .getAssignedProjects(this.LoggedInUser.userId)
@@ -170,7 +151,9 @@ export class CreateTaskComponent implements OnInit {
         },
       });
   }
-
+  handleNullUser(){
+    this.selectedUser = null
+  }
   handleDialogClose() {
     this.dialogRef.close();
   }

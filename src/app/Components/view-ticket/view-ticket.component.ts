@@ -24,8 +24,12 @@ export class ViewTicketComponent implements OnInit {
   userList: any[];
   filteredArray: any[] = [];
   update: boolean = false;
+  ResultDialog:boolean = false
   LoggedInUser = UserLogin();
   AdminId = environment.admin;
+  MatchFound:boolean = false
+  blur:boolean = false
+  itemSelected:boolean = false
   UpdateTicketForm: FormGroup;
 
   constructor(
@@ -80,20 +84,30 @@ export class ViewTicketComponent implements OnInit {
     return array.find((items) => items.name === name);
   }
   handleChange(event: any) {
+    console.log(this.selectedUser)
+    console.log(event.target.value)
     const filteredUser = this.userList?.filter((item) =>
       item.fullname.toLowerCase().startsWith(event.target.value.toLowerCase())
     );
     if (event.target.value === '') {
+     
       this.filteredArray = this.userList;
       this.selectedUser = null;
+      this.MatchFound = false
     } else {
+      if (filteredUser.length === 0) {
+       this.MatchFound = true
+      }
+      else{
+        this.MatchFound = false
+      }
       this.filteredArray = filteredUser;
     }
   }
   getProject(projectId: any) {
     this.projectService.GetProjectById(projectId).subscribe({
       next: (res) => {
-        this.userList = res.users;
+        this.userList   = res.users;
       },
     });
   }
@@ -136,6 +150,7 @@ export class ViewTicketComponent implements OnInit {
     this.UpdateTicketForm.patchValue({
       assignedto: item.userId,
     });
+    this.blur = true
   }
   handleOpenDelete() {
     this.dialog.open(DeleteComponentComponent, {
@@ -149,8 +164,8 @@ export class ViewTicketComponent implements OnInit {
       },
     });
   }
-  handleFocus() {
-    this.filteredArray = this.userList;
+  handleFocus(){
+    this.blur = false
   }
   handleOpenUpdate() {
     this.update = true;

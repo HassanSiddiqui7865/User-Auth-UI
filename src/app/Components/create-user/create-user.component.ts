@@ -39,6 +39,20 @@ export class CreateUserComponent {
       }
     })
   }
+  getRoleName(){
+    if(this.selectedRoleId === this.AdminId){
+      return 'Administrator'
+    }
+    else if(this.selectedRoleId === this.ManagerId){
+      return 'Manager'
+    }
+    else if (this.selectedRoleId === this.MemberId){
+      return 'Member'
+    }
+    else{
+      return null
+    }
+  }
   handleCreateUser(){
     this.loading =true
     this.userService.createUser(this.CreateUserForm.value,this.selectedRoleId).subscribe({
@@ -53,14 +67,6 @@ export class CreateUserComponent {
         this.toastr.error("Error Occured")
       }
     })
-  }
-  handleOpenRole(){
-    this.OpenRoles = !this.OpenRoles;
-  }
-  handleSelectRole(value,id){
-    this.selectedRole = value
-    this.selectedRoleId = id
-    this.handleOpenRole()
   }
 }
 
