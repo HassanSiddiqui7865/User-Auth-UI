@@ -17,13 +17,13 @@ import { AvatarSelectComponent } from '../Components/avatar-select/avatar-select
   styleUrls: ['./create-project.component.css'],
 })
 export class CreateProjectComponent implements OnInit {
-  PmList: any[];
   loading: boolean = false;
   CreateProjectForm: FormGroup;
   userList: any[];
   filteredArray: any[];
   selectedLead = null;
   AdminId: any;
+  searchControl = new FormControl();
   avatarselected: string =
     'https://octdailops.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10400';
   constructor(
@@ -43,26 +43,32 @@ export class CreateProjectComponent implements OnInit {
       projectdescription: new FormControl(null, [Validators.required]),
     });
     this.getAllUsers();
+    this.searchControl.valueChanges.subscribe(() => {
+      this.handleChange();
+    });
+
   }
   getAllUsers() {
     this.userService.getUsersWithoutProjects().subscribe({
       next: (res) => {
-        this.userList = res.filter((items) => items.roleId !== this.AdminId);
+        this.userList = this.filteredArray =  res.filter((items) => items.roleId !== this.AdminId);
       },
     });
   }
-  handleChange(event) {
-    const filteredUser = this.userList.filter((item) => {
-      return item.fullname
-        .toLowerCase()
-        .startsWith(event.target.value.toLowerCase());
-    });
-    this.filteredArray = event.target.value === '' ? null : filteredUser;
-  }
-  SetLead(user) {
-    this.selectedLead = user;
-    this.filteredArray = null;
-  }
+  handleChange() {
+    const inputValue = this.searchControl.value.toLowerCase();
+    const filteredUser = this.userList?.filter((item) =>
+        item.fullname.toLowerCase().startsWith(inputValue)
+    );
+    
+    if (inputValue === '') {
+        this.filteredArray = this.userList;
+    } else if (filteredUser.length > 0) {
+        this.filteredArray = filteredUser;
+    } else {
+        this.filteredArray = [];
+    }
+}
   handleSubmitProject() {
     this.loading = true;
     this.projectService

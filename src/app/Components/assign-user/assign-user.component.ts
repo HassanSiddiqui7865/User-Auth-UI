@@ -12,13 +12,14 @@ import { environment } from 'src/environment/environment';
   styleUrls: ['./assign-user.component.css']
 })
 export class AssignUserComponent implements OnInit {
-  CreateUserForm : FormGroup
-  roleList:any[]
   loading:boolean =false
   userList:any[]
   filteredArray:any[]
-  selectedUser = null
+  selectedUser :any= null
   AdminId:any;
+  inputValue:any
+  MatchNotFound:boolean = false
+  searchControl = new FormControl();
   constructor(private userService : UserService,private projectService : ProjectService,
      public dialogRef: MatDialogRef<AssignUserComponent>,private toastr : ToastrService,
     @Inject(MAT_DIALOG_DATA) public data){
@@ -26,34 +27,31 @@ export class AssignUserComponent implements OnInit {
     }
   ngOnInit(): void {
     this.getAllUsers()
+    this.searchControl.valueChanges.subscribe(() => {
+      this.handleChange();
+    });
   }
   getAllUsers(){
     this.userService.getUsersWithoutProjects().subscribe({
       next:(res)=>{
-        this.userList = res.filter((items)=>items.roleId !== this.AdminId)
+        this.userList = this.filteredArray= res.filter((items)=>items.roleId !== this.AdminId)
       }
     })
   }
-  handleChange(event){
-    const filteredUser = this.userList.filter((item) => {
-      return item.fullname.toLowerCase().startsWith(event.target.value.toLowerCase());
-  });
-    this.filteredArray= event.target.value === "" ? null: filteredUser;
-    if(event.target.value===""){
-      this.filteredArray = null
-      this.selectedUser = null
+  handleChange() {
+    this.inputValue = this.searchControl.value.toLowerCase();
+    const filteredUser = this.userList?.filter((item) =>
+        item.fullname.toLowerCase().startsWith(this.inputValue)
+    );
+    
+    if (this.inputValue === '') {
+        this.filteredArray = this.userList;
+    } else if (filteredUser.length > 0) {
+        this.filteredArray = filteredUser;
+    } else {
+        this.filteredArray = [];
     }
-    else{
-      this.filteredArray
-    }
-  }
-  SetUser(user:any){
-    if(!this.data.UserList.find((items)=>items.userId === user.userId)){
-      this.selectedUser = user
-      this.filteredArray = null
-    }
-   
-  }
+}
   CheckAssigned(user){
     return this.data.UserList.find((item)=>item.userId === user.userId)
   }

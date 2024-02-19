@@ -12,6 +12,7 @@
       <input
         type="text"
         id="form3Example1"
+        autocomplete="off"
         formControlName="fullname"
         class="form-control"
         placeholder="Enter Full Name"
@@ -22,6 +23,7 @@
       <input
         type="text"
         id="form3Example2"
+        autocomplete="off"
         class="form-control"
         formControlName="username"
         placeholder="Enter Username"
@@ -33,6 +35,7 @@
         type="email"
         id="form3Example3"
         formControlName="email"
+        autocomplete="off"
         class="form-control"
         placeholder="Enter Email"
       />
@@ -43,57 +46,44 @@
         type="password"
         id="form3Example4"
         formControlName="pass"
+        autocomplete="new-password"
         class="form-control"
         placeholder="Enter Password"
       />
     </div>
-    <div class="form-outline mb-3" style="position: relative">
+    <div class="form-outline mb-3">
       <label for="exampleFormControlSelect2">Choose User Role</label>
-      <div class="border w-100 d-flex align-items-center">
-        <input
-          type="text"
-          id="form3Example1"
-          class="border-0 p-2 w-100"
-          style="outline: none"
-          readonly
-          [value]="selectedRole ? selectedRole : 'Select User Role'"
-        />
-        <mat-icon (click)="handleOpenRole()">expand_more</mat-icon>
-      </div>
-      <div *ngIf="OpenRoles"
-        style="
-          position: absolute;
-          width: 100%;
-          background-color:white;
-          height: 200px;
-          overflow-y: auto;
-          z-index: 99;
-          margin-top: 10px;
-        "
-        class="border p-3 rounded "
-
-      >
-        <div class="m-3" (click)="handleSelectRole('Administrator',AdminId)">
+     <mat-select placeholder="Select Role" class="form-control" [(value)]="selectedRoleId">
+      <mat-select-trigger>
+        {{getRoleName()}}
+      </mat-select-trigger>
+      <mat-option [value]="AdminId">
+        <div class="m-3">
           <div style="font-size: medium;">Administrator</div>
           <div style="font-size: small;color: rgb(88, 88, 88);">
             Admin can do most thing, like update settings and add other admin
           </div>
         </div>
-        <div class="m-3" (click)="handleSelectRole('Manager',ManagerId)">
+      </mat-option>
+      <mat-option [value]="ManagerId">
+        <div class="m-3">
           <div style="font-size: medium;">Manager</div>
           <div  style="font-size: small;color: rgb(88, 88, 88);">
             Manager can access all over the projects but they can only manage
             assigned projects
           </div>
         </div>
-        <div class="m-3" (click)="handleSelectRole('Member',MemberId)">
+      </mat-option>
+      <mat-option [value]="MemberId">
+        <div class="m-3">
           <div style="font-size: medium;">Member</div>
           <div  style="font-size: small;color: rgb(88, 88, 88);">
             Member can only access the project and perform the task they are
             assigned
           </div>
         </div>
-      </div>
+      </mat-option>
+     </mat-select>
     </div>
     <div class="mt-4 pt-2">
       <button

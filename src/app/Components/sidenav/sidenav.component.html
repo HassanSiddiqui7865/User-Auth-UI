@@ -1,5 +1,6 @@
-<div class="bg-primary" style="height: 100vh;width: 40px;">
-    <div class="d-flex pt-3   justify-content-center ">
-        <mat-icon (click)="openCreateIssueDialog()" class="text-white ">add</mat-icon>
+<div class="bg-primary" style="height: 100vh;width: 40px;position: sticky;top: 0;left: 0;">
+    <div class="d-flex pt-3 align-items-center  flex-column gap-3 text-white">
+        <mat-icon style="cursor: pointer;" (click)="openCreateIssueDialog()">add</mat-icon>
+        <mat-icon style="cursor: pointer;"  [routerLink]="'/projects'">table_chart</mat-icon>
     </div>
 </div>

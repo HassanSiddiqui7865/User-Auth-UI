@@ -44,12 +44,14 @@ import {
 } from '@angular/cdk/drag-drop';
 import { SidenavComponent } from './Components/sidenav/sidenav.component';
 import {MatSelectModule} from '@angular/material/select';
-import {TooltipPosition, MatTooltipModule} from '@angular/material/tooltip';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import { ViewTicketComponent } from './Components/view-ticket/view-ticket.component';
-
-
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
+  
   declarations: [
+   
     AppComponent,
     LoginpageComponent,
     RegisterpageComponent,
@@ -76,14 +78,13 @@ import { ViewTicketComponent } from './Components/view-ticket/view-ticket.compon
     AvatarSelectComponent,
     BoardComponent,
     SidenavComponent,
-    ViewTicketComponent,
-    
-   
-    
+    ViewTicketComponent, 
     ],
   imports: [
+    NgSelectModule,
     MatAutocompleteModule,
     MatSelectModule,
+    NgxMatSelectSearchModule,
     MatTooltipModule,
     CommonModule,
     BrowserAnimationsModule,
@@ -102,9 +103,10 @@ import { ViewTicketComponent } from './Components/view-ticket/view-ticket.compon
     CdkDrag,
     CdkDropList,
     CdkDropListGroup,
-   
   ],
-  providers: [],
+  providers: [
+    
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
