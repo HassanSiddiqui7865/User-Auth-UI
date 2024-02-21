@@ -10,7 +10,7 @@ import { ProjectsComponent } from './projects/projects.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProjectUserManageComponent } from './project-user-manage/project-user-manage.component';
 import { ManageuserComponent } from './manageuser/manageuser.component';
-import {HttpClientModule} from '@angular/common/http'
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
@@ -48,6 +48,7 @@ import { ViewTicketComponent } from './Components/view-ticket/view-ticket.compon
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SingleUserComponent } from './single-user/single-user.component';
+import { AuthInterceptor } from './Interceptor/auth.interceptor';
 @NgModule({
   
   declarations: [
@@ -105,7 +106,7 @@ import { SingleUserComponent } from './single-user/single-user.component';
     CdkDropListGroup,
   ],
   providers: [
-    
+    {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}
   ],
   bootstrap: [AppComponent]
 })

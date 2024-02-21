@@ -34,7 +34,7 @@ export class UserService {
       return this.http.get(`${environment.BASEURL}/User/withoutProjects`)
     }
     getUserById(userId:any):Observable<any>{
-      return this.http.get(`${environment.BASEURL}/User/${userId}`)
+      return this.http.get(`${environment.BASEURL}/User/UserWithProjects/${userId}`)
     }
     updateRole(userId:any,roleId:any):Observable<any>{
       return this.http.put(`${environment.BASEURL}/User/${userId}/${roleId}`,{})
